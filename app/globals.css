@@ -47,6 +47,14 @@
 
     /* Border Radius */
     --radius: 0.5rem;
+
+    /* CHẠM Bloom — Editorial Garden */
+    --bloom-green-deep: #1a4a2e;
+    --bloom-green-mid: #2d7a4f;
+    --bloom-green-light: #e8f5ee;
+    --bloom-green-mist: #f0f9f4;
+    --bloom-cream: #faf8f3;
+    --bloom-gold: #c9a84c;
   }
 
   .dark {
@@ -110,6 +118,17 @@
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+
+  --color-bloom-green-deep: var(--bloom-green-deep);
+  --color-bloom-green-mid: var(--bloom-green-mid);
+  --color-bloom-green-light: var(--bloom-green-light);
+  --color-bloom-green-mist: var(--bloom-green-mist);
+  --color-bloom-cream: var(--bloom-cream);
+  --color-bloom-gold: var(--bloom-gold);
+
+  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), Georgia, 'Times New Roman', serif;
+  --font-hero: var(--font-cormorant), var(--font-playfair), Georgia, 'Times New Roman', serif;
 }
 
 @layer base {
@@ -118,5 +137,116 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .cham-bloom-page {
+    scroll-behavior: smooth;
+    position: relative;
+  }
+
+  .cham-bloom-page::before {
+    content: '';
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .cham-bloom-page [id] {
+    scroll-margin-top: 5rem;
+  }
+
+  .cham-bloom-page ::selection {
+    background-color: var(--bloom-green-mid);
+    color: white;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-overlay {
+  animation: fadeInOverlay 0.4s ease-out forwards;
+}
+
+@layer utilities {
+  .font-hero {
+    font-family: var(--font-hero);
+  }
+
+  .bloom-headline-accent {
+    @apply bg-gradient-to-r from-bloom-green-deep via-bloom-green-mid to-gray-500 bg-clip-text text-transparent;
+  }
+
+  .bloom-section-band {
+    @apply relative overflow-hidden rounded-3xl border border-white/30 bg-gradient-to-br from-white/50 via-bloom-green-light/40 to-bloom-cream/80 px-6 py-14 shadow-inner backdrop-blur-sm sm:px-10 md:py-16;
+  }
+
+  .bloom-step-pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/20 px-5 py-2.5 text-sm font-medium text-bloom-green-deep shadow-sm backdrop-blur-md;
+  }
+
+  .bloom-step-index {
+    @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-bloom-green-mid/15 font-sans text-xs font-semibold tabular-nums text-bloom-green-mid;
+  }
+
+  .bloom-tag-chip {
+    @apply inline-flex items-center rounded-full border border-bloom-green-mid/20 bg-white/50 px-3 py-1 text-xs font-medium text-bloom-green-deep backdrop-blur-sm;
+  }
+
+  .bloom-pull-accent {
+    @apply border-l-[3px] border-bloom-gold/70 pl-5;
+  }
+
+  .bloom-journey-node {
+    @apply flex size-14 items-center justify-center rounded-2xl border border-white/35 bg-white/70 text-bloom-green-mid shadow-md shadow-bloom-green-deep/10 backdrop-blur-md transition-[transform,box-shadow] duration-300 ease-out;
+  }
+
+  .bloom-marquee-track {
+    animation: bloomMarquee 32s linear infinite;
+  }
+
+  .bloom-timeline-rail {
+    @apply absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-bloom-green-mid/10 via-bloom-gold/35 to-bloom-green-mid/10 md:left-1/2 md:-translate-x-px;
+  }
+
+  .bloom-bento-featured {
+    @apply md:col-span-2 md:row-span-2;
+  }
+
+  .bloom-zigzag-item {
+    @apply relative border-t border-bloom-green-mid/15 pt-6 transition-colors duration-300 hover:border-bloom-gold/30 md:pt-8;
+  }
+}
+
+@keyframes bloomMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }

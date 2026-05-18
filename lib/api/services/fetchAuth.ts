@@ -1,5 +1,9 @@
-import type { LoginResponse, LoginRequest } from "@/types/api";
 import apiService from "../core";
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
 
 // Type definition specifically for fetchAuth if not in types/api.ts
 export interface AuthLoginResponse {
