@@ -18,13 +18,20 @@ export interface AuthLoginResponse {
   metadata: unknown;
 }
 
+export interface RegisterRequest {
+  email: string;
+  password: string;
+  name?: string;
+  [key: string]: unknown;
+}
+
 export const fetchAuth = {
   login: async (data: LoginRequest): Promise<AuthLoginResponse> => {
     const response = await apiService.post<AuthLoginResponse>("api/v1/auth/login", data);
     return response.data;
   },
 
-  register: async (data: any): Promise<AuthLoginResponse> => {
+  register: async (data: RegisterRequest): Promise<AuthLoginResponse> => {
     const response = await apiService.post<AuthLoginResponse>("api/v1/auth/register", data);
     return response.data;
   },
