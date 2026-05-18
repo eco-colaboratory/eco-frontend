@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface SafeImageProps {
@@ -27,14 +27,15 @@ export default function SafeImage({
   fallbackSrc = '/banner_website.jpg',
   onError,
 }: SafeImageProps) {
+  const [prevSrc, setPrevSrc] = useState(src);
   const [imageSrc, setImageSrc] = useState(src);
   const [useRegularImg, setUseRegularImg] = useState(false);
 
-  // Reset state when src prop changes
-  useEffect(() => {
+  if (src !== prevSrc) {
+    setPrevSrc(src);
     setImageSrc(src);
     setUseRegularImg(false);
-  }, [src]);
+  }
 
   const handleImageError = () => {
     onError?.();
