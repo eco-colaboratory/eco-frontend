@@ -48,36 +48,38 @@
     /* Border Radius */
     --radius: 0.5rem;
 
-    /* CHẠM Bloom — Editorial Garden */
-    --bloom-green-deep: #1a4a2e;
-    --bloom-green-mid: #2d7a4f;
-    --bloom-green-light: #e8f5ee;
-    --bloom-green-mist: #f0f9f4;
-    --bloom-cream: #faf8f3;
-    --bloom-gold: #c9a84c;
+    /* CHẠM Flora — Eco Green Theme (Forest Green, Leaf Green, Mint Green, Cream Warm Green, Deep Dark) */
+    --bloom-green-deep: #0D3E1D;
+    --bloom-green-mid: #1B8A42;
+    --bloom-green-light: #F4FBF7;
+    --bloom-green-mist: #EAF5EE;
+    --bloom-cream: #FAFDFB;
+    --bloom-gold: #D68C45;
+    --bloom-dark: #051A0C;
+    --bloom-accent-mint: #10B981;
   }
 
   .dark {
-    --background: #0a000e;
-    --foreground: #ffffff;
-    
-    --primary: #ad1c9a;
-    --primary-foreground: #ffffff;
-    
-    --secondary: #67178d;
-    --secondary-foreground: #ffffff;
-    
-    --muted: #1f2937;
+    --background: #111827;
+    --foreground: #FFFDFB;
+
+    --primary: #A78BFA;
+    --primary-foreground: #111827;
+
+    --secondary: #F9A8D4;
+    --secondary-foreground: #111827;
+
+    --muted: #1F2937;
     --muted-foreground: #9ca3af;
-    
+
     --border: #374151;
     --input: #374151;
-    
-    --card: #111827;
-    --card-foreground: #ffffff;
-    
-    --popover: #111827;
-    --popover-foreground: #ffffff;
+
+    --card: #1F2937;
+    --card-foreground: #FFFDFB;
+
+    --popover: #1F2937;
+    --popover-foreground: #FFFDFB;
   }
 }
 
@@ -125,16 +127,19 @@
   --color-bloom-green-mist: var(--bloom-green-mist);
   --color-bloom-cream: var(--bloom-cream);
   --color-bloom-gold: var(--bloom-gold);
+  --color-bloom-dark: var(--bloom-dark);
+  --color-bloom-accent-mint: var(--bloom-accent-mint);
 
-  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-playfair), Georgia, 'Times New Roman', serif;
-  --font-hero: var(--font-cormorant), var(--font-playfair), Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-be-vietnam-pro), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-be-vietnam-pro), var(--font-inter), sans-serif;
+  --font-hero: var(--font-be-vietnam-pro), var(--font-inter), sans-serif;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -169,6 +174,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -183,6 +189,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -198,7 +205,17 @@
   }
 
   .bloom-headline-accent {
-    @apply bg-gradient-to-r from-bloom-green-deep via-bloom-green-mid to-gray-500 bg-clip-text text-transparent;
+    background: linear-gradient(135deg, #0D3E1D 0%, #1B8A42 50%, #10B981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @apply bg-clip-text text-transparent;
+  }
+
+  .bloom-gradient-readmore {
+    background: linear-gradient(90deg, #616161 0%, #928C86 50%, #0b521ba0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @apply bg-clip-text text-transparent;
   }
 
   .bloom-section-band {
@@ -222,7 +239,8 @@
   }
 
   .bloom-journey-node {
-    @apply flex size-14 items-center justify-center rounded-2xl border border-white/35 bg-white/70 text-bloom-green-mid shadow-md shadow-bloom-green-deep/10 backdrop-blur-md transition-[transform,box-shadow] duration-300 ease-out;
+    @apply flex size-14 items-center justify-center rounded-2xl border border-white/35 bg-white/70 text-bloom-green-mid shadow-md shadow-bloom-green-deep/10 backdrop-blur-md duration-300 ease-out;
+    transition-property: transform, box-shadow;
   }
 
   .bloom-marquee-track {
@@ -246,6 +264,7 @@
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }

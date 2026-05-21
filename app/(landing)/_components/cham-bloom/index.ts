@@ -1,16 +1,30 @@
-export { ChamBloomMotionProvider } from './motion-provider'
-export { Navbar } from './navbar'
-export { BloomButton } from './bloom-button'
-export { GlassCard } from './glass-card'
-export { SectionShell } from './section-shell'
-export { SectionLabel } from './section-label'
+// Layout primitives — re-exported from layout/ for backwards compatibility
+export {
+  ChamBloomMotionProvider,
+  Navbar,
+  BloomButton,
+  BloomAmbient,
+  type BloomAmbientTone,
+  GlassCard,
+  IconGlass,
+  EditorialImage,
+  HeroVideo,
+  SectionShell,
+  type SectionShellBg,
+  SectionLabel,
+  SectionHeader,
+  SectionDivider,
+  SectionWave,
+  MotionWrapper,
+} from '../layout'
+
+// Page sections
 export { HeroSection } from './hero-section'
 export { AboutSection } from './about-section'
-export { VisionMissionSection } from './vision-mission-section'
 export { CoreIdeaSection } from './core-idea-section'
 export { AchievementsSection } from './achievements-section'
 export { SponsorshipSection } from './sponsorship-section'
 export { ValuePropSection } from './value-prop-section'
 export { BenefitsSection } from './benefits-section'
 export { ContactSection } from './contact-section'
-export { PageJsonLd } from './page-json-ld'
+export { RoadmapSection } from './roadmap-section'

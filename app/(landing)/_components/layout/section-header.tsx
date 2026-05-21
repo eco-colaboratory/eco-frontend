@@ -26,7 +26,7 @@ export function SectionHeader({
       </SectionLabel>
       <h2
         className={cn(
-          'mt-4 font-display text-4xl leading-[1.08] text-bloom-green-deep md:text-5xl lg:text-[3.25rem]',
+          'mt-4 font-display text-3xl font-semibold leading-[1.15] text-bloom-green-deep md:text-4xl lg:text-[2.75rem]',
           centered && 'mx-auto max-w-3xl',
         )}
       >
@@ -34,7 +34,7 @@ export function SectionHeader({
           <>
             {title}
             {' '}
-            <span className="bloom-headline-accent">{accent}</span>
+            <span className="bloom-headline-accent font-semibold">{accent}</span>
           </>
         ) : (
           title
@@ -43,7 +43,7 @@ export function SectionHeader({
       {description ? (
         <p
           className={cn(
-            'mt-4 max-w-3xl text-lg leading-relaxed text-gray-600',
+            'mt-4 max-w-3xl text-base leading-relaxed text-gray-600 font-light',
             centered && 'mx-auto',
           )}
         >

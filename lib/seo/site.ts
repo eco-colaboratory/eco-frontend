@@ -1,8 +1,8 @@
 export const SITE = {
-  name: 'CHẠM Bloom',
-  shortName: 'CHẠM Bloom',
+  name: 'CHẠM Flora',
+  shortName: 'CHẠM Flora',
   defaultDescription:
-    'Game hóa hành động xanh cho Gen Z — biến vườn hoa ảo thành vườn hoa thật. Trang tài trợ chính thức.',
+    'CHẠM Flora là nền tảng game hóa hành động xanh cho Gen Z, kêu gọi tài trợ và hợp tác CSR để chuyển đổi vườn hoa ảo thành vườn hoa thật.',
   locale: 'vi_VN',
 } as const
 

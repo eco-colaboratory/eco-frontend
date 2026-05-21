@@ -1,72 +1,165 @@
-import { Award, Medal } from 'lucide-react'
-import { CHAM_BLOOM_CONTENT } from '@/lib/content/cham-bloom-landing'
-import { cn } from '@/lib/utils'
-import { GlassCard } from './glass-card'
-import { IconGlass } from './icon-glass'
-import { MotionWrapper } from './motion-wrapper'
-import { SectionHeader } from './section-header'
-import { SectionShell } from './section-shell'
+'use client'
 
-const icons = [Award, Medal]
+import { useState } from 'react'
+import Image from 'next/image'
+import { MotionWrapper } from '../layout/motion-wrapper'
+import { SectionShell } from '../layout/section-shell'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { BloomAmbientInline } from './core-idea-section'
+import { SectionHeader } from '../layout'
+
+const SLIDES = [
+  {
+    id: 1,
+    value: 'Top 5',
+    label: 'Đại sứ Gen G 2025',
+    description: 'E.C.O/C.H.A.M lọt vào Top 5 nhóm dự án được tài trợ bởi Panasonic Việt Nam thông qua chương trình Đại sứ Gen G 2025.',
+    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80',
+  },
+  {
+    id: 2,
+    value: 'Á quân',
+    label: 'FIP – Youth Startup',
+    description: 'Dự án đạt danh hiệu Á quân tại cuộc thi FIP – Youth Startup, ghi nhận tiềm năng của mô hình game hóa hành động xanh và tác động cộng đồng.',
+    image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1000&q=80',
+  },
+] as const
 
 export function AchievementsSection() {
-  const { achievements } = CHAM_BLOOM_CONTENT
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : SLIDES.length - 1))
+  }
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev < SLIDES.length - 1 ? prev + 1 : 0))
+  }
+
+  const activeSlide = SLIDES[activeIndex]
 
   return (
     <SectionShell id="achievements" bg="cream" ambient>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <SectionHeader
-            label={achievements.label}
-            title="Được"
-            accent="công nhận"
-            className="lg:col-span-4 lg:sticky lg:top-28 lg:self-start"
-          />
+      <BloomAmbientInline />
 
-          <div className="flex flex-col gap-6 lg:col-span-8 lg:gap-8">
-            {achievements.items.map((item, i) => {
-              const Icon = icons[i] ?? Award
-              const featured = i === 0
-              return (
-                <MotionWrapper key={item.title} delay={0.15 * (i + 1)}>
-                  <GlassCard
-                    interactive
-                    className={cn(
-                      'border-2 text-left',
-                      featured
-                        ? 'border-bloom-gold/40 bg-gradient-to-br from-white/85 to-bloom-cream/90 p-8 md:p-12'
-                        : 'ml-auto max-w-lg border-bloom-green-mid/25 bg-bloom-green-light/45 p-7 md:mr-8 md:p-9',
-                    )}
-                  >
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
-                      <IconGlass variant="gold" className="mb-0 shrink-0">
-                        <Icon
-                          className={cn('text-bloom-gold', featured ? 'h-9 w-9' : 'h-7 w-7')}
-                          aria-hidden
-                        />
-                      </IconGlass>
-                      <div className="min-w-0 flex-1">
-                        <span className="inline-flex w-fit rounded-full border border-white/25 bg-white/20 px-3.5 py-1 text-xs font-medium uppercase tracking-wider text-bloom-green-deep backdrop-blur-md">
-                          {item.badge}
-                        </span>
-                        <h3
-                          className={cn(
-                            'mt-3 font-display text-bloom-green-deep',
-                            featured ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl',
-                          )}
-                        >
-                          {item.title}
-                        </h3>
-                        <p className="mt-2 max-w-xl text-base leading-relaxed text-gray-600">
-                          {item.subtitle}
+      <SectionHeader
+        label="Thành quả đã đạt được"
+        title={"Trước khi phát triển thành CHẠM Flora"}
+        accent={"Dự án E.C.O/C.H.A.M đã có một số cột mốc nổi bật"}
+        align="center"
+        className="!mb-4 !mt-0"
+      />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2 md:py-4">
+        <div className="grid grid-cols-12 gap-8 lg:gap-12 items-center">
+
+          {/* Cột trái: Nút điều hướng & Thông tin thành tích đang Active */}
+          <div className="col-span-12 md:col-span-5 lg:col-span-4 flex flex-col justify-center min-h-[340px] md:pr-4">
+            <MotionWrapper>
+              {/* Nút điều khiển slide tròn mảnh dẻ */}
+              <div className="flex items-center gap-3 mb-8">
+                <button
+                  onClick={handlePrev}
+                  className="flex items-center justify-center w-12 h-12 rounded-full border border-bloom-green-deep/30 text-bloom-green-deep hover:bg-bloom-green-deep hover:text-white transition-all duration-300 cursor-pointer"
+                  aria-label="Slide trước"
+                >
+                  <ArrowLeft className="w-5 h-5 stroke-[1.5]" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="flex items-center justify-center w-12 h-12 rounded-full border border-bloom-green-deep/30 text-bloom-green-deep hover:bg-bloom-green-deep hover:text-white transition-all duration-300 cursor-pointer"
+                  aria-label="Slide tiếp theo"
+                >
+                  <ArrowRight className="w-5 h-5 stroke-[1.5]" />
+                </button>
+              </div>
+
+              {/* Phần text đồng bộ hóa thay đổi mượt mà theo activeIndex */}
+              <div key={activeIndex} className="animate-fade-in-up flex flex-col items-start">
+                {/* Badge danh vị lớn hơn và tinh tế */}
+                <span className="inline-flex items-center rounded-full bg-bloom-accent-mint/15 border border-bloom-accent-mint/25 px-4.5 py-1.5 text-xs font-bold uppercase tracking-wider text-bloom-accent-mint backdrop-blur-sm shadow-sm">
+                  {activeSlide.value}
+                </span>
+
+                {/* Tiêu đề thành tích */}
+                <h2 className="mt-5 font-display text-3xl sm:text-4xl lg:text-4xl.5 font-extrabold tracking-tight text-bloom-green-deep leading-[1.2] max-w-md">
+                  {activeSlide.label}
+                </h2>
+
+                {/* Mô tả chi tiết lấy từ PDF */}
+                <p className="mt-5 text-sm sm:text-base font-light text-bloom-green-deep/75 leading-relaxed max-w-md min-h-[80px]">
+                  {activeSlide.description}
+                </p>
+              </div>
+
+              {/* Nút hành động */}
+              <div className="mt-8">
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center px-8 py-3.5 bg-bloom-dark text-white text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-bloom-green-mid transition-all duration-300 shadow-md shadow-bloom-green-deep/15"
+                >
+                  Đồng hành ngay
+                </a>
+              </div>
+            </MotionWrapper>
+          </div>
+
+          {/* Cột phải: Hình ảnh mẫu dạng NẰM NGANG và to hơn hẳn nhờ CSS Grid 8/12 */}
+          <div className="col-span-12 md:col-span-7 lg:col-span-8 relative z-20 mr-2 md:mr-0">
+            <MotionWrapper delay={0.2}>
+              {/* Sử dụng CSS Grid để 2 hình tự động co giãn to nhất có thể và tránh lỗi ép co lề chữ */}
+              {/* Bổ sung px-3 sm:px-5 để tạo khoảng đệm an toàn 2 bên rìa giúp card khi active scale và ring không bị cắt viền */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 py-4 px-3 sm:px-5 w-full">
+                {SLIDES.map((slide, index) => {
+                  const isActive = activeIndex === index
+                  return (
+                    <div
+                      key={slide.id}
+                      onClick={() => setActiveIndex(index)}
+                      className={`relative aspect-[16/10] w-full overflow-hidden rounded-[2.2rem] bg-white/40 border cursor-pointer transition-all duration-500 ease-out shadow-lg 
+                        ${isActive
+                          ? 'ring-4 ring-bloom-green-mid ring-offset-2 scale-[1.02] opacity-100 z-10 border-bloom-green-mid/20 shadow-bloom-green-deep/20'
+                          : 'scale-95 opacity-40 hover:opacity-75 border-white/30 hover:scale-[97%]'
+                        }
+                      `}
+                    >
+                      {/* Hình ảnh mẫu ngang chất lượng cao */}
+                      <Image
+                        src={slide.image}
+                        alt={slide.label}
+                        fill
+                        className="object-cover transition-transform duration-700 hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, 500px"
+                      />
+
+                      {/* Lớp phủ mờ che phủ nhẹ trên ảnh */}
+                      <div className={`absolute inset-0 bg-gradient-to-t from-bloom-dark/60 via-bloom-dark/10 to-transparent transition-opacity duration-300 
+                        ${isActive ? 'opacity-80' : 'opacity-40'}
+                      `} />
+
+                      {/* Badge nhỏ ở góc ảnh để báo trạng thái đang active */}
+                      {isActive && (
+                        <div className="absolute top-4 right-4 bg-bloom-green-deep/80 text-bloom-accent-mint px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-sm shadow-sm border border-bloom-accent-mint/30 animate-fade-in-overlay">
+                          Đang xem
+                        </div>
+                      )}
+
+                      {/* Tên ngắn góc dưới card ảnh */}
+                      <div className="absolute bottom-5 left-5 right-5 text-white">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-bloom-accent-mint">
+                          {slide.value}
                         </p>
+                        <h4 className="font-display text-sm sm:text-base font-bold truncate mt-0.5">
+                          {slide.label}
+                        </h4>
                       </div>
                     </div>
-                  </GlassCard>
-                </MotionWrapper>
-              )
-            })}
+                  )
+                })}
+              </div>
+            </MotionWrapper>
           </div>
+
         </div>
       </div>
     </SectionShell>
