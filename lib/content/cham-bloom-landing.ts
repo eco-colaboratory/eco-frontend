@@ -48,6 +48,7 @@ export interface ChamBloomContent {
   }
   tiers: { name: string; slug: string; teaser: string; highlight: TierHighlight }[]
   fundUsage: { title: string; bullets: string[] }
+  sponsorshipCategories: { title: string; contribution: string; description: string }[]
   valueProp: {
     label: string
     title: string
@@ -91,13 +92,13 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
     label: 'Về dự án',
     title: 'CHẠM Flora là gì?',
     intro:
-      'Không chỉ là một dự án môi trường đơn thuần, CHẠM Flora là một startup công nghệ xanh được game hóa, biến tương tác số thành giá trị bền vững ngoài đời thật.',
+      'CHẠM Flora là phiên bản phát triển mới từ tinh thần E.C.O/C.H.A.M, được xây dựng theo hướng một game chăm sóc vườn hoa ảo dành cho học sinh – sinh viên.',
     cards: [
       {
         icon: 'gamepad',
         title: 'Nuôi dưỡng vườn ảo',
         description:
-          'Chăm sóc và phát triển vườn hoa số của bạn thông qua các hoạt động tập trung Focus Mode và minigame thú vị.',
+          'Chăm sóc và phát triển vườn hoa số của bạn thông qua các hoạt động trong game như tưới nước, chăm hoa, hoàn thành nhiệm vụ.',
       },
       {
         icon: 'sparkles',
@@ -121,13 +122,13 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
   },
   vision: {
     title: 'Tầm nhìn',
-    body: 'Trở thành ứng dụng hàng đầu trong việc game hóa phong cách sống xanh cho Gen Z Việt Nam, kết nối hàng triệu hành động số nhỏ bé để tạo dựng một hệ sinh thái vườn thực ngoài đời, đồng hành lâu dài cùng các thương hiệu xanh.',
+    body: 'Hướng đến trở thành nền tảng game hóa hành động xanh cho Gen Z, kết nối những tương tác trong thế giới số với các giá trị tích cực ngoài đời thật thông qua mô hình “vườn hoa ảo – vườn hoa thật”.',
     imageSrc: '/assets/landing/vision.jpg',
     imageAlt: 'Vườn hoa phát sáng huyền ảo — tầm nhìn CHẠM Flora',
   },
   mission: {
     title: 'Sứ mệnh',
-    body: 'Giúp Gen Z hình thành thói quen tích cực và thấu hiểu lối sống bền vững một cách tự nhiên thông qua gamification mượt mà, đồng thời trao quyền để người trẻ trực tiếp cùng doanh nghiệp bảo vệ môi trường.',
+    body: 'giúp Gen Z xây dựng lối sống xanh và thói quen tích cực một cách nhẹ nhàng, gần gũi thông qua trải nghiệm game hóa, nơi mỗi hành động nhỏ đều góp phần tạo nên giá trị thật cho cộng đồng và tương lai.',
     imageSrc: '/assets/landing/mission.jpg',
     imageAlt: 'Mầm cây nhỏ lớn dần dưới nắng — sứ mệnh CHẠM Flora',
   },
@@ -138,7 +139,7 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
   },
   achievements: {
     label: 'Thành tích nổi bật',
-    title: 'Được bảo chứng uy tín',
+    title: 'Nền tảng uy tín cho giai đoạn phát triển tiếp theo:',
     items: [
       {
         title: 'Top 5 Đại sứ Gen G 2025',
@@ -152,32 +153,32 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
       },
     ],
   },
-  roadmap: {
-    label: 'Lộ trình phát triển',
-    title: 'Hành trình launching 2026',
-    items: [
-      {
-        month: 'Tháng 6',
-        title: 'Beta Test',
-        description: 'Ra mắt phiên bản thử nghiệm đầu tiên của game, khảo sát phản hồi từ nhóm người dùng Gen Z nòng cốt để tối ưu hóa trải nghiệm.',
-      },
-      {
-        month: 'Tháng 7',
-        title: 'Community Building',
-        description: 'Xây dựng cộng đồng xanh năng động, triển khai các minigame và thử thách vệ tinh nhằm thu hút sự quan tâm trước sự kiện launching chính thức.',
-      },
-      {
-        month: 'Tháng 8',
-        title: 'Launching Campaign',
-        description: 'Chính thức khởi động chiến dịch quy mô lớn, ra mắt phiên bản game hoàn chỉnh và quảng bá rộng rãi tới học sinh - sinh viên toàn thành phố.',
-      },
-      {
-        month: 'Tháng 9',
-        title: 'Sponsor Activities & Recap',
-        description: 'Hiện thực hóa vườn hoa thật từ tích lũy của người chơi, bàn giao các hạng mục tài trợ, đo lường chỉ số truyền thông và phát hành Media Recap.',
-      },
-    ],
-  },
+roadmap: {
+  label: 'Lộ trình phát triển',
+  title: 'Hành trình triển khai 2026',
+  items: [
+    {
+      month: 'Tháng 6',
+      title: 'Thử nghiệm phiên bản đầu',
+      description: 'Ra mắt phiên bản thử nghiệm đầu tiên của game, khảo sát phản hồi từ nhóm người dùng Gen Z nòng cốt để tối ưu trải nghiệm.',
+    },
+    {
+      month: 'Tháng 7',
+      title: 'Xây dựng cộng đồng',
+      description: 'Phát triển cộng đồng sống xanh năng động, triển khai các minigame và thử thách vệ tinh nhằm thu hút sự quan tâm trước giai đoạn ra mắt chính thức.',
+    },
+    {
+      month: 'Tháng 8',
+      title: 'Khởi động chiến dịch',
+      description: 'Chính thức triển khai chiến dịch quy mô lớn, ra mắt phiên bản hoàn chỉnh và quảng bá rộng rãi đến học sinh – sinh viên toàn thành phố.',
+    },
+    {
+      month: 'Tháng 9',
+      title: 'Hoạt động đồng hành & tổng kết',
+      description: 'Hiện thực hóa vườn hoa thật từ thành quả tích lũy của người chơi, triển khai các quyền lợi tài trợ, đo lường hiệu quả truyền thông và phát hành báo cáo tổng kết.',
+    },
+  ],
+},
   tiers: [
     { name: 'Đồng', slug: 'dong', teaser: '2.000.000 VNĐ', highlight: 'base' },
     { name: 'Bạc', slug: 'bac', teaser: '5.000.000 VNĐ', highlight: 'base' },
@@ -187,13 +188,57 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
   fundUsage: {
     title: 'Phân bổ ngân sách',
     bullets: [
-      'Phát triển hoàn thiện cơ chế gamification và giao diện game',
+      'Phát triển hoàn thiện cơ chế và giao diện game',
       'Thiết kế đồ họa, hình ảnh hoa, vườn và nhân vật',
       'Chuẩn bị cơ sở vật chất, đất trồng và hạt giống cho vườn hoa thật',
       'Chiến dịch truyền thông số: bài đăng fanpage, video TikTok, TVC launching',
       'Tổ chức sự kiện ra mắt và vận hành cộng đồng người dùng',
     ],
   },
+  sponsorshipCategories: [
+    {
+      title: 'Đơn vị hợp tác',
+      contribution: 'Theo thỏa thuận',
+      description:
+        'Là các đơn vị cùng CHẠM Flora phối hợp triển khai nội dung, hoạt động, chuyên môn, địa điểm, nhân sự hoặc các nguồn lực khác để phát triển dự án.',
+    },
+    {
+      title: 'Đơn vị đồng hành',
+      contribution: 'Theo thỏa thuận',
+      description:
+        'Là các đơn vị đồng hành cùng dự án ở mức cơ bản, hỗ trợ CHẠM Flora trong quá trình phát triển game, truyền thông hoặc lan tỏa tinh thần sống xanh đến Gen Z.',
+    },
+    {
+      title: 'Đơn vị bảo trợ truyền thông',
+      contribution: 'Hỗ trợ truyền thông',
+      description:
+        'Hỗ trợ lan tỏa thông tin dự án thông qua bài đăng, chia sẻ, truyền thông cộng đồng hoặc kết nối người dùng đến với CHẠM Flora.',
+    },
+    {
+      title: 'Nhà tài trợ Đồng',
+      contribution: '2.000.000 VNĐ',
+      description:
+        'Gói tài trợ khởi đầu, giúp dự án có thêm nguồn lực để sản xuất nội dung truyền thông, hoàn thiện một phần visual/game asset và duy trì hoạt động truyền thông trong giai đoạn launching.',
+    },
+    {
+      title: 'Nhà tài trợ Bạc',
+      contribution: '5.000.000 VNĐ',
+      description:
+        'Gói tài trợ hỗ trợ dự án trong việc phát triển nội dung truyền thông, beta test, sản xuất video ngắn, ấn phẩm visual và các hoạt động tương tác cộng đồng.',
+    },
+    {
+      title: 'Nhà tài trợ Vàng',
+      contribution: '10.000.000 VNĐ',
+      description:
+        'Gói tài trợ quan trọng, đồng hành cùng CHẠM Flora trong giai đoạn launching, hỗ trợ phát triển sản phẩm game, truyền thông, beta test và chuẩn bị cho hành trình kết nối vườn hoa ảo – vườn hoa thật.',
+    },
+    {
+      title: 'Nhà tài trợ Kim Cương',
+      contribution: '20.000.000 VNĐ',
+      description:
+        'Gói tài trợ cao nhất, dành cho đơn vị muốn trở thành đối tác nổi bật của CHẠM Flora trong hành trình phát triển game, truyền thông launch và đồng hành cùng định hướng biến vườn hoa ảo trong game thành vườn hoa thật ngoài đời.',
+    },
+  ],
   valueProp: {
     label: 'Giá trị đồng hành',
     title: 'Vì sao nhà tài trợ nên quan tâm?',

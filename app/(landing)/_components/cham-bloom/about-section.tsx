@@ -112,7 +112,7 @@ export function AboutSection() {
               {/* Card Sứ mệnh */}
               <MotionWrapper
                 delay={0.2}
-                className="relative overflow-hidden rounded-[2rem] border border-white/40 bg-white/30 p-5 shadow-md backdrop-blur-md transition-all duration-500 hover:shadow-lg sm:translate-y-2"
+                className="relative overflow-hidden rounded-[2rem] border border-white/40 bg-white/30 p-4 shadow-md backdrop-blur-md transition-all duration-500 hover:shadow-lg sm:translate-y-2"
               >
                 <div className="flex items-center gap-2.5 mb-2">
                   <h3 className="font-display text-sm font-extrabold uppercase tracking-wider text-bloom-green-deep border-b border-bloom-green-mid/20 pb-0.5">

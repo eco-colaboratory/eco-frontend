@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { MotionWrapper } from '../layout/motion-wrapper'
 import { SectionShell } from '../layout/section-shell'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { BloomAmbientInline } from './core-idea-section'
+import { SectionHeader } from '../layout'
 
 const SLIDES = [
   {
@@ -38,6 +40,16 @@ export function AchievementsSection() {
 
   return (
     <SectionShell id="achievements" bg="cream" ambient>
+      <BloomAmbientInline />
+
+      <SectionHeader
+        label="Thành quả đã đạt được"
+        title={"Trước khi phát triển thành CHẠM Flora"}
+        accent={"Dự án E.C.O/C.H.A.M đã có một số cột mốc nổi bật"}
+        align="center"
+        className="!mb-4 !mt-0"
+      />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2 md:py-4">
         <div className="grid grid-cols-12 gap-8 lg:gap-12 items-center">
 

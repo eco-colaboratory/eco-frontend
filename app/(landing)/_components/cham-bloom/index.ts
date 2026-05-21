@@ -16,7 +16,6 @@ export {
   SectionDivider,
   SectionWave,
   MotionWrapper,
-  PageJsonLd,
 } from '../layout'
 
 // Page sections

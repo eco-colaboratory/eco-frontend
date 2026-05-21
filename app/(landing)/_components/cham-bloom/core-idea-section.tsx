@@ -105,7 +105,7 @@ export function CoreIdeaSection() {
   )
 }
 
-function BloomAmbientInline() {
+export function BloomAmbientInline() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl" aria-hidden>
       <div className="absolute -left-16 top-0 h-48 w-48 rounded-full bg-bloom-green-mid/10 blur-3xl" />

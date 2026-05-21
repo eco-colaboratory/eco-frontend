@@ -1,3 +1,7 @@
+"use client"
+
+import { useState } from 'react'
+import { m } from 'framer-motion'
 import { CHAM_BLOOM_CONTENT, type TierHighlight } from '@/lib/content/cham-bloom-landing'
 import { GlassCard } from '../layout/glass-card'
 import { MotionWrapper } from '../layout/motion-wrapper'
@@ -20,7 +24,8 @@ function tierStyles(highlight: TierHighlight) {
 }
 
 export function SponsorshipSection() {
-  const { tiers, fundUsage } = CHAM_BLOOM_CONTENT
+  const { tiers, fundUsage, sponsorshipCategories } = CHAM_BLOOM_CONTENT
+  const [isCategoryTableOpen, setIsCategoryTableOpen] = useState(false)
 
   return (
     <SectionShell id="sponsorship" bg="light-to-cream">
@@ -86,13 +91,71 @@ export function SponsorshipSection() {
                       variant={tier.highlight === 'gold' ? 'primary' : 'outline'}
                       className="w-full text-center py-2 text-xs font-semibold font-display"
                     >
-                      {tier.highlight === 'gold' ? 'Hợp tác ngay' : 'Đăng ký đồng hành'}
+                      {'Đăng ký đồng hành'}
                     </BloomButton>
                   </div>
                 </GlassCard>
               </MotionWrapper>
             )
           })}
+        </div>
+
+        {/* Bảng hạng mục tài trợ */}
+        <div className="mt-10">
+          <MotionWrapper>
+            <GlassCard interactive={false} className="overflow-hidden rounded-3xl border border-bloom-green-mid/20 bg-white/60 p-6 shadow-sm">
+              <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <span className="bloom-tag-chip mb-3 font-display">Bảng hạng mục</span>
+                  <h3 className="font-display text-xl font-semibold text-bloom-green-deep">
+                    Các hạng mục đồng hành và mức đề xuất
+                  </h3>
+                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+                    Từ hợp tác chuyên môn đến gói tài trợ Kim Cương, biểu đồ hạng mục này thể hiện rõ mức đề xuất và bản chất quyền lợi đồng hành.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsCategoryTableOpen((open) => !open)}
+                  className={isCategoryTableOpen ? 'self-start whitespace-nowrap rounded-full border border-white/50 bg-white/40 px-5 py-2 text-xs font-semibold text-bloom-green-deep backdrop-blur-md transition duration-300 hover:bg-white/60 active:scale-[0.98]' : 'self-start whitespace-nowrap rounded-full bg-bloom-green-deep px-5 py-2 text-xs font-semibold text-white shadow-md shadow-bloom-green-deep/20 transition duration-300 hover:bg-bloom-green-deep/90 active:scale-[0.98]'}
+                >
+                  {isCategoryTableOpen ? 'Thu gọn chi tiết' : 'Xem chi tiết'}
+                </button>
+              </div>
+
+              <m.div
+                initial={false}
+                animate={isCategoryTableOpen ? 'open' : 'closed'}
+                variants={{
+                  open: { height: 'auto', opacity: 1 },
+                  closed: { height: 0, opacity: 0 },
+                }}
+                transition={{ duration: 0.32, ease: 'easeOut' }}
+                className="overflow-hidden"
+              >
+                <div className="overflow-x-auto">
+                  <table className="min-w-180 w-full text-sm">
+                    <thead className="border-b border-bloom-green-mid/20 bg-bloom-green-mist/90 text-left">
+                      <tr>
+                        <th className="px-4 py-3 font-semibold text-bloom-green-deep">Hạng mục</th>
+                        <th className="px-4 py-3 font-semibold text-bloom-green-deep">Mức đóng góp đề xuất</th>
+                        <th className="px-4 py-3 font-semibold text-bloom-green-deep">Thông tin</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-bloom-green-mid/10">
+                      {sponsorshipCategories.map((item, index) => (
+                        <tr key={item.title} className={index % 2 === 0 ? 'bg-white' : 'bg-bloom-green-mist/20'}>
+                          <td className="px-4 py-4 font-medium text-gray-800">{item.title}</td>
+                          <td className="px-4 py-4 text-gray-600">{item.contribution}</td>
+                          <td className="px-4 py-4 text-gray-600">{item.description}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </m.div>
+            </GlassCard>
+          </MotionWrapper>
         </div>
 
         {/* Phân bổ ngân sách */}

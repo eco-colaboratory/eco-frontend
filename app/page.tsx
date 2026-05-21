@@ -8,16 +8,16 @@ import {
   CoreIdeaSection,
   HeroSection,
   Navbar,
-  PageJsonLd,
   SponsorshipSection,
   ValuePropSection,
   RoadmapSection,
 } from '@/app/(landing)/_components/cham-bloom'
+import { PageJsonLd } from '@/app/(landing)/_components/layout/page-json-ld'
 
 export const metadata = buildPageMetadata({
-  title: 'CHẠM Flora — Biến vườn hoa ảo thành vườn hoa thật',
+  title: 'CHẠM Flora | Landing page tài trợ chiến dịch xanh cho Gen Z',
   description:
-    'Trang tài trợ chính thức CHẠM Flora — game hóa hành động xanh cho Gen Z. Giai đoạn launching tháng 6–9/2026.',
+    'CHẠM Flora là dự án game hóa hành động xanh dành cho Gen Z, kết nối thương hiệu và cộng đồng qua vườn hoa ảo, điểm xanh và hiện thực hóa sân vườn thật. Trang tài trợ chính thức cho giai đoạn ra mắt 2026.',
   path: '/',
 })
 
@@ -29,7 +29,7 @@ export default function HomePage() {
         <Navbar />
         <HeroSection />
         <AboutSection />
-        <CoreIdeaSection />
+        {/* <CoreIdeaSection /> */}
         <AchievementsSection />
         <RoadmapSection />
         <SponsorshipSection />
