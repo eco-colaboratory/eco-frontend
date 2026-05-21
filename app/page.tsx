@@ -11,13 +11,13 @@ import {
   PageJsonLd,
   SponsorshipSection,
   ValuePropSection,
-  VisionMissionSection,
+  RoadmapSection,
 } from '@/app/(landing)/_components/cham-bloom'
 
 export const metadata = buildPageMetadata({
-  title: 'CHẠM Bloom — Biến vườn hoa ảo thành vườn hoa thật',
+  title: 'CHẠM Flora — Biến vườn hoa ảo thành vườn hoa thật',
   description:
-    'Trang tài trợ chính thức CHẠM Bloom — game hóa hành động xanh cho Gen Z. Giai đoạn launching tháng 6–9/2026.',
+    'Trang tài trợ chính thức CHẠM Flora — game hóa hành động xanh cho Gen Z. Giai đoạn launching tháng 6–9/2026.',
   path: '/',
 })
 
@@ -29,9 +29,9 @@ export default function HomePage() {
         <Navbar />
         <HeroSection />
         <AboutSection />
-        <VisionMissionSection />
         <CoreIdeaSection />
         <AchievementsSection />
+        <RoadmapSection />
         <SponsorshipSection />
         <ValuePropSection />
         <BenefitsSection />

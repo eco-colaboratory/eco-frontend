@@ -37,7 +37,7 @@ export function SectionShell({
   return (
     <section
       id={id}
-      className={cn('relative py-24 md:py-32', BG_CLASSES[bg], className)}
+      className={cn('relative py-14 md:py-20', BG_CLASSES[bg], className)}
     >
       {showAmbient && ambientTone ? <BloomAmbient tone={ambientTone} /> : null}
       <div className="relative z-10">{children}</div>
