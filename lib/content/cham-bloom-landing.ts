@@ -86,13 +86,13 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
     primaryCta: 'Trở thành nhà tài trợ',
     secondaryCta: 'Xem quyền lợi đồng hành',
     partnersPill: 'Hành trình phát triển thương hiệu CHẠM Flora',
-    partners: ['Panasonic Gen G', 'FIP Startup', 'Gen Z', 'E.C.O'],
+    partners: ['Panasonic Gen G', 'FIP Startup', 'Gen Z', 'CHẠM'],
   },
   about: {
     label: 'Về dự án',
     title: 'CHẠM Flora là gì?',
     intro:
-      'CHẠM Flora là phiên bản phát triển mới từ tinh thần E.C.O/C.H.A.M, được xây dựng theo hướng một game chăm sóc vườn hoa ảo dành cho học sinh – sinh viên.',
+      'CHẠM Flora là phiên bản phát triển mới từ tinh thần CHẠM, được xây dựng theo hướng một game chăm sóc vườn hoa ảo dành cho học sinh – sinh viên.',
     cards: [
       {
         icon: 'gamepad',
@@ -310,7 +310,7 @@ roadmap: {
     cta: 'Liên hệ ngay',
     email: 'thaolinhworkspace@gmail.com',
     facebookUrl: 'https://www.facebook.com/',
-    facebookLabel: 'E.C.O - Green Tech Gamification',
+    facebookLabel: 'CHẠM - Green Tech Gamification',
     tiktokUrl: 'https://www.tiktok.com/',
     tiktokLabel: 'E.C.O Startup',
     representative: 'Nguyễn Thị Thảo Linh · Leader Project',
