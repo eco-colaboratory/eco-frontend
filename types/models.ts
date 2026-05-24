@@ -2,7 +2,7 @@
 export interface User {
   id: string;
   email: string;
-  userNname: string; // tên trường tùy backend
+  username: string;
   role: string[]; // QUAN TRỌNG: role là ARRAY
   avatarUrl?: string;
 }

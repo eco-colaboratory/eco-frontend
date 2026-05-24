@@ -9,7 +9,7 @@ import {
   selectUser,
   setupAutoRefresh,
 } from "@/lib/redux/slices/authSlice";
-import { ROLE_ADMIN, ROLE_INSTRUCTOR, ROLE_STUDENT } from "@/lib/types/roles";
+import { ROLE_ADMIN } from "@/lib/types/roles";
 
 export function useAuth() {
   const dispatch = useAppDispatch();
@@ -19,10 +19,8 @@ export function useAuth() {
 
   const roles = user?.role ?? [];
   const isAdmin = roles.includes(ROLE_ADMIN);
-  const isInstructor = roles.includes(ROLE_INSTRUCTOR);
-  const isStudent = roles.includes(ROLE_STUDENT);
 
-  const login = async (credentials: { email: string; password: string }) => {
+  const login = async (credentials: { account: string; password: string }) => {
     try {
       const result = await dispatch(loginAsync(credentials)).unwrap();
 
@@ -30,8 +28,8 @@ export function useAuth() {
 
       toast.success("Đăng nhập thành công");
 
-      if (roles.includes(ROLE_ADMIN)) router.push("/admin/dashboard");
-      else if (roles.includes(ROLE_INSTRUCTOR)) router.push("/instructor/dashboard");
+      const resultRoles = result.user?.role ?? [];
+      if (resultRoles.includes(ROLE_ADMIN)) router.push("/admin/dashboard");
       else router.push("/courses");
 
       return result;
@@ -42,21 +40,15 @@ export function useAuth() {
   };
 
   const logout = async () => {
-    try {
-      await dispatch(logoutAsync()).unwrap();
-      toast.success("Đăng xuất thành công");
-      router.push("/login");
-    } catch {
-      toast.error("Có lỗi xảy ra khi đăng xuất");
-    }
+    await dispatch(logoutAsync()).unwrap();
+    toast.success("Đăng xuất thành công");
+    router.push("/login");
   };
 
   return {
     ...auth,
     user,
     isAdmin,
-    isInstructor,
-    isStudent,
     login,
     logout,
   };

@@ -77,7 +77,7 @@ class ApiService {
             if (!refreshToken) throw new Error("No refresh token");
 
             const response = await axios.post(
-              `${process.env.NEXT_PUBLIC_API_URL}api/v1/auth/refresh-token`,
+              `${process.env.NEXT_PUBLIC_API_URL}api/auth/refresh-token`,
               { refreshToken },
               { headers: { "Content-Type": "application/json" } }
             );
@@ -88,9 +88,10 @@ class ApiService {
               const { setTokenWithRefresh } = await import("@/lib/redux/slices/authSlice");
               const { setCookie } = await import("cookies-next");
               const { getAuthCookieConfig } = await import("@/utils/cookieConfig");
-
+              const cookieCfg = getAuthCookieConfig();
               store.dispatch(setTokenWithRefresh({ accessToken, refreshToken: newRefreshToken }));
-              setCookie("authToken", accessToken, getAuthCookieConfig());
+              setCookie("authToken", accessToken, cookieCfg);
+              setCookie("refreshToken", newRefreshToken, cookieCfg);
               this.setAuthToken(accessToken);
 
               this.processQueue(null, accessToken);
@@ -106,6 +107,7 @@ class ApiService {
             this.processQueue(refreshError, null);
 
             deleteCookie("authToken", { path: "/" });
+            deleteCookie("refreshToken", { path: "/" });
             store.dispatch(logout());
 
             if (typeof window !== "undefined") {

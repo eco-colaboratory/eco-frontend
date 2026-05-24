@@ -3,16 +3,17 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { setCookie, deleteCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
 import apiService from "@/lib/api/core";
-import { fetchAuth } from "@/lib/api/services/fetchAuth";
+import { fetchAuth, type RegisterRequest } from "@/lib/api/services/fetchAuth";
 import { getAuthCookieConfig } from "@/utils/cookieConfig";
+import { normalizeRoles } from "@/lib/types/roles";
 import type { RootState, AppDispatch } from "../store";
 
-// Types
 export interface User {
   id: string;
   email: string;
-  userNname: string; // đổi thành trường tên thực từ JWT payload của backend
-  role: string[]; // LUÔN là array
+  username: string;
+  name?: string;
+  role: string[];
 }
 
 export interface DecodedToken extends User {
@@ -24,13 +25,12 @@ export interface DecodedToken extends User {
 interface AuthState {
   user: User | null;
   token: string | null;
-  refreshToken: string | null; // lưu refresh token để tự động renew
+  refreshToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
 }
 
-// Global timer cho auto-refresh
 let refreshTimer: NodeJS.Timeout | null = null;
 
 const initialState: AuthState = {
@@ -42,14 +42,31 @@ const initialState: AuthState = {
   error: null,
 };
 
-// Decode JWT token an toàn
+const REFRESH_TOKEN_COOKIE = "refreshToken";
+
+function mapJwtToUser(decoded: Record<string, unknown>): User | null {
+  const id = decoded.id as string | undefined;
+  if (!id) return null;
+
+  const role = normalizeRoles(decoded.role as string | string[] | undefined);
+
+  return {
+    id,
+    email: (decoded.email as string) ?? "",
+    username:
+      (decoded.username as string) ??
+      (decoded.userNname as string) ??
+      (decoded.name as string) ??
+      "",
+    name: decoded.name as string | undefined,
+    role,
+  };
+}
+
 export const decodeToken = (token: string): User | null => {
   try {
-    const decoded: any = jwtDecode(token);
-    if (decoded.role && !Array.isArray(decoded.role)) {
-      decoded.role = [decoded.role];
-    }
-    return decoded as User;
+    const decoded = jwtDecode<Record<string, unknown>>(token);
+    return mapJwtToUser(decoded);
   } catch {
     return null;
   }
@@ -57,17 +74,31 @@ export const decodeToken = (token: string): User | null => {
 
 export const decodeTokenWithExpiry = (token: string): DecodedToken | null => {
   try {
-    const decoded: any = jwtDecode(token);
-    if (decoded.role && !Array.isArray(decoded.role)) {
-      decoded.role = [decoded.role];
-    }
-    return decoded as DecodedToken;
+    const decoded = jwtDecode<Record<string, unknown>>(token);
+    const user = mapJwtToUser(decoded);
+    if (!user) return null;
+    return {
+      ...user,
+      nbf: decoded.nbf as number | undefined,
+      exp: decoded.exp as number | undefined,
+      iat: decoded.iat as number | undefined,
+    };
   } catch {
     return null;
   }
 };
 
-// Lên lịch refresh token 2 phút trước khi hết hạn
+function persistAuthCookies(accessToken: string, refreshToken: string) {
+  const cookieConfig = getAuthCookieConfig();
+  setCookie("authToken", accessToken, cookieConfig);
+  setCookie(REFRESH_TOKEN_COOKIE, refreshToken, cookieConfig);
+}
+
+function clearAuthCookies() {
+  deleteCookie("authToken", { path: "/" });
+  deleteCookie(REFRESH_TOKEN_COOKIE, { path: "/" });
+}
+
 export const setupAutoRefresh = (token: string, dispatch: AppDispatch) => {
   if (refreshTimer) {
     clearTimeout(refreshTimer);
@@ -77,7 +108,7 @@ export const setupAutoRefresh = (token: string, dispatch: AppDispatch) => {
   const decoded = decodeTokenWithExpiry(token);
   if (!decoded?.exp) return;
 
-  const refreshTime = decoded.exp * 1000 - Date.now() - 2 * 60 * 1000; // 2 phút trước
+  const refreshTime = decoded.exp * 1000 - Date.now() - 2 * 60 * 1000;
 
   if (refreshTime <= 0) {
     dispatch(refreshTokenAsync());
@@ -94,21 +125,27 @@ export const clearAutoRefresh = () => {
   }
 };
 
-// Async Thunks
+type AuthSessionPayload = {
+  token: string;
+  refreshToken: string;
+  user: User | null;
+};
+
+function createAuthSession(accessToken: string, refreshToken: string): AuthSessionPayload {
+  persistAuthCookies(accessToken, refreshToken);
+  apiService.setAuthToken(accessToken);
+  return { token: accessToken, refreshToken, user: decodeToken(accessToken) };
+}
+
 export const loginAsync = createAsyncThunk(
   "auth/login",
-  async (credentials: { email: string; password: string }, { rejectWithValue }) => {
+  async (credentials: { account: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await fetchAuth.login(credentials);
 
       if (response.isSuccess && response.data.accessToken) {
         const { accessToken, refreshToken } = response.data;
-        const user = decodeToken(accessToken);
-
-        setCookie("authToken", accessToken, getAuthCookieConfig());
-        apiService.setAuthToken(accessToken);
-
-        return { token: accessToken, refreshToken, user };
+        return createAuthSession(accessToken, refreshToken);
       }
 
       return rejectWithValue(response.message || "Login failed");
@@ -118,16 +155,35 @@ export const loginAsync = createAsyncThunk(
   }
 );
 
-export const logoutAsync = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
-  try {
-    await apiService.post("/api/v1/auth/logout");
-    deleteCookie("authToken", { path: "/" });
-    apiService.setAuthToken(null);
-    clearAutoRefresh();
-    return true;
-  } catch (error: any) {
-    return rejectWithValue(error.message);
+export const registerAsync = createAsyncThunk(
+  "auth/register",
+  async (payload: RegisterRequest, { rejectWithValue }) => {
+    try {
+      const response = await fetchAuth.register(payload);
+
+      if (response.isSuccess && response.data.accessToken) {
+        const { accessToken, refreshToken } = response.data;
+        return createAuthSession(accessToken, refreshToken);
+      }
+
+      return rejectWithValue(response.message || "Đăng ký thất bại");
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Đăng ký thất bại");
+    }
   }
+);
+
+/** Client-only logout — no `/api/auth/logout` on backend. */
+export const logoutAsync = createAsyncThunk("auth/logout", async () => {
+  clearAuthCookies();
+  apiService.setAuthToken(null);
+  clearAutoRefresh();
+
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("logout"));
+  }
+
+  return true;
 });
 
 export const refreshTokenAsync = createAsyncThunk(
@@ -138,16 +194,13 @@ export const refreshTokenAsync = createAsyncThunk(
       const { refreshToken } = state.auth;
       if (!refreshToken) return rejectWithValue("No refresh token");
 
-      const response = await apiService.post<{
-        isSuccess: boolean;
-        data: { accessToken: string; refreshToken: string };
-      }>("/api/v1/auth/refresh-token", { refreshToken });
+      const response = await fetchAuth.refreshToken(refreshToken);
 
-      if (response.data.isSuccess && response.data.data.accessToken) {
-        const { accessToken, refreshToken: newRefreshToken } = response.data.data;
+      if (response.isSuccess && response.data.accessToken) {
+        const { accessToken, refreshToken: newRefreshToken } = response.data;
         const user = decodeToken(accessToken);
 
-        setCookie("authToken", accessToken, getAuthCookieConfig());
+        persistAuthCookies(accessToken, newRefreshToken);
         apiService.setAuthToken(accessToken);
 
         setupAutoRefresh(accessToken, dispatch as AppDispatch);
@@ -155,14 +208,13 @@ export const refreshTokenAsync = createAsyncThunk(
         return { token: accessToken, refreshToken: newRefreshToken, user };
       }
 
-      return rejectWithValue("Refresh failed");
+      return rejectWithValue(response.message || "Refresh failed");
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Slice
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -186,7 +238,7 @@ const authSlice = createSlice({
       state.refreshToken = null;
       state.isAuthenticated = false;
       state.error = null;
-      deleteCookie("authToken", { path: "/" });
+      clearAuthCookies();
       apiService.setAuthToken(null);
       clearAutoRefresh();
     },
@@ -205,10 +257,28 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken ?? null;
         state.user = action.payload.user;
-        state.isAuthenticated = true;
+        state.isAuthenticated = !!action.payload.user;
         state.error = null;
       })
       .addCase(loginAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
+
+    builder
+      .addCase(registerAsync.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(registerAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.token = action.payload.token;
+        state.refreshToken = action.payload.refreshToken ?? null;
+        state.user = action.payload.user;
+        state.isAuthenticated = !!action.payload.user;
+        state.error = null;
+      })
+      .addCase(registerAsync.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });
@@ -227,6 +297,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken;
         state.user = action.payload.user;
+        state.isAuthenticated = !!action.payload.user;
       })
       .addCase(refreshTokenAsync.rejected, (state) => {
         state.user = null;
@@ -239,7 +310,6 @@ const authSlice = createSlice({
 
 export const { setTokenWithRefresh, logout, clearError } = authSlice.actions;
 
-// Selectors
 export const selectAuth = (state: RootState) => state.auth;
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
