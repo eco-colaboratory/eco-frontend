@@ -27,6 +27,7 @@ const getPrimaryRole = (roles: string[]) => {
 export function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
   const token = request.cookies.get("authToken")?.value;
+  const refreshToken = request.cookies.get("refreshToken")?.value;
   const userRoles = getUserRoles(token);
   const primaryRole = getPrimaryRole(userRoles);
 
@@ -47,9 +48,15 @@ export function middleware(request: NextRequest) {
   const isPublicRoute = publicRoutes.some((r) => pathname === r || pathname.startsWith(`${r}/`));
   const isAuthRoute = authRoutes.some((r) => pathname === r || pathname.startsWith(`${r}/`));
 
-  // Chưa đăng nhập
+  // Chưa đăng nhập hoặc token đã hết hạn
   if (!token || userRoles.length === 0) {
     if (isPublicRoute) return NextResponse.next();
+
+    // If a refreshToken cookie exists the client can silently refresh — let
+    // the request through so useAuthHydration + the 401 interceptor can
+    // obtain a new access token instead of immediately redirecting to /login.
+    if (refreshToken) return NextResponse.next();
+
     const res = NextResponse.redirect(new URL("/login", request.url));
     if (token) res.cookies.delete("authToken");
     return res;
@@ -62,7 +69,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/courses", request.url));
   }
 
-  const isAdminRoute = pathname.startsWith("/admin/");
+  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
   const isInstructorRoute = pathname.startsWith("/instructor/");
   const isCoursesRoute = pathname.startsWith("/courses");
   const isMyBeyondRoute = pathname.startsWith("/mybeyond");

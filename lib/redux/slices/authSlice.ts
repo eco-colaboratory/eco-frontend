@@ -6,6 +6,9 @@ import apiService from "@/lib/api/core";
 import { fetchAuth, type RegisterRequest } from "@/lib/api/services/fetchAuth";
 import { getAuthCookieConfig } from "@/utils/cookieConfig";
 import { normalizeRoles } from "@/lib/types/roles";
+import { getRefreshTokenFromCookie } from "@/lib/auth/cookie-tokens";
+import { applyRefreshedSession } from "@/lib/auth/persist-session";
+import { refreshAccessToken } from "@/lib/auth/refresh-session";
 import type { RootState, AppDispatch } from "../store";
 
 export interface User {
@@ -191,24 +194,20 @@ export const refreshTokenAsync = createAsyncThunk(
   async (_, { rejectWithValue, dispatch, getState }) => {
     try {
       const state = getState() as RootState;
-      const { refreshToken } = state.auth;
+      // Fall back to cookie when Redux state is empty (e.g. before hydration).
+      const refreshToken = state.auth.refreshToken ?? getRefreshTokenFromCookie();
       if (!refreshToken) return rejectWithValue("No refresh token");
 
-      const response = await fetchAuth.refreshToken(refreshToken);
+      const tokens = await refreshAccessToken(refreshToken);
+      await applyRefreshedSession(tokens);
+      setupAutoRefresh(tokens.accessToken, dispatch as AppDispatch);
 
-      if (response.isSuccess && response.data.accessToken) {
-        const { accessToken, refreshToken: newRefreshToken } = response.data;
-        const user = decodeToken(accessToken);
-
-        persistAuthCookies(accessToken, newRefreshToken);
-        apiService.setAuthToken(accessToken);
-
-        setupAutoRefresh(accessToken, dispatch as AppDispatch);
-
-        return { token: accessToken, refreshToken: newRefreshToken, user };
-      }
-
-      return rejectWithValue(response.message || "Refresh failed");
+      const user = decodeToken(tokens.accessToken);
+      return {
+        token: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+        user,
+      };
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -293,17 +292,25 @@ const authSlice = createSlice({
     });
 
     builder
+      .addCase(refreshTokenAsync.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(refreshTokenAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken;
         state.user = action.payload.user;
         state.isAuthenticated = !!action.payload.user;
       })
       .addCase(refreshTokenAsync.rejected, (state) => {
+        state.isLoading = false;
         state.user = null;
         state.token = null;
         state.refreshToken = null;
         state.isAuthenticated = false;
+        clearAuthCookies();
+        apiService.setAuthToken(null);
+        clearAutoRefresh();
       });
   },
 });
