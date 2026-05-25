@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Be_Vietnam_Pro } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/lib/providers'
+import { NavigationProgress } from '@/components/navigation-progress'
 import { Toaster } from '@/components/ui/sonner'
 import { getSiteUrl, SITE } from '@/lib/seo/site'
 
@@ -50,6 +51,7 @@ export default function RootLayout({
         className={`${beVietnamPro.variable} ${inter.variable} font-sans antialiased`}
       >
         <Providers>
+          <NavigationProgress />
           {children}
           <Toaster theme="light" position="bottom-center" richColors closeButton />
         </Providers>

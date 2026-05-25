@@ -36,17 +36,9 @@ export function middleware(request: NextRequest) {
 
   const publicRoutes = [
     "/",
-    "/landing",
-    "/login",
-    "/register",
-    "/reset-password",
-    "/courses",
-    "/supscription",
   ];
-  const authRoutes = ["/login", "/register", "/reset-password"];
 
   const isPublicRoute = publicRoutes.some((r) => pathname === r || pathname.startsWith(`${r}/`));
-  const isAuthRoute = authRoutes.some((r) => pathname === r || pathname.startsWith(`${r}/`));
 
   // Chưa đăng nhập hoặc token đã hết hạn
   if (!token || userRoles.length === 0) {
@@ -54,21 +46,15 @@ export function middleware(request: NextRequest) {
 
     // If a refreshToken cookie exists the client can silently refresh — let
     // the request through so useAuthHydration + the 401 interceptor can
-    // obtain a new access token instead of immediately redirecting to /login.
+    // obtain a new access token instead of immediately redirecting home.
     if (refreshToken) return NextResponse.next();
 
-    const res = NextResponse.redirect(new URL("/login", request.url));
+    const res = NextResponse.redirect(new URL("/", request.url));
     if (token) res.cookies.delete("authToken");
     return res;
   }
 
   // Đang ở trang auth mà đã đăng nhập → redirect theo role
-  if (isAuthRoute) {
-    if (primaryRole === ROLE_ADMIN)
-      return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-    return NextResponse.redirect(new URL("/courses", request.url));
-  }
-
   const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
   const isInstructorRoute = pathname.startsWith("/instructor/");
   const isCoursesRoute = pathname.startsWith("/courses");
@@ -139,7 +125,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const res = NextResponse.redirect(new URL("/login", request.url));
+  const res = NextResponse.redirect(new URL("/", request.url));
   res.cookies.delete("authToken");
   return res;
 }

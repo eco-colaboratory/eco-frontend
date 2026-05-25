@@ -23,6 +23,32 @@ Controller gắn `[Authorize(Roles = "Admin,SuperAdmin")]` ở cấp class → m
 | Method | Route | Mô tả |
 |--------|-------|--------|
 | `GET` | `/api/user` | Danh sách player (phân trang) |
+params: isBanned, sortBy, sortDescending, page, pageSize
+response :
+{
+  "isSuccess": true,
+  "message": "string",
+  "data": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "email": "string",
+      "username": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "role": "string",
+      "currency": 0,
+      "level": 0,
+      "isBanned": true
+    }
+  ],
+  "metaData": 
+  {
+    "currentPage": 1,
+    "pageSize": 10,
+    "totalItems": 15,
+    "totalPages": 2
+  }
+}
 | `GET` | `/api/user/{userId}` | Chi tiết user theo ID |
 | `POST` | `/api/user` | Admin tạo user |
 | `PUT` | `/api/user/{userId}` | Admin cập nhật user |

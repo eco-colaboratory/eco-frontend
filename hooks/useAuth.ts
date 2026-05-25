@@ -42,7 +42,7 @@ export function useAuth() {
   const logout = async () => {
     await dispatch(logoutAsync()).unwrap();
     toast.success("Đăng xuất thành công");
-    router.push("/login");
+    router.push("/");
   };
 
   return {
