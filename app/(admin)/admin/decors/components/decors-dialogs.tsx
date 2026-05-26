@@ -7,7 +7,7 @@ import {
   useDeleteDecor,
 } from '@/hooks/useDecors';
 import { DecorFormDialog } from './decor-form-dialog';
-import { DecorDeleteDialog } from './decor-delete-dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useDecorsPage } from './decors-provider';
 import type { DecorFormValues } from './decor-schema';
 
@@ -68,12 +68,15 @@ export function DecorsDialogs() {
         onSubmit={formMode === 'create' ? handleCreate : handleUpdate}
         isPending={createMutation.isPending || updateMutation.isPending}
       />
-      <DecorDeleteDialog
+      <ConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        name={deleteTarget?.name ?? ''}
+        title="Xóa đồ trang trí"
+        description={`Bạn có chắc chắn muốn xóa đồ trang trí "${deleteTarget?.name ?? ''}"? Hành động này sẽ chuyển trạng thái đồ trang trí thành đã xóa (soft-delete).`}
+        confirmText="Xóa"
         onConfirm={() => void confirmDelete()}
         isPending={deleteMutation.isPending}
+        variant="danger"
       />
     </>
   );

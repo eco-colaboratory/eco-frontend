@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 
@@ -9,10 +9,16 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import { UserPen, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,6 +38,7 @@ import {
   type CreateUserFormValues,
   type UpdateUserFormValues,
 } from './user-schema';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type UserFormDialogProps = {
   open: boolean;
@@ -60,8 +67,10 @@ export function UserFormDialog({
   isPending,
 }: UserFormDialogProps) {
   const isCreate = mode === 'create';
+  const isMobile = useIsMobile();
+  
   const form = useForm<CreateUserFormValues>({
-    resolver: zodResolver(isCreate ? createUserSchema : updateUserSchema) as any,
+    resolver: zodResolver(isCreate ? createUserSchema : updateUserSchema) as Resolver<CreateUserFormValues>,
     defaultValues: {
       username: '',
       password: '',
@@ -109,9 +118,113 @@ export function UserFormDialog({
     }
   });
 
+  const formContent = (
+    <form onSubmit={handleSubmit} className="space-y-4 px-6 py-5">
+      <div className="space-y-2">
+        <Label htmlFor="username">Tên đăng nhập</Label>
+        <Input id="username" placeholder="Nhập tên đăng nhập..." {...form.register('username')} />
+        {form.formState.errors.username ? (
+          <p className="text-xs text-red-600">{form.formState.errors.username.message}</p>
+        ) : null}
+      </div>
+      {isCreate ? (
+        <div className="space-y-2">
+          <Label htmlFor="password">Mật khẩu</Label>
+          <Input id="password" type="password" placeholder="Nhập mật khẩu..." {...form.register('password')} />
+          {form.formState.errors.password ? (
+            <p className="text-xs text-red-600">{form.formState.errors.password.message}</p>
+          ) : null}
+        </div>
+      ) : null}
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input id="email" type="email" placeholder="Nhập địa chỉ email..." {...form.register('email')} />
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-2">
+          <Label htmlFor="firstName">Họ</Label>
+          <Input id="firstName" placeholder="Họ (ví dụ: Nguyễn)..." {...form.register('firstName')} />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="lastName">Tên</Label>
+          <Input id="lastName" placeholder="Tên (ví dụ: Văn A)..." {...form.register('lastName')} />
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-2">
+          <Label htmlFor="level">Cấp độ</Label>
+          <Input id="level" type="number" placeholder="Cấp độ (ví dụ: 1)..." {...form.register('level')} />
+          {form.formState.errors.level ? (
+            <p className="text-xs text-red-600">{form.formState.errors.level.message}</p>
+          ) : null}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="currency">Xu</Label>
+          <Input id="currency" type="number" placeholder="Số xu (ví dụ: 100)..." {...form.register('currency')} />
+          {form.formState.errors.currency ? (
+            <p className="text-xs text-red-600">{form.formState.errors.currency.message}</p>
+          ) : null}
+        </div>
+      </div>
+      <div className="space-y-2">
+        <Label>Vai trò</Label>
+        <Select
+          // eslint-disable-next-line react-hooks/incompatible-library
+          value={form.watch('role') ?? 'Player'}
+          onValueChange={(v) => form.setValue('role', v as (typeof ASSIGNABLE_ROLES)[number])}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Chọn vai trò" />
+          </SelectTrigger>
+          <SelectContent>
+            {ASSIGNABLE_ROLES.map((role) => (
+              <SelectItem key={role} value={role}>
+                {ROLE_LABELS[role] ?? role}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="pt-2 flex justify-end gap-2">
+        <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+          Hủy
+        </Button>
+        <Button type="submit" disabled={isPending}>
+          {isPending ? 'Đang lưu…' : 'Lưu'}
+        </Button>
+      </div>
+    </form>
+  );
+
+  if (isMobile) {
+    return (
+      <Sheet open={open} onOpenChange={onOpenChange}>
+        <SheetContent side="bottom" className="admin-theme rounded-t-2xl px-0 pb-6 pt-2 border-t max-h-[92vh] overflow-y-auto">
+          <div className="mx-auto my-2 h-1.5 w-12 rounded-full bg-muted-foreground/20 shrink-0" />
+          <SheetHeader className="px-6 border-b border-border/60 pb-3 bg-muted/10">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-bloom-green-mid/10 text-bloom-green-mid">
+                {isCreate ? <UserPlus className="h-4 w-4" /> : <UserPen className="h-4 w-4" />}
+              </div>
+              <div className="text-left space-y-0.5">
+                <SheetTitle className="text-base font-bold">
+                  {isCreate ? 'Thêm người dùng' : 'Sửa người dùng'}
+                </SheetTitle>
+                <SheetDescription className="text-xs">
+                  {isCreate ? 'Tạo người dùng mới.' : 'Cập nhật thông tin người dùng.'}
+                </SheetDescription>
+              </div>
+            </div>
+          </SheetHeader>
+          {formContent}
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="gap-0 overflow-hidden p-0 sm:max-w-xl">
+      <DialogContent className="admin-theme gap-0 overflow-hidden p-0 sm:max-w-xl">
         <DialogHeader className="space-y-0 border-b border-border/60 bg-muted/30 px-6 py-4">
           <div className="flex items-start gap-3 pr-8">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-bloom-green-mid/10 text-bloom-green-mid">
@@ -133,81 +246,7 @@ export function UserFormDialog({
             </div>
           </div>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 px-6 py-5">
-            <div className="space-y-2">
-              <Label htmlFor="username">Tên đăng nhập</Label>
-              <Input id="username" placeholder="Nhập tên đăng nhập..." {...form.register('username')} />
-              {form.formState.errors.username ? (
-                <p className="text-xs text-red-600">{form.formState.errors.username.message}</p>
-              ) : null}
-            </div>
-            {isCreate ? (
-              <div className="space-y-2">
-                <Label htmlFor="password">Mật khẩu</Label>
-                <Input id="password" type="password" placeholder="Nhập mật khẩu..." {...form.register('password')} />
-                {form.formState.errors.password ? (
-                  <p className="text-xs text-red-600">{form.formState.errors.password.message}</p>
-                ) : null}
-              </div>
-            ) : null}
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="Nhập địa chỉ email..." {...form.register('email')} />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">Họ</Label>
-                <Input id="firstName" placeholder="Họ (ví dụ: Nguyễn)..." {...form.register('firstName')} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Tên</Label>
-                <Input id="lastName" placeholder="Tên (ví dụ: Văn A)..." {...form.register('lastName')} />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label htmlFor="level">Cấp độ</Label>
-                <Input id="level" type="number" placeholder="Cấp độ (ví dụ: 1)..." {...form.register('level')} />
-                {form.formState.errors.level ? (
-                  <p className="text-xs text-red-600">{form.formState.errors.level.message}</p>
-                ) : null}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="currency">Xu</Label>
-                <Input id="currency" type="number" placeholder="Số xu (ví dụ: 100)..." {...form.register('currency')} />
-                {form.formState.errors.currency ? (
-                  <p className="text-xs text-red-600">{form.formState.errors.currency.message}</p>
-                ) : null}
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label>Vai trò</Label>
-              <Select
-                // eslint-disable-next-line react-hooks/incompatible-library
-                value={form.watch('role') ?? 'Player'}
-                onValueChange={(v) => form.setValue('role', v as (typeof ASSIGNABLE_ROLES)[number])}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Chọn vai trò" />
-                </SelectTrigger>
-                <SelectContent>
-                  {ASSIGNABLE_ROLES.map((role) => (
-                    <SelectItem key={role} value={role}>
-                      {ROLE_LABELS[role] ?? role}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                Hủy
-              </Button>
-              <Button type="submit" disabled={isPending}>
-                {isPending ? 'Đang lưu…' : 'Lưu'}
-              </Button>
-            </DialogFooter>
-        </form>
+        {formContent}
       </DialogContent>
     </Dialog>
   );

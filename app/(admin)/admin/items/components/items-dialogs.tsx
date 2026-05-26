@@ -7,7 +7,7 @@ import {
   useDeleteItem,
 } from '@/hooks/useItems';
 import { ItemFormDialog } from './item-form-dialog';
-import { ItemDeleteDialog } from './item-delete-dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useItemsPage } from './items-provider';
 import { ITEM_TYPE_MAPPING, type ItemFormValues } from './item-schema';
 
@@ -76,12 +76,15 @@ export function ItemsDialogs() {
         onSubmit={formMode === 'create' ? handleCreate : handleUpdate}
         isPending={createMutation.isPending || updateMutation.isPending}
       />
-      <ItemDeleteDialog
+      <ConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        name={deleteTarget?.name ?? ''}
+        title="Xóa vật phẩm"
+        description={`Bạn có chắc chắn muốn xóa vật phẩm "${deleteTarget?.name ?? ''}"? Hành động này sẽ chuyển trạng thái vật phẩm thành đã xóa (soft-delete).`}
+        confirmText="Xóa"
         onConfirm={() => void confirmDelete()}
         isPending={deleteMutation.isPending}
+        variant="danger"
       />
     </>
   );

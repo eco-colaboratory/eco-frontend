@@ -7,7 +7,7 @@ import {
   useDeleteFlowerTemplate,
 } from '@/hooks/useFlowerTemplates';
 import { FlowerTemplateFormDialog } from './flower-template-form-dialog';
-import { FlowerTemplateDeleteDialog } from './flower-template-delete-dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useFlowerTemplatesPage } from './flower-templates-provider';
 import type { FlowerTemplateFormValues } from './flower-template-schema';
 
@@ -68,12 +68,15 @@ export function FlowerTemplatesDialogs() {
         onSubmit={formMode === 'create' ? handleCreate : handleUpdate}
         isPending={createMutation.isPending || updateMutation.isPending}
       />
-      <FlowerTemplateDeleteDialog
+      <ConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        name={deleteTarget?.name ?? ''}
+        title="Xóa mẫu hoa"
+        description={`Bạn có chắc chắn muốn xóa mẫu hoa "${deleteTarget?.name ?? ''}"? Hành động này sẽ chuyển trạng thái mẫu hoa thành đã xóa (soft-delete).`}
+        confirmText="Xóa"
         onConfirm={() => void confirmDelete()}
         isPending={deleteMutation.isPending}
+        variant="danger"
       />
     </>
   );

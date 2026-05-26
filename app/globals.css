@@ -457,3 +457,88 @@
     }
   }
 }
+
+/* ==========================================
+   RADIX UI SHEET MOTION OVERRIDES
+   ========================================== */
+
+/* Keyframes cho Sheet trượt từ dưới lên (side="bottom") */
+@keyframes slideInBottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutBottom {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Keyframes cho Sheet trượt từ bên phải (side="right") */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Keyframes cho Overlay làm mờ nền */
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutOverlay {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Áp dụng animation mở/đóng cho Overlay */
+[data-slot="sheet-overlay"][data-state="open"] {
+  animation: fadeInOverlay 250ms ease-out forwards;
+}
+[data-slot="sheet-overlay"][data-state="closed"] {
+  animation: fadeOutOverlay 200ms ease-in forwards;
+}
+
+/* Áp dụng animation cho Bottom Sheet (side="bottom") */
+[data-slot="sheet-content"][data-state="open"].inset-x-0.bottom-0 {
+  animation: slideInBottom 350ms cubic-bezier(0.32, 0.94, 0.6, 1) forwards;
+}
+[data-slot="sheet-content"][data-state="closed"].inset-x-0.bottom-0 {
+  animation: slideOutBottom 280ms cubic-bezier(0.32, 0.94, 0.6, 1) forwards;
+}
+
+/* Áp dụng animation cho Right Sheet (side="right") */
+[data-slot="sheet-content"][data-state="open"].inset-y-0.right-0 {
+  animation: slideInRight 350ms cubic-bezier(0.32, 0.94, 0.6, 1) forwards;
+}
+[data-slot="sheet-content"][data-state="closed"].inset-y-0.right-0 {
+  animation: slideOutRight 280ms cubic-bezier(0.32, 0.94, 0.6, 1) forwards;
+}

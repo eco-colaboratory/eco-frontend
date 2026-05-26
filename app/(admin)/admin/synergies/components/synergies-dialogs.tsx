@@ -7,7 +7,7 @@ import {
   useDeleteSynergy,
 } from '@/hooks/useSynergies';
 import { SynergyFormDialog } from './synergy-form-dialog';
-import { SynergyDeleteDialog } from './synergy-delete-dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useSynergiesPage } from './synergies-provider';
 import type { SynergyFormValues } from './synergy-schema';
 
@@ -70,12 +70,15 @@ export function SynergiesDialogs() {
         onSubmit={formMode === 'create' ? handleCreate : handleUpdate}
         isPending={createMutation.isPending || updateMutation.isPending}
       />
-      <SynergyDeleteDialog
+      <ConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        name={deleteTarget?.name ?? ''}
+        title="Xóa hệ sinh thái"
+        description={`Bạn có chắc chắn muốn xóa hệ sinh thái "${deleteTarget?.name ?? ''}"? Hành động này sẽ chuyển trạng thái hệ sinh thái thành đã xóa (soft-delete).`}
+        confirmText="Xóa"
         onConfirm={() => void confirmDelete()}
         isPending={deleteMutation.isPending}
+        variant="danger"
       />
     </>
   );
