@@ -2,7 +2,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { deleteCookie } from "cookies-next";
 import { store } from "@/lib/redux/store";
-import { logout } from "@/lib/redux/slices/authSlice";
+import { getStoredAccessToken, getStoredRefreshToken } from "@/lib/auth/token-storage";
+import { applyRefreshedSession } from "@/lib/auth/persist-session";
+import { refreshAccessToken } from "@/lib/auth/refresh-session";
 
 export interface ApiError {
   code?: number;
@@ -44,7 +46,7 @@ class ApiService {
   private setupInterceptors() {
     this.client.interceptors.request.use(
       (config) => {
-        const token = store.getState().auth.token;
+        const token = getStoredAccessToken();
         if (token) config.headers.Authorization = `Bearer ${token}`;
         if (config.data instanceof FormData) delete config.headers["Content-Type"];
         return config;
@@ -57,7 +59,11 @@ class ApiService {
       async (error) => {
         const originalRequest = error.config;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        const isRefreshEndpoint =
+          typeof originalRequest.url === "string" &&
+          originalRequest.url.includes("refresh-token");
+
+        if (error.response?.status === 401 && !originalRequest._retry && !isRefreshEndpoint) {
           if (this.isRefreshing) {
             return new Promise((resolve, reject) => {
               this.failedQueue.push({ resolve, reject });
@@ -73,39 +79,24 @@ class ApiService {
           this.isRefreshing = true;
 
           try {
-            const refreshToken = store.getState().auth.refreshToken;
+            const refreshToken = getStoredRefreshToken();
             if (!refreshToken) throw new Error("No refresh token");
 
-            const response = await axios.post(
-              `${process.env.NEXT_PUBLIC_API_URL}api/v1/auth/refresh-token`,
-              { refreshToken },
-              { headers: { "Content-Type": "application/json" } }
-            );
+            const tokens = await refreshAccessToken(refreshToken);
+            await applyRefreshedSession(tokens);
 
-            if (response.data?.data?.accessToken) {
-              const { accessToken, refreshToken: newRefreshToken } = response.data.data;
+            this.processQueue(null, tokens.accessToken);
+            this.isRefreshing = false;
 
-              const { setTokenWithRefresh } = await import("@/lib/redux/slices/authSlice");
-              const { setCookie } = await import("cookies-next");
-              const { getAuthCookieConfig } = await import("@/utils/cookieConfig");
-
-              store.dispatch(setTokenWithRefresh({ accessToken, refreshToken: newRefreshToken }));
-              setCookie("authToken", accessToken, getAuthCookieConfig());
-              this.setAuthToken(accessToken);
-
-              this.processQueue(null, accessToken);
-              this.isRefreshing = false;
-
-              originalRequest.headers["Authorization"] = "Bearer " + accessToken;
-              return this.client(originalRequest);
-            }
-
-            throw new Error("Invalid refresh response");
+            originalRequest.headers["Authorization"] = "Bearer " + tokens.accessToken;
+            return this.client(originalRequest);
           } catch (refreshError) {
             this.isRefreshing = false;
             this.processQueue(refreshError, null);
 
             deleteCookie("authToken", { path: "/" });
+            deleteCookie("refreshToken", { path: "/" });
+            const { logout } = await import("@/lib/redux/slices/authSlice");
             store.dispatch(logout());
 
             if (typeof window !== "undefined") {

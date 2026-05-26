@@ -118,37 +118,48 @@ export function BenefitsSection() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {benefits.rows.map((row, rowIndex) => (
-                                            <tr
-                                                key={row.label}
-                                                className={cn(
-                                                    'border-b border-bloom-green-mid/10 transition-colors hover:bg-white/40',
-                                                    rowIndex % 2 === 1 && 'bg-bloom-green-mist/30'
-                                                )}
-                                            >
-                                                <td className="px-6 py-4 font-semibold text-gray-700 leading-snug">{row.label}</td>
-                                                {row.cells.map((cell, i) => {
-                                                    const isCheck = cell === '✓'
-                                                    return (
-                                                        <td
-                                                            key={`${row.label}-${i}`}
-                                                            className={cn(
-                                                                'px-4 py-4 text-center font-medium',
-                                                                isCheck ? 'text-bloom-green-mid' : 'text-gray-500 text-xs'
-                                                            )}
-                                                        >
-                                                            {isCheck ? (
-                                                                <span className="text-bloom-green-mid text-lg font-extrabold select-none">✓</span>
-                                                            ) : cell === '-' ? (
-                                                                <span className="text-gray-300 select-none">—</span>
-                                                            ) : (
-                                                                cell
-                                                            )}
-                                                        </td>
-                                                    )
-                                                })}
-                                            </tr>
-                                        ))}
+                                        {benefits.rows.map((row, rowIndex) =>
+                                            row.kind === 'section' ? (
+                                                <tr key={`section-${row.label}`} className="bg-bloom-green-deep/5">
+                                                    <td
+                                                        colSpan={benefits.tierNames.length + 1}
+                                                        className="px-6 py-3 font-display text-sm font-bold uppercase tracking-wide text-bloom-green-deep"
+                                                    >
+                                                        {row.label}
+                                                    </td>
+                                                </tr>
+                                            ) : (
+                                                <tr
+                                                    key={row.label}
+                                                    className={cn(
+                                                        'border-b border-bloom-green-mid/10 transition-colors hover:bg-white/40',
+                                                        rowIndex % 2 === 1 && 'bg-bloom-green-mist/30'
+                                                    )}
+                                                >
+                                                    <td className="px-6 py-4 font-semibold text-gray-700 leading-snug">{row.label}</td>
+                                                    {row.cells.map((cell, i) => {
+                                                        const isCheck = cell === '✓'
+                                                        return (
+                                                            <td
+                                                                key={`${row.label}-${i}`}
+                                                                className={cn(
+                                                                    'px-4 py-4 text-center font-medium',
+                                                                    isCheck ? 'text-bloom-green-mid' : 'text-gray-500 text-xs'
+                                                                )}
+                                                            >
+                                                                {isCheck ? (
+                                                                    <span className="text-bloom-green-mid text-lg font-extrabold select-none">✓</span>
+                                                                ) : cell === '-' ? (
+                                                                    <span className="text-gray-300 select-none">—</span>
+                                                                ) : (
+                                                                    cell
+                                                                )}
+                                                            </td>
+                                                        )
+                                                    })}
+                                                </tr>
+                                            )
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -181,25 +192,35 @@ export function BenefitsSection() {
                                 </div>
 
                                 <ul className="space-y-4">
-                                    {benefits.rows
-                                        .map((row) => {
-                                            const cellValue = row.cells[activeMobileTab]
-                                            return { label: row.label, value: cellValue }
-                                        })
-                                        .filter((item) => item.value !== '-')
-                                        .map((item) => (
-                                            <li key={item.label} className="flex items-start gap-3">
+                                    {benefits.rows.map((row) => {
+                                        if (row.kind === 'section') {
+                                            return (
+                                                <li
+                                                    key={`section-${row.label}`}
+                                                    className="pt-2 first:pt-0 list-none"
+                                                >
+                                                    <p className="font-display text-xs font-bold uppercase tracking-wide text-bloom-green-deep border-b border-bloom-green-mid/20 pb-2">
+                                                        {row.label}
+                                                    </p>
+                                                </li>
+                                            )
+                                        }
+                                        const cellValue = row.cells[activeMobileTab]
+                                        if (cellValue === '-') return null
+                                        return (
+                                            <li key={row.label} className="flex items-start gap-3">
                                                 <span className="text-bloom-green-mid font-black select-none mt-0.5">•</span>
                                                 <div className="text-sm">
-                                                    <span className="font-medium text-gray-700 block leading-snug">{item.label}</span>
-                                                    {item.value !== '✓' && (
+                                                    <span className="font-medium text-gray-700 block leading-snug">{row.label}</span>
+                                                    {cellValue !== '✓' && (
                                                         <span className="text-xs font-bold text-bloom-green-mid mt-0.5 block bg-bloom-green-mist/50 rounded px-2 py-0.5 w-fit">
-                                                            {item.value}
+                                                            {cellValue}
                                                         </span>
                                                     )}
                                                 </div>
                                             </li>
-                                        ))}
+                                        )
+                                    })}
                                 </ul>
                             </GlassCard>
                         </div>

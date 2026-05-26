@@ -57,7 +57,24 @@
     --bloom-gold: #D68C45;
     --bloom-dark: #051A0C;
     --bloom-accent-mint: #10B981;
+
+    /* Admin shell + charts (shadcn sidebar / recharts) */
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+    --sidebar: #ffffff;
+    --sidebar-foreground: #0f172a;
+    --sidebar-primary: #0f172a;
+    --sidebar-primary-foreground: #f8fafc;
+    --sidebar-accent: #f1f5f9;
+    --sidebar-accent-foreground: #0f172a;
+    --sidebar-border: #e2e8f0;
+    --sidebar-ring: #94a3b8;
   }
+
+
 
   .dark {
     --background: #111827;
@@ -80,7 +97,23 @@
 
     --popover: #1F2937;
     --popover-foreground: #FFFDFB;
+
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+    --sidebar: #1e293b;
+    --sidebar-foreground: #f8fafc;
+    --sidebar-primary: #f8fafc;
+    --sidebar-primary-foreground: #0f172a;
+    --sidebar-accent: #334155;
+    --sidebar-accent-foreground: #f8fafc;
+    --sidebar-border: #334155;
+    --sidebar-ring: #64748b;
   }
+
+
 }
 
 @theme {
@@ -117,6 +150,20 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
 
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
@@ -133,6 +180,125 @@
   --font-sans: var(--font-be-vietnam-pro), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-be-vietnam-pro), var(--font-inter), sans-serif;
   --font-hero: var(--font-be-vietnam-pro), var(--font-inter), sans-serif;
+}
+
+/* ==========================================
+   ADMIN THEME SPECIFIC OVERRIDES (BLOOM GREEN)
+   ========================================== */
+.admin-theme {
+  /* Bộ biến CSS tùy chỉnh hệ thống */
+  --background: var(--bloom-cream);
+  --foreground: var(--bloom-green-deep);
+  --primary: var(--bloom-green-mid);
+  --primary-foreground: #ffffff;
+  --secondary: var(--bloom-green-mist);
+  --secondary-foreground: var(--bloom-green-deep);
+  --accent: var(--bloom-green-mist);
+  --accent-foreground: var(--bloom-green-deep);
+  --muted: var(--bloom-green-light);
+  --muted-foreground: color-mix(in srgb, var(--bloom-green-deep) 65%, transparent);
+  --border: var(--bloom-green-mist);
+  --input: var(--bloom-green-mist);
+  --ring: var(--bloom-green-mid);
+  --card: #ffffff;
+  --card-foreground: var(--bloom-green-deep);
+  --popover: #ffffff;
+  --popover-foreground: var(--bloom-green-deep);
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: var(--bloom-green-deep);
+  --sidebar-primary: var(--bloom-green-mid);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--bloom-green-mist);
+  --sidebar-accent-foreground: var(--bloom-green-deep);
+  --sidebar-border: var(--bloom-green-mist);
+  --sidebar-ring: color-mix(in srgb, var(--bloom-green-mid) 35%, transparent);
+
+  /* Ghi đè trực tiếp các biến màu sắc của Tailwind v4 */
+  --color-background: var(--bloom-cream);
+  --color-foreground: var(--bloom-green-deep);
+  --color-primary: var(--bloom-green-mid);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--bloom-green-mist);
+  --color-secondary-foreground: var(--bloom-green-deep);
+  --color-accent: var(--bloom-green-mist);
+  --color-accent-foreground: var(--bloom-green-deep);
+  --color-muted: var(--bloom-green-light);
+  --color-muted-foreground: color-mix(in srgb, var(--bloom-green-deep) 65%, transparent);
+  --color-border: var(--bloom-green-mist);
+  --color-input: var(--bloom-green-mist);
+  --color-ring: var(--bloom-green-mid);
+  --color-card: #ffffff;
+  --color-card-foreground: var(--bloom-green-deep);
+  --color-popover: #ffffff;
+  --color-popover-foreground: var(--bloom-green-deep);
+
+  --color-sidebar: #ffffff;
+  --color-sidebar-foreground: var(--bloom-green-deep);
+  --color-sidebar-primary: var(--bloom-green-mid);
+  --color-sidebar-primary-foreground: #ffffff;
+  --color-sidebar-accent: var(--bloom-green-mist);
+  --color-sidebar-accent-foreground: var(--bloom-green-deep);
+  --color-sidebar-border: var(--bloom-green-mist);
+  --color-sidebar-ring: color-mix(in srgb, var(--bloom-green-mid) 35%, transparent);
+}
+
+.dark .admin-theme {
+  /* Bộ biến CSS tùy chỉnh hệ thống */
+  --background: var(--bloom-dark);
+  --foreground: var(--bloom-green-light);
+  --primary: var(--bloom-accent-mint);
+  --primary-foreground: var(--bloom-dark);
+  --secondary: color-mix(in srgb, var(--bloom-green-mid) 20%, #1e293b);
+  --secondary-foreground: var(--bloom-green-light);
+  --accent: color-mix(in srgb, var(--bloom-green-mid) 22%, #1e293b);
+  --accent-foreground: var(--bloom-green-light);
+  --muted: color-mix(in srgb, var(--bloom-green-deep) 30%, #111827);
+  --muted-foreground: color-mix(in srgb, var(--bloom-green-light) 65%, transparent);
+  --border: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
+  --input: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
+  --ring: var(--bloom-accent-mint);
+  --card: color-mix(in srgb, var(--bloom-green-deep) 40%, #111827);
+  --card-foreground: var(--bloom-green-light);
+  --popover: color-mix(in srgb, var(--bloom-green-deep) 40%, #111827);
+  --popover-foreground: var(--bloom-green-light);
+
+  --sidebar: color-mix(in srgb, var(--bloom-green-deep) 50%, #090d16);
+  --sidebar-foreground: var(--bloom-green-light);
+  --sidebar-primary: var(--bloom-accent-mint);
+  --sidebar-primary-foreground: var(--bloom-dark);
+  --sidebar-accent: color-mix(in srgb, var(--bloom-green-mid) 22%, #1e293b);
+  --sidebar-accent-foreground: var(--bloom-green-light);
+  --sidebar-border: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
+  --sidebar-ring: color-mix(in srgb, var(--bloom-accent-mint) 40%, transparent);
+
+  /* Ghi đè trực tiếp các biến màu sắc của Tailwind v4 */
+  --color-background: var(--bloom-dark);
+  --color-foreground: var(--bloom-green-light);
+  --color-primary: var(--bloom-accent-mint);
+  --color-primary-foreground: var(--bloom-dark);
+  --color-secondary: color-mix(in srgb, var(--bloom-green-mid) 20%, #1e293b);
+  --color-secondary-foreground: var(--bloom-green-light);
+  --color-accent: color-mix(in srgb, var(--bloom-green-mid) 22%, #1e293b);
+  --color-accent-foreground: var(--bloom-green-light);
+  --color-muted: color-mix(in srgb, var(--bloom-green-deep) 30%, #111827);
+  --color-muted-foreground: color-mix(in srgb, var(--bloom-green-light) 65%, transparent);
+  --color-border: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
+  --color-input: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
+  --color-ring: var(--bloom-accent-mint);
+  --color-card: color-mix(in srgb, var(--bloom-green-deep) 40%, #111827);
+  --color-card-foreground: var(--bloom-green-light);
+  --color-popover: color-mix(in srgb, var(--bloom-green-deep) 40%, #111827);
+  --color-popover-foreground: var(--bloom-green-light);
+
+  --color-sidebar: color-mix(in srgb, var(--bloom-green-deep) 50%, #090d16);
+  --color-sidebar-foreground: var(--bloom-green-light);
+  --color-sidebar-primary: var(--bloom-accent-mint);
+  --color-sidebar-primary-foreground: var(--bloom-dark);
+  --color-sidebar-accent: color-mix(in srgb, var(--bloom-green-mid) 22%, #1e293b);
+  --color-sidebar-accent-foreground: var(--bloom-green-light);
+  --color-sidebar-border: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
+  --color-sidebar-ring: color-mix(in srgb, var(--bloom-accent-mint) 40%, transparent);
 }
 
 @layer base {
@@ -267,5 +433,27 @@
 
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes adminNavProgress {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@layer utilities {
+  .animate-admin-nav-progress {
+    animation: adminNavProgress 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-admin-nav-progress {
+      animation-duration: 0.01ms;
+    }
   }
 }

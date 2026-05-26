@@ -11,7 +11,9 @@ import {
 } from 'framer-motion'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { CHAM_BLOOM_CONTENT } from '@/lib/content/cham-bloom-landing'
+import { AuthModal, UserMenuDropdown } from '@/components/widget/auth'
+import { useAppSelector } from '@/lib/redux/hooks'
+import { selectIsAuthenticated, selectUser } from '@/lib/redux/slices/authSlice'
 
 const SCROLL_THRESHOLD = 100
 
@@ -67,9 +69,12 @@ export function Navbar() {
     () => typeof window !== 'undefined' && window.scrollY > SCROLL_THRESHOLD,
   )
   const [open, setOpen] = useState(false)
+  const [authOpen, setAuthOpen] = useState(false)
   const [activeSection, setActiveSection] = useState<string>('hero')
   const reduced = useReducedMotion()
-  const { email, cta } = CHAM_BLOOM_CONTENT.contact
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
+  const user = useAppSelector(selectUser)
+  const displayName = user?.username || user?.name || 'bạn'
 
   const { scrollY } = useScroll()
 
@@ -203,12 +208,17 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center justify-end gap-2">
-          <Link
-            href={`mailto:${email}`}
-            className="hidden rounded-full bg-bloom-green-mid px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-bloom-green-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bloom-green-mid sm:inline-flex font-display"
-          >
-            {cta}
-          </Link>
+          {isAuthenticated ? (
+            <UserMenuDropdown displayName={displayName} />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setAuthOpen(true)}
+              className="hidden rounded-full bg-bloom-green-mid px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-bloom-green-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bloom-green-mid sm:inline-flex font-display"
+            >
+              Đăng nhập
+            </button>
+          )}
 
           <button
             type="button"
@@ -257,18 +267,31 @@ export function Navbar() {
                 )
               })}
               <div className="border-t border-bloom-green-mid/10 pt-3">
-                <Link
-                  href={`mailto:${email}`}
-                  className="block w-full rounded-full bg-bloom-green-mid py-2 text-center text-xs font-medium text-white transition-colors hover:bg-bloom-green-deep font-display"
-                  onClick={() => setOpen(false)}
-                >
-                  {cta}
-                </Link>
+                {isAuthenticated ? (
+                  <UserMenuDropdown
+                    displayName={displayName}
+                    variant="block"
+                    onLogout={() => setOpen(false)}
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className="block w-full rounded-full bg-bloom-green-mid py-2 text-center text-xs font-medium text-white transition-colors hover:bg-bloom-green-deep font-display"
+                    onClick={() => {
+                      setOpen(false)
+                      setAuthOpen(true)
+                    }}
+                  >
+                    Đăng nhập
+                  </button>
+                )}
               </div>
             </div>
           </m.div>
         ) : null}
       </AnimatePresence>
+
+      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
     </header>
   )
 }
