@@ -1,6 +1,6 @@
 'use client';
 
-import { ListFilter, PlusCircle, SlidersHorizontal } from 'lucide-react';
+import { ListFilter, PlusCircle, Search, SlidersHorizontal } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -40,12 +40,15 @@ export function DataTableToolbar({
 }: DataTableToolbarProps) {
   return (
     <div className={cn('flex flex-col gap-3 sm:flex-row sm:items-center', className)}>
-      <Input
-        placeholder={searchPlaceholder}
-        value={searchValue}
-        onChange={(e) => onSearchChange(e.target.value)}
-        className="h-9 max-w-sm border-border bg-background shadow-none"
-      />
+      <div className="relative max-w-sm flex-1">
+        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground/70" />
+        <Input
+          placeholder={searchPlaceholder}
+          value={searchValue}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="h-9 pl-9 border-border bg-background shadow-none"
+        />
+      </div>
       <div className="flex flex-wrap items-center gap-2">
         {showStatusFilter ? (
           <Select value={statusValue} onValueChange={onStatusChange}>

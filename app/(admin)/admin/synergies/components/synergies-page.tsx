@@ -1,14 +1,17 @@
 'use client';
 
 import { AdminRouteShell } from '@/components/layout/admin-route-shell';
-import { CatalogCrudPage } from '@/components/admin/catalog/catalog-crud-page';
-import { synergiesPageConfig } from '@/lib/admin/catalog/entities/synergies.config';
+import { SynergiesProvider } from './synergies-provider';
+import { SynergiesTable } from './synergies-table';
+import { SynergiesDialogs } from './synergies-dialogs';
 
-/** Recipe B — list + CRUD via shared CatalogCrudPage */
 export function SynergiesPage() {
   return (
     <AdminRouteShell>
-      <CatalogCrudPage {...synergiesPageConfig} />
+      <SynergiesProvider>
+        <SynergiesTable />
+        <SynergiesDialogs />
+      </SynergiesProvider>
     </AdminRouteShell>
   );
 }

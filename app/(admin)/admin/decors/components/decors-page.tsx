@@ -1,13 +1,17 @@
 'use client';
 
 import { AdminRouteShell } from '@/components/layout/admin-route-shell';
-import { CatalogCrudPage } from '@/components/admin/catalog/catalog-crud-page';
-import { decorsPageConfig } from '@/lib/admin/catalog/entities/decors.config';
+import { DecorsProvider } from './decors-provider';
+import { DecorsTable } from './decors-table';
+import { DecorsDialogs } from './decors-dialogs';
 
 export function DecorsPage() {
   return (
     <AdminRouteShell>
-      <CatalogCrudPage {...decorsPageConfig} />
+      <DecorsProvider>
+        <DecorsTable />
+        <DecorsDialogs />
+      </DecorsProvider>
     </AdminRouteShell>
   );
 }

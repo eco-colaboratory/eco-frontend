@@ -62,7 +62,25 @@ response :
 | Method | Route | Mô tả |
 |--------|-------|--------|
 | `POST` | `/api/items` | Tạo item |
+REQUEST:
+{
+  "name": "string",
+  "price": 0,
+  "imageUrl": "string",
+  "cooldownTime": 0,
+  "type": 0,
+  "receivedExp": 0
+}
 | `PUT` | `/api/items/{id}` | Cập nhật item |
+REQUEST: 
+{
+  "name": "string",
+  "price": 0,
+  "imageUrl": "string",
+  "cooldownTime": 0,
+  "type": 0,
+  "receivedExp": 0
+}
 | `DELETE` | `/api/items/{id}` | Xóa item (soft delete) |
 
 **Public (không yêu cầu Admin/SuperAdmin):**
@@ -70,6 +88,25 @@ response :
 | Method | Route | Ghi chú |
 |--------|-------|---------|
 | `GET` | `/api/items` | Không có `[Authorize]` |
+params: IsDeleted, Type, Search, SortBy, SortDescending, Page, PageSize
+response: 
+{
+  "isSuccess": true,
+  "message": "string",
+  "data": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "string",
+      "price": 0,
+      "imageUrl": "string",
+      "cooldownTime": 0,
+      "type": 0,
+      "receivedExp": 0,
+      "isDeleted": true
+    }
+  ],
+  "metaData": {}
+}
 | `GET` | `/api/items/{id}` | Không có `[Authorize]` |
 
 ---
@@ -79,7 +116,19 @@ response :
 | Method | Route | Mô tả |
 |--------|-------|--------|
 | `POST` | `/api/decors` | Tạo decor |
+REQUEST: 
+{
+  "name": "string",
+  "price": 0,
+  "imageUrl": "string"
+}
 | `PUT` | `/api/decors/{id}` | Cập nhật decor |
+REQUEST: 
+{
+  "name": "string",
+  "price": 0,
+  "imageUrl": "string"
+}
 | `DELETE` | `/api/decors/{id}` | Xóa decor |
 
 **Public:**
@@ -87,6 +136,22 @@ response :
 | Method | Route | Ghi chú |
 |--------|-------|---------|
 | `GET` | `/api/decors` | Không có `[Authorize]` |
+params: IsDeleted, Search, SortBy, SortDescending, Page, PageSize
+response:
+{
+  "isSuccess": true,
+  "message": "string",
+  "data": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "string",
+      "price": 0,
+      "imageUrl": "string",
+      "isDeleted": true
+    }
+  ],
+  "metaData": {}
+}
 | `GET` | `/api/decors/{id}` | Không có `[Authorize]` |
 
 ---
@@ -96,7 +161,23 @@ response :
 | Method | Route | Mô tả |
 |--------|-------|--------|
 | `POST` | `/api/synergies` | Tạo synergy |
+{
+  "name": "string",
+  "xpPlus": 0,
+  "cooldownMinus": 0,
+  "flowerTemplateIds": [
+    "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  ]
+}
 | `PUT` | `/api/synergies/{id}` | Cập nhật synergy |
+{
+  "name": "string",
+  "xpPlus": 0,
+  "cooldownMinus": 0,
+  "flowerTemplateIds": [
+    "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  ]
+}
 | `DELETE` | `/api/synergies/{id}` | Xóa synergy |
 
 **Public:**
@@ -104,6 +185,32 @@ response :
 | Method | Route | Ghi chú |
 |--------|-------|---------|
 | `GET` | `/api/synergies` | Không có `[Authorize]` |
+params:  IsDeleted, Search, SortBy, SortDescending, Page, PageSize
+response :
+{
+  "isSuccess": true,
+  "message": "string",
+  "data": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "string",
+      "xpPlus": 0,
+      "cooldownMinus": 0,
+      "isDeleted": true,
+      "flowerTemplates": [
+        {
+          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "name": "string",
+          "basePrice": 0,
+          "imageUrl": "string",
+          "synergyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "isDeleted": true
+        }
+      ]
+    }
+  ],
+  "metaData": {}
+}
 | `GET` | `/api/synergies/{id}` | Không có `[Authorize]` |
 
 ---
@@ -113,7 +220,17 @@ response :
 | Method | Route | Mô tả |
 |--------|-------|--------|
 | `POST` | `/api/flowertemplates` | Tạo mẫu hoa |
+{
+  "name": "string",
+  "price": 0,
+  "imageUrl": "string"
+}
 | `PUT` | `/api/flowertemplates/{id}` | Cập nhật mẫu hoa |
+{
+  "name": "string",
+  "price": 0,
+  "imageUrl": "string"
+}
 | `DELETE` | `/api/flowertemplates/{id}` | Xóa mẫu hoa |
 
 **Public:**
@@ -121,6 +238,23 @@ response :
 | Method | Route | Ghi chú |
 |--------|-------|---------|
 | `GET` | `/api/flowertemplates` | Không có `[Authorize]` |
+params: IsDeleted, Search, SortBy, SortDescending, Page, PageSize
+response: 
+{
+  "isSuccess": true,
+  "message": "string",
+  "data": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "string",
+      "basePrice": 0,
+      "imageUrl": "string",
+      "synergyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "isDeleted": true
+    }
+  ],
+  "metaData": {}
+}
 | `GET` | `/api/flowertemplates/{id}` | Không có `[Authorize]` |
 
 ---

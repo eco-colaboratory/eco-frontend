@@ -47,15 +47,15 @@ export const fetchUsers = {
       sortBy: params.sortBy,
       sortDescending: params.sortDescending,
     });
-    
+
     const responseBody = response.data;
     if (!responseBody.isSuccess) {
       throw new ApiResponseError(responseBody.message || 'Request failed', responseBody.data);
     }
-    
+
     const items = responseBody.data || [];
     const meta = responseBody.metaData;
-    
+
     return {
       items,
       totalCount: meta?.totalItems ?? items.length,

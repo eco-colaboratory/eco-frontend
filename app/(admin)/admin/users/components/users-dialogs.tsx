@@ -10,7 +10,7 @@ import {
   useCreateUser,
   useUnbanUser,
   useUpdateUser,
-} from '@/hooks/admin/useUsers';
+} from '@/hooks/useUsers';
 import { UserBanDialog } from './user-ban-dialog';
 import { UserFormDialog } from './user-form-dialog';
 import { useUsersPage } from './users-provider';

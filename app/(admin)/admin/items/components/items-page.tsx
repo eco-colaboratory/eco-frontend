@@ -1,13 +1,17 @@
 'use client';
 
 import { AdminRouteShell } from '@/components/layout/admin-route-shell';
-import { CatalogCrudPage } from '@/components/admin/catalog/catalog-crud-page';
-import { itemsPageConfig } from '@/lib/admin/catalog/entities/items.config';
+import { ItemsProvider } from './items-provider';
+import { ItemsTable } from './items-table';
+import { ItemsDialogs } from './items-dialogs';
 
 export function ItemsPage() {
   return (
     <AdminRouteShell>
-      <CatalogCrudPage {...itemsPageConfig} />
+      <ItemsProvider>
+        <ItemsTable />
+        <ItemsDialogs />
+      </ItemsProvider>
     </AdminRouteShell>
   );
 }

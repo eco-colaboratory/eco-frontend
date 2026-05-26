@@ -7,49 +7,35 @@ import type { CatalogColumnConfig, CatalogFieldConfig } from '@/components/admin
 
 export const synergiesSchema = z.object({
   name: z.string().min(1),
-  description: z.string().optional(),
-  bonusMultiplier: z.coerce.number().optional(),
-  itemIds: z.string().optional(),
+  xpPlus: z.coerce.number().optional().default(0),
+  cooldownMinus: z.coerce.number().optional().default(0),
 });
 
 export type SynergiesFormValues = z.infer<typeof synergiesSchema>;
 
 export const synergiesFields: CatalogFieldConfig[] = [
   { name: 'name', label: 'Tên', type: 'text', required: true },
-  { name: 'description', label: 'Mô tả', type: 'textarea' },
-  { name: 'bonusMultiplier', label: 'Hệ số', type: 'number' },
-  {
-    name: 'itemIds',
-    label: 'Item IDs (phân cách bằng dấu phẩy)',
-    type: 'text',
-  },
+  { name: 'xpPlus', label: 'Cộng thêm EXP', type: 'number' },
+  { name: 'cooldownMinus', label: 'Giảm cooldown (giây)', type: 'number' },
 ];
 
 export const synergiesColumns: CatalogColumnConfig<Synergy>[] = [
   { id: 'name', header: 'Tên', cell: (r) => r.name },
   {
-    id: 'bonus',
-    header: 'Hệ số',
-    cell: (r) => r.bonusMultiplier ?? '—',
+    id: 'xpPlus',
+    header: 'EXP cộng thêm',
+    cell: (r) => `+${r.xpPlus} EXP`,
   },
   {
-    id: 'items',
-    header: 'Items',
-    cell: (r) => r.itemIds?.length ?? 0,
+    id: 'cooldownMinus',
+    header: 'Giảm cooldown',
+    cell: (r) => `-${r.cooldownMinus}s`,
   },
 ];
 
-function parseItemIds(raw?: string): string[] | undefined {
-  if (!raw?.trim()) return undefined;
-  return raw
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean);
-}
-
 export const synergiesPageConfig = {
   title: 'Synergies',
-  description: 'Quản lý synergy giữa items',
+  description: 'Quản lý hệ sinh thái loài hoa',
   basePath: '/admin/synergies',
   fields: synergiesFields,
   columns: synergiesColumns,
@@ -57,14 +43,14 @@ export const synergiesPageConfig = {
   hooks: synergiesCatalog,
   mapToCreate: (v: SynergiesFormValues) => ({
     name: v.name,
-    description: v.description || undefined,
-    bonusMultiplier: v.bonusMultiplier,
-    itemIds: parseItemIds(v.itemIds),
+    xpPlus: v.xpPlus,
+    cooldownMinus: v.cooldownMinus,
+    flowerTemplateIds: [] as string[],
   }),
   mapToUpdate: (v: SynergiesFormValues) => ({
     name: v.name,
-    description: v.description || undefined,
-    bonusMultiplier: v.bonusMultiplier,
-    itemIds: parseItemIds(v.itemIds),
+    xpPlus: v.xpPlus,
+    cooldownMinus: v.cooldownMinus,
+    flowerTemplateIds: [] as string[],
   }),
 };

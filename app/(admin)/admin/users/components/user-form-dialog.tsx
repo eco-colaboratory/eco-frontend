@@ -5,7 +5,15 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { UserPen, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -103,11 +111,29 @@ export function UserFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{isCreate ? 'Thêm người dùng' : 'Sửa người dùng'}</DialogTitle>
+      <DialogContent className="gap-0 overflow-hidden p-0 sm:max-w-xl">
+        <DialogHeader className="space-y-0 border-b border-border/60 bg-muted/30 px-6 py-4">
+          <div className="flex items-start gap-3 pr-8">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-bloom-green-mid/10 text-bloom-green-mid">
+              {isCreate ? (
+                <UserPlus className="h-5 w-5" aria-hidden />
+              ) : (
+                <UserPen className="h-5 w-5" aria-hidden />
+              )}
+            </div>
+            <div className="space-y-1">
+              <DialogTitle className="text-base">
+                {isCreate ? 'Thêm người dùng' : 'Sửa người dùng'}
+              </DialogTitle>
+              <DialogDescription>
+                {isCreate
+                  ? 'Tạo tài khoản mới với thông tin đăng nhập và vai trò trong hệ thống.'
+                  : 'Cập nhật thông tin và quyền hạn của người dùng.'}
+              </DialogDescription>
+            </div>
+          </div>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 px-6 py-5">
             <div className="space-y-2">
               <Label htmlFor="username">Tên đăng nhập</Label>
               <Input id="username" placeholder="Nhập tên đăng nhập..." {...form.register('username')} />
@@ -157,6 +183,7 @@ export function UserFormDialog({
             <div className="space-y-2">
               <Label>Vai trò</Label>
               <Select
+                // eslint-disable-next-line react-hooks/incompatible-library
                 value={form.watch('role') ?? 'Player'}
                 onValueChange={(v) => form.setValue('role', v as (typeof ASSIGNABLE_ROLES)[number])}
               >

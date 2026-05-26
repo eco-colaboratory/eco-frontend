@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import { fetchUsers, type UserListParams } from '@/lib/api/services/fetchUsers';
 import type { CreateUserRequest, UpdateUserRequest } from '@/lib/types/admin/user';
 import { useAuthReady } from '@/hooks/useAuthReady';
@@ -13,6 +13,7 @@ export function useUsersList(params: UserListParams) {
     queryKey: usersKey(params),
     queryFn: () => fetchUsers.list(params),
     enabled: ready && isAuthenticated,
+    placeholderData: keepPreviousData,
   });
 }
 
