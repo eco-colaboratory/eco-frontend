@@ -59,7 +59,10 @@ export interface ChamBloomContent {
     label: string
     title: string
     tierNames: string[]
-    rows: { label: string; cells: string[] }[]
+    rows: Array<
+      | { kind: 'section'; label: string }
+      | { kind: 'row'; label: string; cells: string[] }
+    >
   }
   benefitsNote: string
   contact: {
@@ -277,30 +280,36 @@ roadmap: {
       'Kim Cương',
     ],
     rows: [
-      // Quyền lợi truyền thông
-      { label: 'Logo/tên thương hiệu trên landing page/proposal', cells: ['Bằng 1/2 logo dự án', 'Bằng 1/2 logo dự án', 'Bằng logo dự án', 'Bằng logo dự án'] },
-      { label: 'Hashtag xuất hiện trong các bài đăng trên Fanpage', cells: ['1 hashtag', '1 hashtag', '1 hashtag', '2 hashtag'] },
-      { label: 'Ghi nhận danh vị trên key visual và ấn phẩm truyền thông chính', cells: ['✓', '✓', '✓', '✓'] },
-      { label: 'Quyền sử dụng danh vị đồng hành/tài trợ chính thức', cells: ['✓', '✓', '✓', '✓'] },
-      { label: 'Cung cấp tư liệu truyền thông độc quyền để đơn vị đăng lại', cells: ['✓', '✓', '✓', '✓'] },
-      { label: 'Bài đăng giới thiệu chung trên fanpage dự án', cells: ['✓', '✓', '✓', '✓'] },
-      { label: 'Bài đăng cảm ơn chung kết thúc chiến dịch', cells: ['✓', '✓', '✓', '✓'] },
-      { label: 'Bài đăng giới thiệu riêng về thương hiệu', cells: ['-', '✓', '✓', '✓'] },
-      { label: 'Bài đăng cảm ơn riêng biệt', cells: ['-', '✓', '✓', '✓'] },
-      { label: 'Tên thương hiệu xuất hiện trong TVC/video launch', cells: ['-', '✓', '✓', '✓'] },
-      { label: 'Logo/tên thương hiệu trong toàn bộ video truyền thông', cells: ['-', '-', '✓', '✓'] },
-      { label: 'Được mời tham dự trực tiếp buổi ra mắt / nghiệm thu vườn thật', cells: ['-', '-', '✓', '✓'] },
-      { label: 'Bài truyền thông hỗ trợ NTT trên fanpage của dự án', cells: ['-', '-', '-', '✓'] },
-      { label: 'Lồng ghép sản phẩm thương hiệu vào nội dung truyền thông sáng tạo', cells: ['-', '-', '1 nội dung', '2 nội dung'] },
-      { label: 'Ưu tiên xuất hiện nổi bật tại vườn hoa thật ngoài đời', cells: ['-', '-', 'Được ghi nhận trên bảng thông tin chung tại vườn', 'Được vinh danh nổi bật trên bảng thông tin vườn, backdrop và ấn phẩm nghiệm thu'] },
-      
-      // Quyền lợi trong game ảo
-      { label: 'Tên thương hiệu/sản phẩm xuất hiện trong game', cells: ['-', '-', '✓', '✓'] },
-      { label: 'Thiết kế vật phẩm/hoa/decor mang dấu ấn thương hiệu', cells: ['-', '-', '✓', '✓'] },
-      { label: 'Khu vực hoặc chuỗi nhiệm vụ đồng hành riêng trong game', cells: ['-', '-', '-', '✓'] },
-      { label: 'Tích hợp voucher/quà tặng của thương hiệu làm phần thưởng game', cells: ['-', '-', '-', '✓'] },
-      { label: 'Ưu tiên đồng hành cùng các hoạt động mở rộng của game trong tương lai', cells: ['-', '-', '-', '✓'] },
-      { label: 'Mini challenge/sự kiện trong game mang tên thương hiệu', cells: ['-', '-', '-', 'Đồng hành & đặt tên 01 sự kiện'] },
+      { kind: 'section', label: 'Quyền lợi truyền thông' },
+      { kind: 'row', label: 'Logo/tên thương hiệu trên landing page/proposal', cells: ['Bằng 1/2 logo dự án', 'Bằng 1/2 logo dự án', 'Bằng logo dự án', 'Bằng logo dự án'] },
+      { kind: 'row', label: 'Hashtag xuất hiện trong các bài đăng trên Fanpage', cells: ['1 hashtag', '1 hashtag', '1 hashtag', '2 hashtag'] },
+      { kind: 'row', label: 'Ghi nhận danh vị trên landing page/proposal/key visual/ấn phẩm truyền thông', cells: ['✓', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Quyền sử dụng danh vị đồng hành/tài trợ', cells: ['✓', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Cung cấp tư liệu truyền thông để đơn vị đăng lại', cells: ['✓', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Bài đăng giới thiệu chung', cells: ['✓', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Bài đăng cảm ơn chung', cells: ['✓', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Bài đăng giới thiệu riêng', cells: ['-', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Bài đăng cảm ơn riêng', cells: ['-', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Tên thương hiệu xuất hiện trong TVC/video launch', cells: ['-', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Logo/tên thương hiệu trong các video truyền thông', cells: ['-', '-', '✓', '✓'] },
+      { kind: 'row', label: 'Tài liệu quảng bá của NTT được hỗ trợ truyền thông trên fanpage của dự án', cells: ['-', '-', '-', '✓'] },
+      { kind: 'row', label: 'Sản phẩm thương hiệu được lồng ghép vào nội dung truyền thông', cells: ['-', '-', '1 nội dung', '2 nội dung'] },
+      { kind: 'section', label: 'Quyền lợi xuất hiện trong sản phẩm game' },
+      { kind: 'row', label: 'Tên thương hiệu/sản phẩm xuất hiện trong game', cells: ['-', '-', '✓', '✓'] },
+      { kind: 'row', label: 'Thiết kế vật phẩm/hoa/decor mang dấu ấn thương hiệu', cells: ['-', '-', '✓', '✓'] },
+      { kind: 'row', label: 'Khu vực thương hiệu riêng hoặc nhiệm vụ đồng hành riêng trong game', cells: ['-', '-', '-', '✓'] },
+      { kind: 'row', label: 'Voucher/quà tặng/thông điệp thương hiệu tích hợp trong hoạt động game', cells: ['-', '-', '-', '✓'] },
+      { kind: 'row', label: 'Ưu tiên đồng hành các hoạt động mở rộng của game trong tương lai', cells: ['-', '-', '-', '✓'] },
+      { kind: 'row', label: 'Mini challenge/sự kiện trong game mang tên thương hiệu', cells: ['-', '-', '-', '✓'] },
+      { kind: 'section', label: 'Quyền lợi tại workshop' },
+      { kind: 'row', label: 'Đặt standee tại workshop', cells: ['-', '-', '1 standee', '2 standee'] },
+      { kind: 'row', label: 'Sản phẩm/quà tặng được đưa vào phần quà workshop', cells: ['✓', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Nhắc tên trong phần cảm ơn tại workshop', cells: ['✓', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Nhận bộ tư liệu workshop để đăng lại', cells: ['✓', '✓', '✓', '✓'] },
+      { kind: 'row', label: 'Logo trên standee/ấn phẩm offline chung', cells: ['-', '-', '✓', '✓'] },
+      { kind: 'row', label: 'Đặt tài liệu/quà tặng tại bàn check-in', cells: ['-', '-', '✓', '✓'] },
+      { kind: 'row', label: 'Đại diện thương hiệu phát biểu ngắn', cells: ['-', '-', '-', '✓'] },
+      { kind: 'row', label: 'Gian hàng/khu vực trải nghiệm thương hiệu', cells: ['-', '-', '-', '✓'] },
     ],
   },
   benefitsNote: 'Các gói tài trợ bằng hiện vật hoặc bảo trợ truyền thông sẽ được thiết lập theo thỏa thuận hợp tác riêng giữa hai bên nhằm tối ưu hóa quyền lợi.',
@@ -309,8 +318,8 @@ roadmap: {
     body: 'Nếu doanh nghiệp của bạn đang tìm kiếm một dự án Gen Z, xanh, công nghệ và có câu chuyện cộng đồng rõ ràng, CHẠM Flora rất mong được đồng hành.',
     cta: 'Liên hệ ngay',
     email: 'thaolinhworkspace@gmail.com',
-    facebookUrl: 'https://www.facebook.com/',
-    facebookLabel: 'CHẠM - Green Tech Gamification',
+    facebookUrl: 'https://www.facebook.com/profile.php?id=61581382018162',
+    facebookLabel: 'E.C.O - Green Tech Gamification',
     tiktokUrl: 'https://www.tiktok.com/',
     tiktokLabel: 'E.C.O Startup',
     representative: 'Nguyễn Thị Thảo Linh · Leader Project',
