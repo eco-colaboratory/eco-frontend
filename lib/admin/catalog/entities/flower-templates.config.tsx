@@ -7,9 +7,7 @@ import type { CatalogColumnConfig, CatalogFieldConfig } from '@/components/admin
 
 export const flowerTemplatesSchema = z.object({
   name: z.string().min(1),
-  description: z.string().optional(),
-  petalCount: z.coerce.number().optional(),
-  colorPalette: z.string().optional(),
+  price: z.coerce.number().optional().default(0),
   imageUrl: z.string().url().optional().or(z.literal('')),
 });
 
@@ -17,21 +15,14 @@ export type FlowerTemplatesFormValues = z.infer<typeof flowerTemplatesSchema>;
 
 export const flowerTemplatesFields: CatalogFieldConfig[] = [
   { name: 'name', label: 'Tên', type: 'text', required: true },
-  { name: 'description', label: 'Mô tả', type: 'textarea' },
-  { name: 'petalCount', label: 'Số cánh', type: 'number' },
-  { name: 'colorPalette', label: 'Màu (phân cách dấu phẩy)', type: 'text' },
+  { name: 'price', label: 'Giá cơ bản', type: 'number' },
   { name: 'imageUrl', label: 'Ảnh URL', type: 'url' },
 ];
 
 export const flowerTemplatesColumns: CatalogColumnConfig<FlowerTemplate>[] = [
   { id: 'name', header: 'Tên', cell: (r) => r.name },
-  { id: 'petals', header: 'Cánh', cell: (r) => r.petalCount ?? '—' },
+  { id: 'basePrice', header: 'Giá cơ bản', cell: (r) => `${r.basePrice} xu` },
 ];
-
-function parsePalette(raw?: string): string[] | undefined {
-  if (!raw?.trim()) return undefined;
-  return raw.split(',').map((s) => s.trim()).filter(Boolean);
-}
 
 export const flowerTemplatesPageConfig = {
   title: 'Flower Templates',
@@ -43,16 +34,12 @@ export const flowerTemplatesPageConfig = {
   hooks: flowerTemplatesCatalog,
   mapToCreate: (v: FlowerTemplatesFormValues) => ({
     name: v.name,
-    description: v.description || undefined,
-    petalCount: v.petalCount,
-    colorPalette: parsePalette(v.colorPalette),
+    price: v.price,
     imageUrl: v.imageUrl || undefined,
   }),
   mapToUpdate: (v: FlowerTemplatesFormValues) => ({
     name: v.name,
-    description: v.description || undefined,
-    petalCount: v.petalCount,
-    colorPalette: parsePalette(v.colorPalette),
+    price: v.price,
     imageUrl: v.imageUrl || undefined,
   }),
 };

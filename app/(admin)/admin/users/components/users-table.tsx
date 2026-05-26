@@ -2,12 +2,9 @@
 
 import { useCallback, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ArrowDown, ArrowUpDown } from 'lucide-react';
-
 
 import {
   Table,
-  TableBody,
   TableCell,
   TableHead,
   TableHeader,
@@ -22,11 +19,11 @@ import { PageHeader } from '@/components/layout/page-header';
 import { useAppSelector } from '@/lib/redux/hooks';
 import { selectUser } from '@/lib/redux/slices/authSlice';
 import type { AdminUser } from '@/lib/types/admin/user';
-import { useUsersList } from '@/hooks/admin/useUsers';
+import { useUsersList } from '@/hooks/useUsers';
 import { AdminPagination } from '@/components/admin/shared/admin-pagination';
 import { AdminTableSkeleton } from '@/components/admin/shared/admin-table-skeleton';
-import { AdminEmptyState } from '@/components/admin/shared/admin-empty-state';
 import { AdminErrorState } from '@/components/admin/shared/admin-error-state';
+import { useDebounce } from '@/hooks/useDebounce';
 import { UserRowActions } from './user-row-actions';
 import { useUsersPage } from './users-provider';
 import { UsersPrimaryButtons } from './users-primary-buttons';
@@ -51,16 +48,18 @@ export function UsersTable() {
   const [filter, setFilter] = useState('');
   const [isBannedFilter, setIsBannedFilter] = useState<'all' | 'active' | 'banned'>('all');
 
+  const debouncedFilter = useDebounce(filter, 300);
+
   const handleStatusChange = useCallback((val: string) => {
     setIsBannedFilter(val as 'all' | 'active' | 'banned');
   }, []);
 
   const isBannedParam = isBannedFilter === 'all' ? undefined : isBannedFilter === 'banned';
 
-  const { data, isLoading, isError, error, refetch } = useUsersList({
+  const { data, isLoading, isFetching, isError, error, refetch } = useUsersList({
     page,
     pageSize: PAGE_SIZE,
-    search: filter,
+    search: debouncedFilter,
     isBanned: isBannedParam,
   });
 
@@ -88,98 +87,161 @@ export function UsersTable() {
         </PageHeader>
       </AdminFadeIn>
 
-      {isLoading ? <AdminTableSkeleton showHeader={false} /> : null}
-      {isError ? (
-        <AdminErrorState
-          message={error instanceof Error ? error.message : 'Không tải được danh sách'}
-          onRetry={() => void refetch()}
-        />
-      ) : null}
+      <DataTableShell>
+        <div className="space-y-4 p-4">
+          <DataTableToolbar
+            searchPlaceholder="Tìm kiếm người dùng…"
+            searchValue={filter}
+            onSearchChange={setFilter}
+            showStatusFilter
+            statusValue={isBannedFilter}
+            onStatusChange={handleStatusChange}
+          />
+        </div>
 
-      {!isLoading && !isError && data ? (
-        <DataTableShell>
-          <div className="space-y-4 p-4">
-            <DataTableToolbar
-              searchPlaceholder="Tìm kiếm người dùng…"
-              searchValue={filter}
-              onSearchChange={setFilter}
-              showStatusFilter
-              statusValue={isBannedFilter}
-              onStatusChange={handleStatusChange}
+        {isLoading ? (
+          <AdminTableSkeleton showHeader={false} />
+        ) : isError ? (
+          <div className="p-4">
+            <AdminErrorState
+              message={error instanceof Error ? error.message : 'Không tải được danh sách'}
+              onRetry={() => void refetch()}
             />
           </div>
-          
-          {filteredItems.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 px-4 border-t border-border text-center">
-              <p className="text-sm font-semibold text-muted-foreground">Không tìm thấy người dùng phù hợp</p>
-              <p className="text-xs text-muted-foreground/70 mt-1">Vui lòng kiểm tra lại từ khóa tìm kiếm hoặc bộ lọc trạng thái.</p>
-            </div>
-          ) : (
-            <>
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-border hover:bg-transparent h-[calc(50vh/10)]">
-                    <TableHead className="text-muted-foreground py-0 h-full">Tên đăng nhập</TableHead>
-                    <TableHead className="text-muted-foreground py-0 h-full">Tên hiển thị</TableHead>
-                    <TableHead className="text-muted-foreground py-0 h-full">Email</TableHead>
-                    <TableHead className="text-muted-foreground text-center py-0 h-full">Cấp độ</TableHead>
-                    <TableHead className="text-muted-foreground text-right py-0 h-full">Số dư xu</TableHead>
-                    <TableHead className="text-muted-foreground py-0 h-full">Trạng thái</TableHead>
-                    <TableHead className="text-muted-foreground py-0 h-full">Vai trò</TableHead>
-                    <TableHead className="w-12 py-0 h-full">
-                      <span className="sr-only">Hành động</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <MotionTableBody motionKey={`${page}-${filter}-${filteredItems.length}`}>
-                  {filteredItems.map((row) => {
-                    const isSelf = row.id === currentAdmin?.id;
-                    return (
-                      <MotionTableRow
-                        key={row.id}
-                        {...motionTableRowProps}
-                        className="h-[calc(70vh/11)] hover:bg-transparent"
-                      >
-                        <TableCell className="font-medium py-0">{row.username}</TableCell>
-                        <TableCell className="text-muted-foreground py-0">{displayName(row)}</TableCell>
-                        <TableCell className="py-0">{row.email ?? '—'}</TableCell>
-                        <TableCell className="text-center font-semibold py-0">Lv.{row.level ?? 1}</TableCell>
-                        <TableCell className="text-right font-medium text-amber-600 dark:text-amber-500 py-0">
-                          {(row.currency ?? 0).toLocaleString('vi-VN')} xu
-                        </TableCell>
-                        <TableCell className="py-0">
-                          <UserStatusBadge isBanned={row.isBanned} />
-                        </TableCell>
-                        <TableCell className="py-0">
-                          <UserRoleCell role={row.role} />
-                        </TableCell>
-                        <TableCell className="py-0">
-                          <UserRowActions
-                            isBanned={!!row.isBanned}
-                            disableBan={isSelf}
-                            onEdit={() => openEdit(row)}
-                            onBanToggle={() => setBanTarget(row)}
-                          />
-                        </TableCell>
-                      </MotionTableRow>
-                    );
-                  })}
-                </MotionTableBody>
-              </Table>
-              <div className="border-t border-border px-4 py-3">
-                <AdminPagination
-                  page={page}
-                  totalPages={totalPages}
-                  totalCount={data.totalCount}
-                  pageSize={PAGE_SIZE}
-                  onPageChange={setPage}
-                  disabled={isLoading}
-                />
+        ) : filteredItems.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 px-4 border-t border-border text-center">
+            <p className="text-sm font-semibold text-muted-foreground">Không tìm thấy người dùng phù hợp</p>
+            <p className="text-xs text-muted-foreground/70 mt-1">Vui lòng kiểm tra lại từ khóa tìm kiếm hoặc bộ lọc trạng thái.</p>
+          </div>
+        ) : (
+          <>
+            <div className={isFetching ? 'opacity-60 transition-opacity duration-200' : 'transition-opacity duration-200'}>
+              {/* Desktop view */}
+              <div className="hidden md:block">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-border hover:bg-transparent h-[calc(50vh/10)]">
+                      <TableHead className="text-muted-foreground py-0 h-full">Tên đăng nhập</TableHead>
+                      <TableHead className="text-muted-foreground py-0 h-full">Tên hiển thị</TableHead>
+                      <TableHead className="text-muted-foreground py-0 h-full">Email</TableHead>
+                      <TableHead className="text-muted-foreground text-center py-0 h-full">Cấp độ</TableHead>
+                      <TableHead className="text-muted-foreground text-right py-0 h-full">Số dư xu</TableHead>
+                      <TableHead className="text-muted-foreground py-0 h-full">Trạng thái</TableHead>
+                      <TableHead className="text-muted-foreground py-0 h-full">Vai trò</TableHead>
+                      <TableHead className="w-12 py-0 h-full">
+                        <span className="sr-only">Hành động</span>
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <MotionTableBody motionKey={`${page}-${debouncedFilter}-${filteredItems.length}`}>
+                    {filteredItems.map((row) => {
+                      const isSelf = row.id === currentAdmin?.id;
+                      return (
+                        <MotionTableRow
+                          key={row.id}
+                          {...motionTableRowProps}
+                          className="h-[calc(70vh/11)] hover:bg-transparent"
+                        >
+                          <TableCell className="font-medium py-0">{row.username}</TableCell>
+                          <TableCell className="text-muted-foreground py-0">{displayName(row)}</TableCell>
+                          <TableCell className="py-0">{row.email ?? '—'}</TableCell>
+                          <TableCell className="text-center font-semibold py-0">Lv.{row.level ?? 1}</TableCell>
+                          <TableCell className="text-right font-medium text-amber-600 dark:text-amber-500 py-0">
+                            {(row.currency ?? 0).toLocaleString('vi-VN')} xu
+                          </TableCell>
+                          <TableCell className="py-0">
+                            <UserStatusBadge isBanned={row.isBanned} />
+                          </TableCell>
+                          <TableCell className="py-0">
+                            <UserRoleCell role={row.role} />
+                          </TableCell>
+                          <TableCell className="py-0">
+                            <UserRowActions
+                              isBanned={!!row.isBanned}
+                              disableBan={isSelf}
+                              onEdit={() => openEdit(row)}
+                              onBanToggle={() => setBanTarget(row)}
+                            />
+                          </TableCell>
+                        </MotionTableRow>
+                      );
+                    })}
+                  </MotionTableBody>
+                </Table>
               </div>
-            </>
-          )}
-        </DataTableShell>
-      ) : null}
+
+              {/* Mobile view */}
+              <div className="grid grid-cols-1 gap-4 p-4 md:hidden">
+                {filteredItems.map((row) => {
+                  const isSelf = row.id === currentAdmin?.id;
+                  const initial = row.username ? row.username.substring(0, 2).toUpperCase() : 'US';
+                  return (
+                    <div
+                      key={row.id}
+                      className="relative flex flex-col gap-3 rounded-xl border border-border bg-card p-4 shadow-sm transition-all duration-200 hover:shadow-md"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bloom-green-mid/10 text-bloom-green-mid font-bold text-xs">
+                          {initial}
+                        </div>
+                        <div className="flex-1 min-w-0 pr-6 space-y-0.5">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h4 className="font-bold text-sm text-foreground truncate">{row.username}</h4>
+                            <UserRoleCell role={row.role} />
+                          </div>
+                          <p className="text-xs text-muted-foreground truncate">{displayName(row)}</p>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-border/40 pt-2 space-y-1.5">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-muted-foreground">Email:</span>
+                          <span className="font-medium text-foreground truncate max-w-[200px]">{row.email ?? '—'}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-muted-foreground">Cấp độ:</span>
+                          <span className="font-semibold text-foreground">Lv.{row.level ?? 1}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-muted-foreground">Số dư xu:</span>
+                          <span className="font-semibold text-amber-600 dark:text-amber-500">{(row.currency ?? 0).toLocaleString('vi-VN')} xu</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between border-t border-border/40 pt-2">
+                        <span className="text-[10px] uppercase font-semibold text-muted-foreground">
+                          {isSelf ? '(Tài khoản của bạn)' : ''}
+                        </span>
+                        <UserStatusBadge isBanned={row.isBanned} />
+                      </div>
+
+                      <div className="absolute right-2 top-2">
+                        <UserRowActions
+                          isBanned={!!row.isBanned}
+                          disableBan={isSelf}
+                          onEdit={() => openEdit(row)}
+                          onBanToggle={() => setBanTarget(row)}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="border-t border-border px-4 py-3">
+              <AdminPagination
+                page={page}
+                totalPages={totalPages}
+                totalCount={data?.totalCount ?? 0}
+                pageSize={PAGE_SIZE}
+                onPageChange={setPage}
+                disabled={isLoading || isFetching}
+              />
+            </div>
+          </>
+        )}
+      </DataTableShell>
     </div>
   );
 }
+

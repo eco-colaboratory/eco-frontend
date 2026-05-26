@@ -10,8 +10,8 @@ import {
   useCreateUser,
   useUnbanUser,
   useUpdateUser,
-} from '@/hooks/admin/useUsers';
-import { UserBanDialog } from './user-ban-dialog';
+} from '@/hooks/useUsers';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { UserFormDialog } from './user-form-dialog';
 import { useUsersPage } from './users-provider';
 
@@ -94,13 +94,19 @@ export function UsersDialogs() {
         onSubmit={formMode === 'create' ? handleCreate : handleUpdate}
         isPending={createMutation.isPending || updateMutation.isPending}
       />
-      <UserBanDialog
+      <ConfirmDialog
         open={!!banTarget}
         onOpenChange={(o) => !o && setBanTarget(null)}
-        username={banTarget?.username ?? ''}
-        isBanned={!!banTarget?.isBanned}
+        title={banTarget?.isBanned ? 'Mở khóa người dùng' : 'Khóa người dùng'}
+        description={
+          banTarget?.isBanned
+            ? `Mở khóa tài khoản "${banTarget.username}"? Người dùng này sẽ có thể đăng nhập lại.`
+            : `Khóa tài khoản "${banTarget?.username ?? ''}"? Người dùng này sẽ không thể đăng nhập hệ thống.`
+        }
+        confirmText={banTarget?.isBanned ? 'Mở khóa' : 'Khóa'}
         onConfirm={() => void confirmBan()}
         isPending={banMutation.isPending || unbanMutation.isPending}
+        variant={banTarget?.isBanned ? 'success' : 'danger'}
       />
     </>
   );

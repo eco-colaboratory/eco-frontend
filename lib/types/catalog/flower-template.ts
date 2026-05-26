@@ -1,19 +1,16 @@
 export interface FlowerTemplate {
   id: string;
   name: string;
-  description?: string;
-  petalCount?: number;
-  colorPalette?: string[];
+  basePrice: number;
   imageUrl?: string;
-  createdAt?: string;
+  synergyId?: string;
+  isDeleted: boolean;
 }
 
 export interface CreateFlowerTemplateRequest {
   name: string;
-  description?: string;
-  petalCount?: number;
-  colorPalette?: string[];
+  price: number;
   imageUrl?: string;
 }
 
-export type UpdateFlowerTemplateRequest = Partial<CreateFlowerTemplateRequest>;
+export type UpdateFlowerTemplateRequest = CreateFlowerTemplateRequest;
