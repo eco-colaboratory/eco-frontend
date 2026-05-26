@@ -156,32 +156,32 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
       },
     ],
   },
-roadmap: {
-  label: 'Lộ trình phát triển',
-  title: 'Hành trình triển khai 2026',
-  items: [
-    {
-      month: 'Tháng 6',
-      title: 'Thử nghiệm phiên bản đầu',
-      description: 'Ra mắt phiên bản thử nghiệm đầu tiên của game, khảo sát phản hồi từ nhóm người dùng Gen Z nòng cốt để tối ưu trải nghiệm.',
-    },
-    {
-      month: 'Tháng 7',
-      title: 'Xây dựng cộng đồng',
-      description: 'Phát triển cộng đồng sống xanh năng động, triển khai các minigame và thử thách vệ tinh nhằm thu hút sự quan tâm trước giai đoạn ra mắt chính thức.',
-    },
-    {
-      month: 'Tháng 8',
-      title: 'Khởi động chiến dịch',
-      description: 'Chính thức triển khai chiến dịch quy mô lớn, ra mắt phiên bản hoàn chỉnh và quảng bá rộng rãi đến học sinh – sinh viên toàn thành phố.',
-    },
-    {
-      month: 'Tháng 9',
-      title: 'Hoạt động đồng hành & tổng kết',
-      description: 'Hiện thực hóa vườn hoa thật từ thành quả tích lũy của người chơi, triển khai các quyền lợi tài trợ, đo lường hiệu quả truyền thông và phát hành báo cáo tổng kết.',
-    },
-  ],
-},
+  roadmap: {
+    label: 'Lộ trình phát triển',
+    title: 'Hành trình triển khai 2026',
+    items: [
+      {
+        month: 'Tháng 6',
+        title: 'Thử nghiệm phiên bản đầu',
+        description: 'Ra mắt phiên bản thử nghiệm đầu tiên của game, khảo sát phản hồi từ nhóm người dùng Gen Z nòng cốt để tối ưu trải nghiệm.',
+      },
+      {
+        month: 'Tháng 7',
+        title: 'Xây dựng cộng đồng',
+        description: 'Phát triển cộng đồng sống xanh năng động, triển khai các minigame và thử thách vệ tinh nhằm thu hút sự quan tâm trước giai đoạn ra mắt chính thức.',
+      },
+      {
+        month: 'Tháng 8',
+        title: 'Khởi động chiến dịch',
+        description: 'Chính thức triển khai chiến dịch quy mô lớn, ra mắt phiên bản hoàn chỉnh và quảng bá rộng rãi đến học sinh – sinh viên toàn thành phố.',
+      },
+      {
+        month: 'Tháng 9',
+        title: 'Hoạt động đồng hành & tổng kết',
+        description: 'Hiện thực hóa vườn hoa thật từ thành quả tích lũy của người chơi, triển khai các quyền lợi tài trợ, đo lường hiệu quả truyền thông và phát hành báo cáo tổng kết.',
+      },
+    ],
+  },
   tiers: [
     { name: 'Đồng', slug: 'dong', teaser: '2.000.000 VNĐ', highlight: 'base' },
     { name: 'Bạc', slug: 'bac', teaser: '5.000.000 VNĐ', highlight: 'base' },
@@ -317,7 +317,7 @@ roadmap: {
     title: 'Cùng gieo hạt mầm đầu tiên với CHẠM Flora',
     body: 'Nếu doanh nghiệp của bạn đang tìm kiếm một dự án Gen Z, xanh, công nghệ và có câu chuyện cộng đồng rõ ràng, CHẠM Flora rất mong được đồng hành.',
     cta: 'Liên hệ ngay',
-    email: 'thaolinhworkspace@gmail.com',
+    email: 'treesforfuture.eco@gmail.com',
     facebookUrl: 'https://www.facebook.com/profile.php?id=61581382018162',
     facebookLabel: 'E.C.O - Green Tech Gamification',
     tiktokUrl: 'https://www.tiktok.com/',
