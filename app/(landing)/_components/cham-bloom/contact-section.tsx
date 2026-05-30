@@ -25,6 +25,24 @@ function TikTokIcon(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
+function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+    </svg>
+  )
+}
+
+
 function FacebookIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -182,6 +200,17 @@ export function ContactSection() {
                       <TikTokIcon className="h-3.5 w-3.5 text-bloom-accent-mint group-hover/link:scale-110 transition-transform" />
                       <span className="truncate">{contact.tiktokLabel}</span>
                     </a>
+
+                    <a
+                      href={contact.youtubeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2.5 py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 hover:text-white transition-all group/link border border-white/5 text-[11px]"
+                      aria-label={`YouTube: ${contact.youtubeLabel}`}
+                    >
+                      <YoutubeIcon className="h-3.5 w-3.5 text-bloom-accent-mint group-hover/link:scale-110 transition-transform" />
+                      <span className="truncate">{contact.youtubeLabel}</span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -191,8 +220,22 @@ export function ContactSection() {
 
         {/* Footer link navigation for professional startup feeling */}
         <footer className="relative z-10 mx-auto mt-10 max-w-7xl border-t border-white/10 px-4 pt-8 text-left text-white/50 sm:px-6">
-          <div className="grid grid-cols-3 gap-6 pb-6">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8">
+            <div className="md:col-span-3 space-y-3">
+              <Link href="#hero" className="inline-block hover:opacity-90 transition-opacity">
+                <Image
+                  src="/assets/logo/CHAM-Flora.png"
+                  alt="CHẠM Flora Logo"
+                  width={140}
+                  height={35}
+                  className="h-7 w-auto object-contain"
+                />
+              </Link>
+              <p className="text-[11px] leading-relaxed text-white/50 max-w-[200px] font-light">
+                Dự án game hóa hành động xanh dành cho Gen Z, kết nối thương hiệu và cộng đồng.
+              </p>
+            </div>
+            <div className="md:col-span-3 space-y-2">
               <h4 className="text-white font-semibold text-xs tracking-wide font-display">Khám phá</h4>
               <ul className="space-y-1.5 text-[11px] font-light">
                 <li><Link href="#about" className="hover:text-bloom-green-mid transition-colors">Về dự án</Link></li>
@@ -200,17 +243,17 @@ export function ContactSection() {
                 <li><Link href="#roadmap" className="hover:text-bloom-green-mid transition-colors">Lộ trình 2026</Link></li>
               </ul>
             </div>
-            <div className="space-y-2">
+            <div className="md:col-span-3 space-y-2">
               <h4 className="text-white font-semibold text-xs tracking-wide font-display">Tài trợ</h4>
               <ul className="space-y-1.5 text-[11px] font-light">
                 <li><Link href="#sponsorship" className="hover:text-bloom-green-mid transition-colors">Gói tài trợ</Link></li>
                 <li><Link href="#benefits" className="hover:text-bloom-green-mid transition-colors">Bảng so sánh quyền lợi</Link></li>
               </ul>
             </div>
-            <div className="space-y-2">
+            <div className="md:col-span-3 space-y-2">
               <h4 className="text-white font-semibold text-xs tracking-wide font-display">Tài nguyên</h4>
               <ul className="space-y-1.5 text-[11px] font-light">
-                <li><a href="#sponsorship" className="hover:text-bloom-accent-mint transition-colors">Proposal (PDF)</a></li>
+                <li><a href="/assets/proposal/CHAM-FLORA.pdf" download="CHAM-FLORA.pdf" className="hover:text-bloom-accent-mint transition-colors">Proposal (PDF)</a></li>
                 <li><a href={`mailto:${contact.email}`} className="hover:text-bloom-accent-mint transition-colors">Media Kit & Logo</a></li>
                 <li><a href={`mailto:${contact.email}`} className="hover:text-bloom-accent-mint transition-colors">Đăng ký đối tác</a></li>
               </ul>

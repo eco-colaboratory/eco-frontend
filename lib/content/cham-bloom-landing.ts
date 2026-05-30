@@ -74,6 +74,8 @@ export interface ChamBloomContent {
     facebookLabel: string
     tiktokUrl: string
     tiktokLabel: string
+    youtubeUrl: string
+    youtubeLabel: string
     representative: string
     copyright: string
   }
@@ -320,8 +322,10 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
     email: 'treesforfuture.eco@gmail.com',
     facebookUrl: 'https://www.facebook.com/profile.php?id=61581382018162',
     facebookLabel: 'E.C.O - Green Tech Gamification',
-    tiktokUrl: 'https://www.tiktok.com/',
+    tiktokUrl: 'https://www.tiktok.com/@chamflora.eco',
     tiktokLabel: 'E.C.O Startup',
+    youtubeUrl: 'https://www.youtube.com/@e.c.o-greentechgamification',
+    youtubeLabel: 'E.C.O - Green Tech Gamification',
     representative: 'Nguyễn Thị Thảo Linh · Leader Project',
     copyright: `© ${new Date().getFullYear()} CHẠM Flora · Flow & Flora`,
   },

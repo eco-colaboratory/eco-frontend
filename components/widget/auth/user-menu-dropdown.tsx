@@ -2,9 +2,13 @@
 
 import { useEffect, useId, useRef, useState } from 'react'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
-import { ChevronDown, LogOut } from 'lucide-react'
+import { ChevronDown, LogOut, LayoutDashboard } from 'lucide-react'
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { useLandingAuth } from '@/hooks/useLandingAuth'
+import { useAppSelector } from '@/lib/redux/hooks'
+import { selectUser } from '@/lib/redux/slices/authSlice'
+import { hasAdminRole } from '@/lib/types/roles'
 
 type UserMenuDropdownProps = {
   displayName: string
@@ -25,6 +29,8 @@ export function UserMenuDropdown({
   const rootRef = useRef<HTMLDivElement>(null)
   const { logout, isLoading } = useLandingAuth()
   const reduced = useReducedMotion()
+  const user = useAppSelector(selectUser)
+  const isAdmin = user && user.role ? hasAdminRole(user.role) : false
 
   useEffect(() => {
     if (!open) return
@@ -93,6 +99,18 @@ export function UserMenuDropdown({
                 : { duration: 0.18, ease: [0.22, 1, 0.36, 1] }
             }
           >
+            {isAdmin && (
+              <Link
+                href="/admin/dashboard"
+                role="menuitem"
+                onClick={() => setOpen(false)}
+                className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-xs font-medium text-bloom-green-deep transition-colors hover:bg-bloom-green-mid/10 font-display border-b border-bloom-green-mid/10"
+              >
+                <LayoutDashboard className="h-3.5 w-3.5" aria-hidden />
+                Dashboard
+              </Link>
+            )}
+
             <button
               type="button"
               role="menuitem"

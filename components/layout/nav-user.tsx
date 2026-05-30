@@ -1,6 +1,6 @@
 'use client';
 
-import { LogOut } from 'lucide-react';
+import { LogOut, MoreVertical } from 'lucide-react';
 
 import { useAuth } from '@/hooks/useAuth';
 import {
@@ -44,6 +44,7 @@ export function NavUser() {
                   {user?.email ?? user?.role?.join(', ')}
                 </span>
               </div>
+              <MoreVertical className="ml-auto size-4 group-data-[collapsible=icon]:hidden text-muted-foreground" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
