@@ -24,7 +24,7 @@ export default function SafeImage({
   fill,
   className,
   priority,
-  fallbackSrc = '/banner_website.jpg',
+  fallbackSrc = '/assets/logo/logo_flower.png',
   onError,
 }: SafeImageProps) {
   const [prevSrc, setPrevSrc] = useState(src);

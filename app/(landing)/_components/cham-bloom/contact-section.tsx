@@ -220,8 +220,22 @@ export function ContactSection() {
 
         {/* Footer link navigation for professional startup feeling */}
         <footer className="relative z-10 mx-auto mt-10 max-w-7xl border-t border-white/10 px-4 pt-8 text-left text-white/50 sm:px-6">
-          <div className="grid grid-cols-3 gap-6 pb-6">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8">
+            <div className="md:col-span-3 space-y-3">
+              <Link href="#hero" className="inline-block hover:opacity-90 transition-opacity">
+                <Image
+                  src="/assets/logo/CHAM-Flora.png"
+                  alt="CHẠM Flora Logo"
+                  width={140}
+                  height={35}
+                  className="h-7 w-auto object-contain"
+                />
+              </Link>
+              <p className="text-[11px] leading-relaxed text-white/50 max-w-[200px] font-light">
+                Dự án game hóa hành động xanh dành cho Gen Z, kết nối thương hiệu và cộng đồng.
+              </p>
+            </div>
+            <div className="md:col-span-3 space-y-2">
               <h4 className="text-white font-semibold text-xs tracking-wide font-display">Khám phá</h4>
               <ul className="space-y-1.5 text-[11px] font-light">
                 <li><Link href="#about" className="hover:text-bloom-green-mid transition-colors">Về dự án</Link></li>
@@ -229,17 +243,17 @@ export function ContactSection() {
                 <li><Link href="#roadmap" className="hover:text-bloom-green-mid transition-colors">Lộ trình 2026</Link></li>
               </ul>
             </div>
-            <div className="space-y-2">
+            <div className="md:col-span-3 space-y-2">
               <h4 className="text-white font-semibold text-xs tracking-wide font-display">Tài trợ</h4>
               <ul className="space-y-1.5 text-[11px] font-light">
                 <li><Link href="#sponsorship" className="hover:text-bloom-green-mid transition-colors">Gói tài trợ</Link></li>
                 <li><Link href="#benefits" className="hover:text-bloom-green-mid transition-colors">Bảng so sánh quyền lợi</Link></li>
               </ul>
             </div>
-            <div className="space-y-2">
+            <div className="md:col-span-3 space-y-2">
               <h4 className="text-white font-semibold text-xs tracking-wide font-display">Tài nguyên</h4>
               <ul className="space-y-1.5 text-[11px] font-light">
-                <li><a href="#sponsorship" className="hover:text-bloom-accent-mint transition-colors">Proposal (PDF)</a></li>
+                <li><a href="/assets/proposal/CHAM-FLORA.pdf" download="CHAM-FLORA.pdf" className="hover:text-bloom-accent-mint transition-colors">Proposal (PDF)</a></li>
                 <li><a href={`mailto:${contact.email}`} className="hover:text-bloom-accent-mint transition-colors">Media Kit & Logo</a></li>
                 <li><a href={`mailto:${contact.email}`} className="hover:text-bloom-accent-mint transition-colors">Đăng ký đối tác</a></li>
               </ul>

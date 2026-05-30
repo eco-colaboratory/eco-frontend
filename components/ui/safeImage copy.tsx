@@ -6,7 +6,7 @@ import {
   type SyntheticEvent,
 } from "react";
 
-export const SAFE_IMAGE_FALLBACK_SRC = "/assets/logo/logo_xanh.png";
+export const SAFE_IMAGE_FALLBACK_SRC = "/assets/logo/logo_flower.png";
 
 export type SafeImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> & {
   src: string | null | undefined;
