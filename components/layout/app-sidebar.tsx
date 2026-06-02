@@ -1,6 +1,7 @@
 'use client';
 
 import { m } from 'framer-motion';
+import Image from 'next/image';
 
 import { useLayout } from '@/context/layout-provider';
 import {
@@ -33,7 +34,13 @@ export function AppSidebar() {
             <SidebarMenuItem>
               <SidebarMenuButton size="lg" className="pointer-events-none">
                 <div className="flex aspect-square size-10 group-data-[collapsible=icon]:size-8 items-center justify-center rounded-lg overflow-hidden transition-all duration-200">
-                  <img src="/assets/logo/logo_xanh.png" alt="CHẠM Flora Logo" className="size-full object-contain" />
+                  <Image
+                    src="/assets/logo/CHAM-Flora.png"
+                    alt="CHẠM Flora Logo"
+                    width={40}
+                    height={40}
+                    className="size-full object-contain"
+                  />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                   <span className="truncate font-semibold">CHẠM Flora</span>

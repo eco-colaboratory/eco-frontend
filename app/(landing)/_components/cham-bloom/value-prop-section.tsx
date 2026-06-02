@@ -7,8 +7,7 @@ import { MotionWrapper } from '../layout/motion-wrapper'
 import { SectionLabel } from '../layout/section-label'
 import { SectionShell } from '../layout/section-shell'
 
-const unsplash = (id: string, w = 600) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`
+
 
 const PROP_IMAGES = [
   '/assets/landing/genz.jpg', // Lớp học Gen Z
@@ -98,7 +97,7 @@ export function ValuePropSection() {
 
                 {/* Checklist 2x2 cực kỳ gọn gàng */}
                 <div className="mt-8 grid w-full grid-cols-1 gap-6 sm:grid-cols-2">
-                  {valueProp.cards.map((card, i) => (
+                  {valueProp.cards.map((card) => (
                     <div
                       key={card.title}
                       className="group rounded-2xl border border-bloom-green-mid/10 bg-white/40 p-5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-white/70"

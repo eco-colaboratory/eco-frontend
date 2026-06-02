@@ -1,181 +1,161 @@
 'use client'
 
 import Image from 'next/image'
+import { Gamepad2, Sparkles, Sprout, Users } from 'lucide-react'
 import { CHAM_BLOOM_CONTENT } from '@/lib/content/cham-bloom-landing'
 import { cn } from '@/lib/utils'
 import { MotionWrapper } from '../layout/motion-wrapper'
 import { SectionLabel } from '../layout/section-label'
 import { SectionShell } from '../layout/section-shell'
-import { SectionWave } from '../layout/section-wave'
-import { ArrowRight } from 'lucide-react'
+import { BloomButton } from '../layout/bloom-button'
 
 const ABOUT_TAGS = ['Gen Z Eco', 'Gamification', 'Tác động thật'] as const
 
-// Định nghĩa màu nền, màu chữ và shadow cho 4 card pastel ở dưới
-const CARD_STYLES = [
+const ICONS = {
+  gamepad: Gamepad2,
+  sparkles: Sparkles,
+  users: Users,
+  sprout: Sprout,
+} as const
+
+const CARD_COLOR_SCHEMES = [
   {
-    bg: 'bg-[#FCDFD7]/50 border-[#FCDFD7]/30 text-[#5C2B1D] hover:bg-[#FCDFD7]/70 hover:border-[#FCDFD7]/60 hover:shadow-[#FCDFD7]/20',
-    numberColor: 'text-[#5C2B1D]/15',
+    bg: 'bg-[#fde0e8]/80 hover:bg-[#fde0e8] border-[#f58fb1]',
+    iconBg: 'bg-[#f58fb1]/20 text-[#f58fb1]',
+    badgeBg: 'bg-[#f58fb1]/10 text-[#f58fb1]',
   },
   {
-    bg: 'bg-[#FDF3C7]/50 border-[#FDF3C7]/30 text-[#5C4D1D] hover:bg-[#FDF3C7]/70 hover:border-[#FDF3C7]/60 hover:shadow-[#FDF3C7]/20',
-    numberColor: 'text-[#5C4D1D]/15',
+    bg: 'bg-[#fdf3c7]/80 hover:bg-[#fdf3c7] border-[#ffcb45]',
+    iconBg: 'bg-[#ffcb45]/20 text-[#d9980d]',
+    badgeBg: 'bg-[#ffcb45]/10 text-[#d9980d]',
   },
   {
-    bg: 'bg-[#D1EBE9]/50 border-[#D1EBE9]/30 text-[#1D5C58] hover:bg-[#D1EBE9]/70 hover:border-[#D1EBE9]/60 hover:shadow-[#D1EBE9]/20',
-    numberColor: 'text-[#1D5C58]/15',
+    bg: 'bg-[#eef7e8]/80 hover:bg-[#eef7e8] border-[#82bf47]',
+    iconBg: 'bg-[#82bf47]/20 text-[#548722]',
+    badgeBg: 'bg-[#82bf47]/10 text-[#548722]',
   },
   {
-    bg: 'bg-[#E0E4FC]/50 border-[#E0E4FC]/30 text-[#222E7A] hover:bg-[#E0E4FC]/70 hover:border-[#E0E4FC]/60 hover:shadow-[#E0E4FC]/20',
-    numberColor: 'text-[#222E7A]/15',
+    bg: 'bg-[#e0e4fc]/80 hover:bg-[#e0e4fc] border-[#92a1fa]',
+    iconBg: 'bg-[#92a1fa]/20 text-[#4c5de6]',
+    badgeBg: 'bg-[#92a1fa]/10 text-[#4c5de6]',
   },
-]
+] as const
 
 export function AboutSection() {
   const { about, vision, mission } = CHAM_BLOOM_CONTENT
 
   return (
-    <SectionShell id="about" bg="cream" className="py-10 md:py-14 pb-0 md:pb-0">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-        {/* Phần trên: Chia đôi cột Trái (Giới thiệu) & cột Phải (Tầm nhìn & Sứ mệnh) */}
-        <div className="grid gap-8 lg:grid-cols-12 lg:gap-12 items-center">
-
-          {/* Cột trái: Thông tin giới thiệu và CTA */}
-          <MotionWrapper className="lg:col-span-5 flex flex-col items-start">
+    <SectionShell id="about" bg="cream" className="overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        
+        {/* Top grid: Title + Vision & Mission */}
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 items-center">
+          <MotionWrapper className="lg:col-span-5">
             <SectionLabel variant="glass" tone="light">
               {about.label}
             </SectionLabel>
-            <h2 className="mt-2 text-balance font-display text-3xl font-extrabold leading-[1.15] text-bloom-green-deep md:text-4xl lg:text-[2.75rem]">
+            <h2 className="mt-5 max-w-xl text-balance font-display text-4xl font-black leading-[1.15] text-bloom-green-deep md:text-5xl bloom-text-shadow">
               {about.title}
             </h2>
-            <p className="mt-3.5 max-w-md border-l-2 border-bloom-green-mid/40 pl-5 text-pretty text-base font-light leading-relaxed text-gray-600">
+            <p className="mt-5 max-w-lg text-pretty text-sm font-medium leading-relaxed text-bloom-green-deep/75">
               {about.intro}
             </p>
 
-            {/* Danh sách tag nổi bật */}
-            <ul className="mt-4 flex flex-wrap gap-2" aria-label="Điểm nổi bật">
+            <ul className="mt-6 flex flex-wrap gap-2.5" aria-label="Điểm nổi bật">
               {ABOUT_TAGS.map((tag) => (
                 <li key={tag}>
-                  <span className="bloom-tag-chip bg-white/60 text-bloom-green-deep border border-bloom-green-mid/10 text-xs font-semibold py-1 px-3.5 rounded-full shadow-sm">
-                    {tag}
+                  <span className="inline-flex rounded-full border-2 border-bloom-green-deep bg-white px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-bloom-green-deep shadow-[2px_2px_0px_var(--bloom-green-deep)]">
+                    🌱 {tag}
                   </span>
                 </li>
               ))}
             </ul>
 
-            {/* Nút hành động cuốn hút */}
-            <div className="mt-5">
-              <a
-                href="#sponsorship"
-                className="inline-flex items-center gap-2 rounded-full bg-bloom-dark hover:bg-bloom-green-deep text-white px-7 py-3.5 text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md shadow-bloom-green-deep/10 hover:shadow-lg group cursor-pointer"
-              >
-                Đồng hành cùng dự án
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
+            <div className="mt-8">
+              <BloomButton href="#sponsorship" variant="primary">
+                <span>Đồng hành cùng dự án</span>
+              </BloomButton>
             </div>
           </MotionWrapper>
 
-          {/* Cột phải: Khối Tầm nhìn & Sứ mệnh (Hiển thị song song / so le 3D cực xịn) */}
-          <div className="lg:col-span-7 relative">
-            {/* Hiệu ứng Ambient Glow mờ phía sau */}
-            <div className="absolute -top-10 -right-10 w-72 h-72 rounded-full bg-bloom-accent-mint/10 blur-[80px] pointer-events-none" />
-            <div className="absolute -bottom-10 -left-10 w-72 h-72 rounded-full bg-bloom-green-mid/5 blur-[80px] pointer-events-none" />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:py-4">
-
-              {/* Card Tầm nhìn */}
-              <MotionWrapper
-                delay={0.1}
-                className="relative overflow-hidden rounded-[2rem] border border-white/40 bg-white/30 p-5 shadow-md backdrop-blur-md transition-all duration-500 hover:shadow-lg sm:-translate-y-2"
-              >
-                <div className="flex items-center gap-2.5 mb-2">
-                  <h3 className="font-display text-sm font-extrabold uppercase tracking-wider text-bloom-green-deep border-b border-bloom-green-mid/20 pb-0.5">
-                    {vision.title}
-                  </h3>
-                </div>
-                <p className="text-sm font-light leading-relaxed text-gray-600 mb-3 min-h-[72px]">
-                  {vision.body}
-                </p>
-                {/* Hình ảnh nghệ thuật thu nhỏ phía dưới card */}
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/50 shadow-sm">
-                  <Image
-                    src={vision.imageSrc}
-                    alt={vision.imageAlt}
-                    fill
-                    className="object-cover transition-transform duration-700 hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, 250px"
-                  />
-                </div>
-              </MotionWrapper>
-
-              {/* Card Sứ mệnh */}
-              <MotionWrapper
-                delay={0.2}
-                className="relative overflow-hidden rounded-[2rem] border border-white/40 bg-white/30 p-4 shadow-md backdrop-blur-md transition-all duration-500 hover:shadow-lg sm:translate-y-2"
-              >
-                <div className="flex items-center gap-2.5 mb-2">
-                  <h3 className="font-display text-sm font-extrabold uppercase tracking-wider text-bloom-green-deep border-b border-bloom-green-mid/20 pb-0.5">
-                    {mission.title}
-                  </h3>
-                </div>
-                <p className="text-sm font-light leading-relaxed text-gray-600 mb-3 min-h-[72px]">
-                  {mission.body}
-                </p>
-                {/* Hình ảnh nghệ thuật thu nhỏ phía dưới card */}
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/50 shadow-sm">
-                  <Image
-                    src={mission.imageSrc}
-                    alt={mission.imageAlt}
-                    fill
-                    className="object-cover transition-transform duration-700 hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, 250px"
-                  />
-                </div>
-              </MotionWrapper>
-
+          {/* Right side: Vision & Mission Cards */}
+          <div className="lg:col-span-7">
+            <div className="grid gap-6 md:grid-cols-2">
+              {[vision, mission].map((item, index) => (
+                <MotionWrapper
+                  key={item.title}
+                  delay={0.1 * (index + 1)}
+                  className={cn(index === 1 && 'md:mt-10')}
+                >
+                  <article className="overflow-hidden rounded-[2rem] border-2 border-bloom-green-deep bg-white shadow-[4px_4px_0px_var(--bloom-green-deep)] hover:translate-y-[-3px] transition-transform duration-300">
+                    <div className="relative aspect-[4/3] w-full border-b-2 border-bloom-green-deep">
+                      <Image
+                        src={item.imageSrc}
+                        alt={item.imageAlt}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 360px"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-bloom-dark/65 via-transparent to-transparent" />
+                      <h3 className="absolute bottom-4 left-4 font-display text-2xl font-black text-white bloom-text-shadow">
+                        {item.title}
+                      </h3>
+                    </div>
+                    <p className="p-5 text-xs font-medium leading-relaxed text-bloom-green-deep/75">
+                      {item.body}
+                    </p>
+                  </article>
+                </MotionWrapper>
+              ))}
             </div>
           </div>
-
         </div>
 
-        {/* Phần dưới: 4 card nằm ngang theo phong cách thiết kế mẫu */}
-        <div className="mt-10 md:mt-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {about.cards.map((card, i) => {
-              const style = CARD_STYLES[i] || CARD_STYLES[0]
-              return (
-                <MotionWrapper
-                  key={card.title}
-                  delay={0.1 * (i + 1)}
-                  className={cn(
-                    'relative overflow-hidden rounded-[2rem] border p-6 md:p-7 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1.5 hover:shadow-md',
-                    style.bg
-                  )}
-                >
-                  <div className="flex justify-between items-start">
-                    {/* Số thứ tự siêu lớn ở góc trái */}
-                    <span className={cn('font-display text-3xl md:text-6xl font-extrabold tracking-tight select-none leading-none', style.numberColor)}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                  </div>
+        {/* Bottom grid: 4 Game-like feature cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-14 sm:mt-16">
+          {about.cards.map((card, index) => {
+            const Icon = ICONS[card.icon as keyof typeof ICONS] ?? Sprout
+            const scheme = CARD_COLOR_SCHEMES[index] ?? CARD_COLOR_SCHEMES[0]
 
-                  {/* Nội dung card */}
-                  <h3 className="font-display text-base md:text-lg font-extrabold mt-6 md:mt-7 mb-1.5 leading-snug">
+            return (
+              <MotionWrapper key={card.title} delay={0.08 * index}>
+                <article className={cn(
+                  'relative flex flex-col p-6 h-full rounded-[2rem] border-2 border-bloom-green-deep shadow-[4px_4px_0px_var(--bloom-green-deep)] transition-all duration-300 cursor-default group',
+                  'hover:translate-y-[-6px] hover:rotate-[1deg] hover:shadow-[6px_6px_0px_var(--bloom-green-deep)]',
+                  scheme.bg
+                )}>
+                  {/* Big cute index number */}
+                  <span className={cn(
+                    'absolute right-5 top-5 font-mono text-xs font-black px-2 py-0.5 rounded-full border-2 border-bloom-green-deep',
+                    scheme.badgeBg
+                  )}>
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+
+                  {/* Icon circle */}
+                  <span className={cn(
+                    'flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-bloom-green-deep shadow-[2px_2px_0px_var(--bloom-green-deep)] group-hover:scale-105 transition-transform duration-300',
+                    scheme.iconBg
+                  )}>
+                    <Icon className="h-6 w-6 stroke-[2]" aria-hidden />
+                  </span>
+
+                  {/* Card Title */}
+                  <h3 className="mt-6 font-display text-base font-black leading-tight text-bloom-green-deep">
                     {card.title}
                   </h3>
-                  <p className="text-xs md:text-[13px] font-light leading-relaxed opacity-85">
+
+                  {/* Card Description */}
+                  <p className="mt-3 text-[12px] font-medium leading-relaxed text-bloom-green-deep/75">
                     {card.description}
                   </p>
-                </MotionWrapper>
-              )
-            })}
-          </div>
+                </article>
+              </MotionWrapper>
+            )
+          })}
         </div>
 
       </div>
-
-      <SectionWave className="relative z-10 mt-6 sm:mt-8" fillClassName="text-bloom-green-mist" />
     </SectionShell>
   )
 }

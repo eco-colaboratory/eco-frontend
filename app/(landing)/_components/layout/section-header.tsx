@@ -26,7 +26,7 @@ export function SectionHeader({
       </SectionLabel>
       <h2
         className={cn(
-          'mt-4 font-display text-3xl font-semibold leading-[1.15] text-bloom-green-deep md:text-4xl lg:text-[2.75rem]',
+          'mt-4 font-display text-3xl font-semibold leading-[1.08] text-bloom-green-deep md:text-4xl lg:text-[3rem]',
           centered && 'mx-auto max-w-3xl',
         )}
       >

@@ -136,12 +136,12 @@ export function Navbar() {
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex flex-col items-center">
       <m.nav
         className={cn(
-          'pointer-events-auto grid grid-cols-2 sm:grid-cols-3 items-center px-6 py-0 sm:px-6 sm:py-1',
+          'pointer-events-auto grid grid-cols-2 sm:grid-cols-3 items-center px-6 py-2 sm:px-6 sm:py-2.5 transition-all duration-300',
           isScrolled
             ? cn(
               pillWidth,
-              'bg-bloom-cream/80 backdrop-blur-[10px] rounded-full',
-              'shadow-[0_4px_30px_rgba(26,60,40,0.08),0_2px_8px_rgba(0,0,0,0.04)]',
+              'bg-bloom-cream/92 border border-bloom-green-deep/20 backdrop-blur-[12px] rounded-full mt-4',
+              'shadow-[0_8px_30px_rgba(79,53,22,0.08),0_4px_12px_rgba(0,0,0,0.02)]',
             )
             : cn(
               'w-full max-w-7xl',
@@ -151,7 +151,7 @@ export function Navbar() {
         initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : 10 }}
         animate={{
           opacity: 1,
-          y: isScrolled && !reduced ? 20 : 0,
+          y: isScrolled && !reduced ? 10 : 0,
         }}
         transition={{
           opacity: {
@@ -166,14 +166,14 @@ export function Navbar() {
           <Link
             href="#hero"
             onClick={(e) => scrollToSection(e, 'hero')}
-            className="flex items-center gap-2 font-sans text-base font-medium text-bloom-green-deep hover:opacity-90 transition-opacity"
+            className="flex items-center gap-2 font-sans text-base font-medium text-bloom-green-deep hover:scale-[1.03] transition-transform"
           >
             <Image
-              src="/assets/logo/logo_xanh.png"
+              src="/assets/logo/CHAM-Flora.png"
               alt="CHẠM Flora Logo"
-              width={54}
-              height={54}
-              className="shrink-0 object-contain"
+              width={120}
+              height={40}
+              className="h-[32px] sm:h-[38px] w-auto shrink-0 object-contain"
             />
           </Link>
         </div>
@@ -188,17 +188,17 @@ export function Navbar() {
                 href={l.href}
                 onClick={(e) => scrollToSection(e, sectionId)}
                 className={cn(
-                  'relative py-1.5 text-[13px] font-medium transition-colors font-display',
+                  'relative py-1.5 text-[13.5px] font-bold transition-colors font-display tracking-wide',
                   isActive
                     ? 'text-bloom-green-deep'
-                    : 'text-gray-600 hover:text-bloom-green-deep',
+                    : 'text-bloom-green-deep/60 hover:text-bloom-green-deep',
                 )}
               >
                 {l.label}
                 {isActive && (
                   <m.div
                     layoutId="activeTab"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-bloom-green-mid rounded-full"
+                    className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-4 h-1.5 bg-bloom-accent-mint rounded-full"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -214,7 +214,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setAuthOpen(true)}
-              className="hidden rounded-full bg-bloom-green-mid px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-bloom-green-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bloom-green-mid sm:inline-flex font-display"
+              className="hidden bloom-btn-3d bloom-btn-3d-petal px-4.5 py-1.5 text-[11px] text-white sm:inline-flex cursor-pointer"
             >
               Đăng nhập
             </button>
@@ -222,12 +222,12 @@ export function Navbar() {
 
           <button
             type="button"
-            className="sm:hidden"
+            className="sm:hidden flex items-center justify-center p-1.5 rounded-full border border-bloom-green-deep/15 bg-white/50 text-bloom-green-deep hover:bg-white transition-colors"
             aria-label={open ? 'Đóng menu' : 'Mở menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? <CloseIcon className="h-6 w-6 text-bloom-green-deep" /> : <MenuIcon className="h-6 w-6 text-bloom-green-deep" />}
+            {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
           </button>
         </div>
       </m.nav>

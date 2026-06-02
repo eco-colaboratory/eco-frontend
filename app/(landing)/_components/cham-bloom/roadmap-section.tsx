@@ -5,81 +5,75 @@ import { SectionLabel } from '../layout/section-label'
 import { SectionShell } from '../layout/section-shell'
 import { SectionWave } from '../layout/section-wave'
 
-const CAPSULE_STYLES = [
-  {
-    bg: 'bg-[#FCDFD7] text-[#5C2B1D] shadow-[0_2px_8px_rgba(252,223,215,0.8)]',
-  },
-  {
-    bg: 'bg-[#FDF3C7] text-[#5C4D1D] shadow-[0_2px_8px_rgba(253,243,199,0.8)]',
-  },
-  {
-    bg: 'bg-[#D1EBE9] text-[#1D5C58] shadow-[0_2px_8px_rgba(209,235,233,0.8)]',
-  },
-  {
-    bg: 'bg-[#E0E4FC] text-[#222E7A] shadow-[0_2px_8px_rgba(224,228,252,0.8)]',
-  },
-]
-
 export function RoadmapSection() {
   const { roadmap } = CHAM_BLOOM_CONTENT
 
   return (
-    <SectionShell id="roadmap" bg="mist" className="pb-0 md:pb-0">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+    <SectionShell id="roadmap" bg="mist" className="pb-0 md:pb-0 relative overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-20">
         <div className="text-center max-w-3xl mx-auto">
           <MotionWrapper>
             <SectionLabel variant="glass" tone="light">
               {roadmap.label}
             </SectionLabel>
-            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight text-bloom-green-deep sm:text-5xl">
+            <h2 className="mt-4 font-display text-4xl font-black text-bloom-green-deep sm:text-5xl bloom-text-shadow">
               {roadmap.title}
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base text-gray-500 font-sans leading-relaxed">
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-bloom-green-deep/75 font-semibold leading-relaxed">
               Lộ trình hiện thực hóa mầm xanh thực từ thế giới game số của Gen Z.
             </p>
           </MotionWrapper>
         </div>
 
-        {/* Responsive Grid with Elegant Cross Border */}
-        <div className="grid grid-cols-1 md:grid-cols-2 mt-8 md:mt-10 border-t border-b md:border-t-0 md:border-b-0 border-gray-300/70">
+        {/* Game Pathway Alternating Timeline */}
+        <div className="relative mt-12 md:mt-16 space-y-10 pb-16">
+          {/* Vertical Vine Line */}
+          <div 
+            className="absolute left-8 top-4 bottom-4 w-[6px] rounded-full bg-gradient-to-b from-bloom-gold via-bloom-accent-mint to-bloom-petal pointer-events-none md:left-1/2 md:-translate-x-1/2" 
+            aria-hidden 
+          />
+          
           {roadmap.items.map((item, i) => {
-            const style = CAPSULE_STYLES[i] || CAPSULE_STYLES[0]
+            const emojis = ['🌱', '🌿', '🌸', '🌻']
+            const isLeft = i % 2 === 0
+            
             return (
-              <MotionWrapper
-                key={item.month}
-                delay={0.12 * (i + 1)}
-                className={cn(
-                  "flex items-start gap-5 lg:gap-8 py-6 px-4 md:py-8 md:px-10 lg:py-10 lg:px-12 border-gray-300",
-                  // Mobile vertical list dividers
-                  i < 3 ? "border-b" : "",
-                  // Desktop 2x2 grid cross dividers
-                  i === 0 ? "md:border-r" : "",
-                  i === 1 ? "md:border-r-0" : "",
-                  i === 2 ? "md:border-r md:border-b-0" : "",
-                  i === 3 ? "md:border-none" : ""
-                )}
+              <div 
+                key={item.month} 
+                className="relative flex flex-col md:flex-row items-start md:justify-between"
               >
-                {/* Colored Number Capsule */}
+                {/* Node marker on the vine */}
+                <div 
+                  className="absolute left-[20px] top-6 w-7 h-7 rounded-full border-2 border-bloom-green-deep bg-white flex items-center justify-center z-20 shadow-[2px_2px_0px_var(--bloom-green-deep)] md:left-1/2 md:-translate-x-1/2 md:top-8 md:w-9 md:h-9 text-xs md:text-sm select-none"
+                  aria-hidden
+                >
+                  {emojis[i] || '🌸'}
+                </div>
+                
+                {/* Content Card */}
                 <div className={cn(
-                  "w-12 h-12 flex items-center justify-center rounded-full font-display font-bold text-sm shrink-0 select-none transition-all duration-300",
-                  style.bg
+                  "w-[calc(100%-4rem)] ml-14 md:w-[44%] md:ml-0",
+                  isLeft ? "md:mr-auto" : "md:ml-auto"
                 )}>
-                  {i + 1}
+                  <MotionWrapper direction={isLeft ? "left" : "right"}>
+                    <div className="bloom-card-3d p-6 relative overflow-hidden bg-white/95 group hover:-translate-y-1 transition-all duration-300">
+                      
+                      {/* Month badge inside card */}
+                      <span className="inline-flex font-display text-[9.5px] font-black uppercase tracking-wider text-bloom-green-deep bg-bloom-green-light border-2 border-bloom-green-deep px-3 py-1 rounded-full shadow-[2px_2px_0px_var(--bloom-green-deep)]">
+                        📆 {item.month}
+                      </span>
+                      
+                      <h3 className="mt-4 font-display text-base font-black text-bloom-green-deep leading-tight">
+                        {item.title}
+                      </h3>
+                      
+                      <p className="mt-3 text-xs font-semibold leading-relaxed text-bloom-green-deep/70">
+                        {item.description}
+                      </p>
+                    </div>
+                  </MotionWrapper>
                 </div>
-
-                {/* Text content */}
-                <div className="flex flex-col">
-                  <span className="font-sans text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1 lg:mb-2">
-                    {item.month}
-                  </span>
-                  <h3 className="font-display text-xl lg:text-2xl font-bold text-bloom-green-deep tracking-tight leading-tight">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2.5 text-sm lg:text-base leading-relaxed text-gray-500 font-sans font-light">
-                    {item.description}
-                  </p>
-                </div>
-              </MotionWrapper>
+              </div>
             )
           })}
         </div>
