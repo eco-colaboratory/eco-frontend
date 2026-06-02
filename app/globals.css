@@ -3,60 +3,62 @@
 @layer base {
   :root {
     /* Brand Colors */
-    --brand-pink: #f4449b;
-    --brand-magenta: #ad1c9a;
-    --brand-purple: #67178d;
-    --brand-dark: #0a000e;
+    --brand-pink: #f58fb1;
+    --brand-magenta: #e27a9d;
+    --brand-purple: #c97b5f;
+    --brand-dark: #2c1a0b;
 
     /* Base */
-    --background: #ffffff;
-    --foreground: #0a000e;
+    --background: #fffaf2;
+    --foreground: #2f2416;
 
     /* Primary */
-    --primary: #ad1c9a;
-    --primary-foreground: #ffffff;
+    --primary: #e3a11d;
+    --primary-foreground: #fffaf2;
 
     /* Secondary */
-    --secondary: #67178d;
-    --secondary-foreground: #ffffff;
+    --secondary: #f9dfcf;
+    --secondary-foreground: #533621;
 
     /* Accent */
-    --accent: #f4449b;
-    --accent-foreground: #ffffff;
+    --accent: #82bf47;
+    --accent-foreground: #18320f;
 
     /* Muted */
-    --muted: #f3f4f6;
-    --muted-foreground: #6b7280;
+    --muted: #fdf0df;
+    --muted-foreground: #8a6c4f;
 
     /* Destructive */
     --destructive: #ef4444;
     --destructive-foreground: #ffffff;
 
     /* Border & Input */
-    --border: #e5e7eb;
-    --input: #e5e7eb;
-    --ring: #ad1c9a;
+    --border: #f1dcc4;
+    --input: #f1dcc4;
+    --ring: #e3a11d;
 
     /* Card */
-    --card: #ffffff;
-    --card-foreground: #0a000e;
+    --card: #fffdf8;
+    --card-foreground: #2f2416;
 
     /* Popover */
-    --popover: #ffffff;
-    --popover-foreground: #0a000e;
+    --popover: #fffdf8;
+    --popover-foreground: #2f2416;
 
     /* Border Radius */
     --radius: 0.5rem;
 
-    /* CHẠM Flora — Eco Green Theme (Forest Green, Leaf Green, Mint Green, Cream Warm Green, Deep Dark) */
-    --bloom-green-deep: #0D3E1D;
-    --bloom-green-mid: #1B8A42;
-    --bloom-green-light: #F4FBF7;
-    --bloom-green-mist: #EAF5EE;
-    --bloom-cream: #FAFDFB;
-    --bloom-gold: #D68C45;
-    --bloom-dark: #051A0C;
-    --bloom-accent-mint: #10B981;
+    /* CHẠM Flora — Honey, petal, leaf palette */
+    --bloom-green-deep: #4f3516;
+    --bloom-green-mid: #e3a11d;
+    --bloom-green-light: #fff6e8;
+    --bloom-green-mist: #fcead5;
+    --bloom-cream: #fffaf2;
+    --bloom-gold: #ffcb45;
+    --bloom-dark: #2c1a0b;
+    --bloom-accent-mint: #82bf47;
+    --bloom-petal: #f58fb1;
+    --bloom-petal-soft: #fde0e8;
 
     /* Admin shell + charts (shadcn sidebar / recharts) */
     --chart-1: oklch(0.646 0.222 41.116);
@@ -64,53 +66,57 @@
     --chart-3: oklch(0.398 0.07 227.392);
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
-    --sidebar: #ffffff;
-    --sidebar-foreground: #0f172a;
-    --sidebar-primary: #0f172a;
-    --sidebar-primary-foreground: #f8fafc;
-    --sidebar-accent: #f1f5f9;
-    --sidebar-accent-foreground: #0f172a;
-    --sidebar-border: #e2e8f0;
-    --sidebar-ring: #94a3b8;
+    --sidebar: #fffdf8;
+    --sidebar-foreground: #533621;
+    --sidebar-primary: #e3a11d;
+    --sidebar-primary-foreground: #fffaf2;
+    --sidebar-accent: #fff2e2;
+    --sidebar-accent-foreground: #533621;
+    --sidebar-border: #f1dcc4;
+    --sidebar-ring: #e7b65a;
   }
 
 
 
   .dark {
-    --background: #111827;
-    --foreground: #FFFDFB;
+    --background: #201409;
+    --foreground: #fff8ef;
 
-    --primary: #A78BFA;
-    --primary-foreground: #111827;
+    --primary: #ffcb45;
+    --primary-foreground: #2c1a0b;
 
-    --secondary: #F9A8D4;
-    --secondary-foreground: #111827;
+    --secondary: #56331f;
+    --secondary-foreground: #fff2e2;
 
-    --muted: #1F2937;
-    --muted-foreground: #9ca3af;
+    --accent: #82bf47;
+    --accent-foreground: #102309;
 
-    --border: #374151;
-    --input: #374151;
+    --muted: #382315;
+    --muted-foreground: #d9bfa2;
 
-    --card: #1F2937;
-    --card-foreground: #FFFDFB;
+    --border: #5d3c24;
+    --input: #5d3c24;
+    --ring: #ffcb45;
 
-    --popover: #1F2937;
-    --popover-foreground: #FFFDFB;
+    --card: #2a1a0d;
+    --card-foreground: #fff8ef;
+
+    --popover: #2a1a0d;
+    --popover-foreground: #fff8ef;
 
     --chart-1: oklch(0.488 0.243 264.376);
     --chart-2: oklch(0.696 0.17 162.48);
     --chart-3: oklch(0.769 0.188 70.08);
     --chart-4: oklch(0.627 0.265 303.9);
     --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: #1e293b;
-    --sidebar-foreground: #f8fafc;
-    --sidebar-primary: #f8fafc;
-    --sidebar-primary-foreground: #0f172a;
-    --sidebar-accent: #334155;
-    --sidebar-accent-foreground: #f8fafc;
-    --sidebar-border: #334155;
-    --sidebar-ring: #64748b;
+    --sidebar: #2a1a0d;
+    --sidebar-foreground: #fff2e2;
+    --sidebar-primary: #ffcb45;
+    --sidebar-primary-foreground: #2c1a0b;
+    --sidebar-accent: #4a2d1a;
+    --sidebar-accent-foreground: #fff2e2;
+    --sidebar-border: #5d3c24;
+    --sidebar-ring: #ffcb45;
   }
 
 
@@ -176,6 +182,8 @@
   --color-bloom-gold: var(--bloom-gold);
   --color-bloom-dark: var(--bloom-dark);
   --color-bloom-accent-mint: var(--bloom-accent-mint);
+  --color-bloom-petal: var(--bloom-petal);
+  --color-bloom-petal-soft: var(--bloom-petal-soft);
 
   --font-sans: var(--font-be-vietnam-pro), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-be-vietnam-pro), var(--font-inter), sans-serif;
@@ -190,17 +198,17 @@
   --background: var(--bloom-cream);
   --foreground: var(--bloom-green-deep);
   --primary: var(--bloom-green-mid);
-  --primary-foreground: #ffffff;
-  --secondary: var(--bloom-green-mist);
+  --primary-foreground: var(--bloom-dark);
+  --secondary: var(--bloom-petal-soft);
   --secondary-foreground: var(--bloom-green-deep);
   --accent: var(--bloom-green-mist);
   --accent-foreground: var(--bloom-green-deep);
   --muted: var(--bloom-green-light);
-  --muted-foreground: color-mix(in srgb, var(--bloom-green-deep) 65%, transparent);
-  --border: var(--bloom-green-mist);
-  --input: var(--bloom-green-mist);
+  --muted-foreground: color-mix(in srgb, var(--bloom-green-deep) 70%, transparent);
+  --border: color-mix(in srgb, var(--bloom-gold) 28%, white);
+  --input: color-mix(in srgb, var(--bloom-gold) 20%, white);
   --ring: var(--bloom-green-mid);
-  --card: #ffffff;
+  --card: #fffdf8;
   --card-foreground: var(--bloom-green-deep);
   --popover: #ffffff;
   --popover-foreground: var(--bloom-green-deep);
@@ -208,27 +216,27 @@
   --sidebar: #ffffff;
   --sidebar-foreground: var(--bloom-green-deep);
   --sidebar-primary: var(--bloom-green-mid);
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: var(--bloom-green-mist);
+  --sidebar-primary-foreground: var(--bloom-dark);
+  --sidebar-accent: var(--bloom-petal-soft);
   --sidebar-accent-foreground: var(--bloom-green-deep);
-  --sidebar-border: var(--bloom-green-mist);
-  --sidebar-ring: color-mix(in srgb, var(--bloom-green-mid) 35%, transparent);
+  --sidebar-border: color-mix(in srgb, var(--bloom-gold) 24%, white);
+  --sidebar-ring: color-mix(in srgb, var(--bloom-green-mid) 45%, transparent);
 
   /* Ghi đè trực tiếp các biến màu sắc của Tailwind v4 */
   --color-background: var(--bloom-cream);
   --color-foreground: var(--bloom-green-deep);
   --color-primary: var(--bloom-green-mid);
-  --color-primary-foreground: #ffffff;
-  --color-secondary: var(--bloom-green-mist);
+  --color-primary-foreground: var(--bloom-dark);
+  --color-secondary: var(--bloom-petal-soft);
   --color-secondary-foreground: var(--bloom-green-deep);
   --color-accent: var(--bloom-green-mist);
   --color-accent-foreground: var(--bloom-green-deep);
   --color-muted: var(--bloom-green-light);
-  --color-muted-foreground: color-mix(in srgb, var(--bloom-green-deep) 65%, transparent);
-  --color-border: var(--bloom-green-mist);
-  --color-input: var(--bloom-green-mist);
+  --color-muted-foreground: color-mix(in srgb, var(--bloom-green-deep) 70%, transparent);
+  --color-border: color-mix(in srgb, var(--bloom-gold) 28%, white);
+  --color-input: color-mix(in srgb, var(--bloom-gold) 20%, white);
   --color-ring: var(--bloom-green-mid);
-  --color-card: #ffffff;
+  --color-card: #fffdf8;
   --color-card-foreground: var(--bloom-green-deep);
   --color-popover: #ffffff;
   --color-popover-foreground: var(--bloom-green-deep);
@@ -236,69 +244,69 @@
   --color-sidebar: #ffffff;
   --color-sidebar-foreground: var(--bloom-green-deep);
   --color-sidebar-primary: var(--bloom-green-mid);
-  --color-sidebar-primary-foreground: #ffffff;
-  --color-sidebar-accent: var(--bloom-green-mist);
+  --color-sidebar-primary-foreground: var(--bloom-dark);
+  --color-sidebar-accent: var(--bloom-petal-soft);
   --color-sidebar-accent-foreground: var(--bloom-green-deep);
-  --color-sidebar-border: var(--bloom-green-mist);
-  --color-sidebar-ring: color-mix(in srgb, var(--bloom-green-mid) 35%, transparent);
+  --color-sidebar-border: color-mix(in srgb, var(--bloom-gold) 24%, white);
+  --color-sidebar-ring: color-mix(in srgb, var(--bloom-green-mid) 45%, transparent);
 }
 
 .dark .admin-theme {
   /* Bộ biến CSS tùy chỉnh hệ thống */
   --background: var(--bloom-dark);
   --foreground: var(--bloom-green-light);
-  --primary: var(--bloom-accent-mint);
+  --primary: var(--bloom-gold);
   --primary-foreground: var(--bloom-dark);
-  --secondary: color-mix(in srgb, var(--bloom-green-mid) 20%, #1e293b);
+  --secondary: color-mix(in srgb, var(--bloom-petal) 20%, #2c1a0b);
   --secondary-foreground: var(--bloom-green-light);
-  --accent: color-mix(in srgb, var(--bloom-green-mid) 22%, #1e293b);
+  --accent: color-mix(in srgb, var(--bloom-accent-mint) 24%, #2c1a0b);
   --accent-foreground: var(--bloom-green-light);
-  --muted: color-mix(in srgb, var(--bloom-green-deep) 30%, #111827);
-  --muted-foreground: color-mix(in srgb, var(--bloom-green-light) 65%, transparent);
-  --border: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
-  --input: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
-  --ring: var(--bloom-accent-mint);
-  --card: color-mix(in srgb, var(--bloom-green-deep) 40%, #111827);
+  --muted: color-mix(in srgb, var(--bloom-green-deep) 38%, #201409);
+  --muted-foreground: color-mix(in srgb, var(--bloom-green-light) 74%, transparent);
+  --border: color-mix(in srgb, var(--bloom-gold) 18%, #5d3c24);
+  --input: color-mix(in srgb, var(--bloom-gold) 16%, #5d3c24);
+  --ring: var(--bloom-gold);
+  --card: color-mix(in srgb, var(--bloom-dark) 82%, #382315);
   --card-foreground: var(--bloom-green-light);
-  --popover: color-mix(in srgb, var(--bloom-green-deep) 40%, #111827);
+  --popover: color-mix(in srgb, var(--bloom-dark) 82%, #382315);
   --popover-foreground: var(--bloom-green-light);
 
-  --sidebar: color-mix(in srgb, var(--bloom-green-deep) 50%, #090d16);
+  --sidebar: color-mix(in srgb, var(--bloom-dark) 88%, #24160a);
   --sidebar-foreground: var(--bloom-green-light);
-  --sidebar-primary: var(--bloom-accent-mint);
+  --sidebar-primary: var(--bloom-gold);
   --sidebar-primary-foreground: var(--bloom-dark);
-  --sidebar-accent: color-mix(in srgb, var(--bloom-green-mid) 22%, #1e293b);
+  --sidebar-accent: color-mix(in srgb, var(--bloom-petal) 16%, #2c1a0b);
   --sidebar-accent-foreground: var(--bloom-green-light);
-  --sidebar-border: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
-  --sidebar-ring: color-mix(in srgb, var(--bloom-accent-mint) 40%, transparent);
+  --sidebar-border: color-mix(in srgb, var(--bloom-gold) 18%, #5d3c24);
+  --sidebar-ring: color-mix(in srgb, var(--bloom-gold) 42%, transparent);
 
   /* Ghi đè trực tiếp các biến màu sắc của Tailwind v4 */
   --color-background: var(--bloom-dark);
   --color-foreground: var(--bloom-green-light);
-  --color-primary: var(--bloom-accent-mint);
+  --color-primary: var(--bloom-gold);
   --color-primary-foreground: var(--bloom-dark);
-  --color-secondary: color-mix(in srgb, var(--bloom-green-mid) 20%, #1e293b);
+  --color-secondary: color-mix(in srgb, var(--bloom-petal) 20%, #2c1a0b);
   --color-secondary-foreground: var(--bloom-green-light);
-  --color-accent: color-mix(in srgb, var(--bloom-green-mid) 22%, #1e293b);
+  --color-accent: color-mix(in srgb, var(--bloom-accent-mint) 24%, #2c1a0b);
   --color-accent-foreground: var(--bloom-green-light);
-  --color-muted: color-mix(in srgb, var(--bloom-green-deep) 30%, #111827);
-  --color-muted-foreground: color-mix(in srgb, var(--bloom-green-light) 65%, transparent);
-  --color-border: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
-  --color-input: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
-  --color-ring: var(--bloom-accent-mint);
-  --color-card: color-mix(in srgb, var(--bloom-green-deep) 40%, #111827);
+  --color-muted: color-mix(in srgb, var(--bloom-green-deep) 38%, #201409);
+  --color-muted-foreground: color-mix(in srgb, var(--bloom-green-light) 74%, transparent);
+  --color-border: color-mix(in srgb, var(--bloom-gold) 18%, #5d3c24);
+  --color-input: color-mix(in srgb, var(--bloom-gold) 16%, #5d3c24);
+  --color-ring: var(--bloom-gold);
+  --color-card: color-mix(in srgb, var(--bloom-dark) 82%, #382315);
   --color-card-foreground: var(--bloom-green-light);
-  --color-popover: color-mix(in srgb, var(--bloom-green-deep) 40%, #111827);
+  --color-popover: color-mix(in srgb, var(--bloom-dark) 82%, #382315);
   --color-popover-foreground: var(--bloom-green-light);
 
-  --color-sidebar: color-mix(in srgb, var(--bloom-green-deep) 50%, #090d16);
+  --color-sidebar: color-mix(in srgb, var(--bloom-dark) 88%, #24160a);
   --color-sidebar-foreground: var(--bloom-green-light);
-  --color-sidebar-primary: var(--bloom-accent-mint);
+  --color-sidebar-primary: var(--bloom-gold);
   --color-sidebar-primary-foreground: var(--bloom-dark);
-  --color-sidebar-accent: color-mix(in srgb, var(--bloom-green-mid) 22%, #1e293b);
+  --color-sidebar-accent: color-mix(in srgb, var(--bloom-petal) 16%, #2c1a0b);
   --color-sidebar-accent-foreground: var(--bloom-green-light);
-  --color-sidebar-border: color-mix(in srgb, var(--bloom-green-mid) 20%, #374151);
-  --color-sidebar-ring: color-mix(in srgb, var(--bloom-accent-mint) 40%, transparent);
+  --color-sidebar-border: color-mix(in srgb, var(--bloom-gold) 18%, #5d3c24);
+  --color-sidebar-ring: color-mix(in srgb, var(--bloom-gold) 42%, transparent);
 }
 
 @layer base {
@@ -330,8 +338,8 @@
   }
 
   .cham-bloom-page ::selection {
-    background-color: var(--bloom-green-mid);
-    color: white;
+    background-color: var(--bloom-gold);
+    color: var(--bloom-dark);
   }
 }
 
@@ -371,21 +379,21 @@
   }
 
   .bloom-headline-accent {
-    background: linear-gradient(135deg, #0D3E1D 0%, #1B8A42 50%, #10B981 100%);
+    background: linear-gradient(135deg, var(--bloom-gold) 0%, #f5b52f 36%, var(--bloom-petal) 68%, var(--bloom-accent-mint) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     @apply bg-clip-text text-transparent;
   }
 
   .bloom-gradient-readmore {
-    background: linear-gradient(90deg, #616161 0%, #928C86 50%, #0b521ba0 100%);
+    background: linear-gradient(90deg, #8c6a43 0%, #d69b35 52%, #7aa93f 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     @apply bg-clip-text text-transparent;
   }
 
   .bloom-section-band {
-    @apply relative overflow-hidden rounded-3xl border border-white/30 bg-gradient-to-br from-white/50 via-bloom-green-light/40 to-bloom-cream/80 px-6 py-14 shadow-inner backdrop-blur-sm sm:px-10 md:py-16;
+    @apply relative overflow-hidden rounded-3xl border border-white/40 bg-gradient-to-br from-white/75 via-bloom-green-light/90 to-bloom-petal-soft/55 px-6 py-14 shadow-inner backdrop-blur-sm sm:px-10 md:py-16;
   }
 
   .bloom-step-pill {
@@ -397,7 +405,7 @@
   }
 
   .bloom-tag-chip {
-    @apply inline-flex items-center rounded-full border border-bloom-green-mid/20 bg-white/50 px-3 py-1 text-xs font-medium text-bloom-green-deep backdrop-blur-sm;
+    @apply inline-flex items-center rounded-full border border-bloom-green-mid/25 bg-white/70 px-3 py-1 text-xs font-medium text-bloom-green-deep backdrop-blur-sm;
   }
 
   .bloom-pull-accent {
@@ -542,3 +550,139 @@
 [data-slot="sheet-content"][data-state="closed"].inset-y-0.right-0 {
   animation: slideOutRight 280ms cubic-bezier(0.32, 0.94, 0.6, 1) forwards;
 }
+
+/* ==========================================
+   CHẠM FLORA — GAME STYLE 3D & ORGANIC UTILITIES
+   ========================================== */
+
+.bloom-btn-3d {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-weight: 800;
+  font-family: var(--font-display), sans-serif;
+  transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: translateY(0);
+  cursor: pointer;
+  user-select: none;
+}
+
+.bloom-btn-3d-primary {
+  background: linear-gradient(135deg, var(--bloom-gold) 0%, #f5b52f 100%);
+  color: var(--bloom-green-deep);
+  border: 2.5px solid var(--bloom-green-deep);
+  box-shadow: 0 5px 0 var(--bloom-green-deep), 0 10px 20px rgba(79, 53, 22, 0.18);
+}
+.bloom-btn-3d-primary:hover {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 var(--bloom-green-deep), 0 6px 12px rgba(79, 53, 22, 0.22);
+}
+.bloom-btn-3d-primary:active {
+  transform: translateY(5px);
+  box-shadow: 0 0px 0 var(--bloom-green-deep), 0 2px 4px rgba(79, 53, 22, 0.12);
+}
+
+.bloom-btn-3d-outline {
+  background-color: var(--bloom-cream);
+  color: var(--bloom-green-deep);
+  border: 2.5px solid var(--bloom-green-deep);
+  box-shadow: 0 5px 0 var(--bloom-green-deep), 0 10px 18px rgba(79, 53, 22, 0.08);
+}
+.bloom-btn-3d-outline:hover {
+  background-color: var(--bloom-green-light);
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 var(--bloom-green-deep), 0 5px 10px rgba(79, 53, 22, 0.1);
+}
+.bloom-btn-3d-outline:active {
+  transform: translateY(5px);
+  box-shadow: 0 0px 0 var(--bloom-green-deep), 0 2px 4px rgba(79, 53, 22, 0.05);
+}
+
+.bloom-btn-3d-petal {
+  background: linear-gradient(135deg, var(--bloom-petal) 0%, var(--brand-magenta) 100%);
+  color: white;
+  border: 2.5px solid var(--bloom-green-deep);
+  box-shadow: 0 5px 0 var(--bloom-green-deep), 0 10px 20px rgba(245, 143, 177, 0.25);
+}
+.bloom-btn-3d-petal:hover {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 var(--bloom-green-deep), 0 6px 12px rgba(245, 143, 177, 0.3);
+}
+.bloom-btn-3d-petal:active {
+  transform: translateY(5px);
+  box-shadow: 0 0px 0 var(--bloom-green-deep), 0 2px 4px rgba(245, 143, 177, 0.15);
+}
+
+.bloom-btn-3d-mint {
+  background: linear-gradient(135deg, var(--bloom-accent-mint) 0%, #6eab34 100%);
+  color: white;
+  border: 2.5px solid var(--bloom-green-deep);
+  box-shadow: 0 5px 0 var(--bloom-green-deep), 0 10px 20px rgba(130, 191, 71, 0.25);
+}
+.bloom-btn-3d-mint:hover {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 var(--bloom-green-deep), 0 6px 12px rgba(130, 191, 71, 0.3);
+}
+.bloom-btn-3d-mint:active {
+  transform: translateY(5px);
+  box-shadow: 0 0px 0 var(--bloom-green-deep), 0 2px 4px rgba(130, 191, 71, 0.15);
+}
+
+.bloom-card-3d {
+  border: 2.5px solid var(--bloom-green-deep);
+  border-radius: 2rem;
+  background-color: #fffdf8;
+  box-shadow: 0 6px 0 var(--bloom-green-deep), 0 12px 28px rgba(79, 53, 22, 0.06);
+  transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+.bloom-card-3d-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 0 var(--bloom-green-deep), 0 16px 32px rgba(79, 53, 22, 0.1);
+}
+.bloom-card-3d-interactive:active {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 var(--bloom-green-deep), 0 6px 12px rgba(79, 53, 22, 0.08);
+}
+
+.bloom-text-shadow {
+  text-shadow: 1.5px 1.5px 0px rgba(79, 53, 22, 0.15);
+}
+.bloom-text-shadow-heavy {
+  text-shadow: 3px 3px 0px var(--bloom-green-deep);
+}
+
+@keyframes bloomSway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.animate-bloom-sway {
+  animation: bloomSway 4s ease-in-out infinite;
+}
+
+@keyframes bloomFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-bloom-float {
+  animation: bloomFloat 5s ease-in-out infinite;
+}
+
+@keyframes bloomSpinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-bloom-spin-slow {
+  animation: bloomSpinSlow 20s linear infinite;
+}
+
+@keyframes bloomBounceGlow {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(255, 203, 69, 0.2)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(255, 203, 69, 0.6)); }
+}
+.animate-bloom-bounce-glow {
+  animation: bloomBounceGlow 3s ease-in-out infinite;
+}
+

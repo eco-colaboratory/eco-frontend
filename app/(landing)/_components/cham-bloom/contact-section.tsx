@@ -147,15 +147,15 @@ export function ContactSection() {
               <div className="relative z-10">
                 <div className="flex items-center gap-3 pb-4 mb-4 border-b border-white/10">
                   <Image
-                    src="/assets/logo/logoLogin.png"
-                    alt="E.C.O Project Logo"
-                    width={80}
-                    height={80}
-                    className="object-contain rounded-lg -mb-4"
+                    src="/assets/logo/CHAM-Flora.png"
+                    alt="CHẠM Flora Logo"
+                    width={124}
+                    height={56}
+                    className="h-14 w-auto object-contain"
                   />
                   <div className="min-w-0">
-                    <p className="font-display font-semibold text-white text-sm leading-tight tracking-wide">E.C.O Project</p>
-                    <p className="text-[11px] text-bloom-accent-mint font-medium mt-0.5">Hành động xanh · Giải pháp số</p>
+                    <p className="font-display font-semibold text-white text-sm leading-tight tracking-wide">CHẠM Flora</p>
+                    <p className="text-[11px] text-bloom-accent-mint font-medium mt-0.5">Game hóa hành động xanh cho Gen Z</p>
                   </div>
                 </div>
 

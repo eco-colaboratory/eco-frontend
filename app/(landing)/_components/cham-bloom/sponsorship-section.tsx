@@ -2,26 +2,43 @@
 
 import { useState } from 'react'
 import { m } from 'framer-motion'
-import { CHAM_BLOOM_CONTENT, type TierHighlight } from '@/lib/content/cham-bloom-landing'
-import { GlassCard } from '../layout/glass-card'
+import { CHAM_BLOOM_CONTENT } from '@/lib/content/cham-bloom-landing'
 import { MotionWrapper } from '../layout/motion-wrapper'
 import { SectionHeader } from '../layout/section-header'
 import { SectionShell } from '../layout/section-shell'
 import { BloomButton } from '../layout/bloom-button'
+import { cn } from '@/lib/utils'
 
-function tierStyles(highlight: TierHighlight) {
-  return highlight === 'gold'
-    ? {
-      card: 'border-2 border-bloom-gold bg-gradient-to-b from-white/90 via-bloom-cream/80 to-white/90 shadow-lg shadow-bloom-gold/15 scale-[1.03] z-10',
-      icon: 'text-bloom-green-mid bg-bloom-gold/20',
-      badge: true,
-    }
-    : {
-      card: 'border-2 border-white/50 bg-white/60 shadow-sm',
-      icon: 'text-bloom-green-deep bg-bloom-green-mist',
-      badge: false,
-    }
-}
+const TIER_CARDS = [
+  {
+    slug: 'dong',
+    cardClass: 'bg-white border-2 border-bloom-green-deep shadow-[4px_4px_0px_var(--bloom-green-deep)] hover:shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px]',
+    badge: null,
+    btnVariant: 'outline' as const,
+    description: 'Hỗ trợ các hoạt động cộng đồng xanh cơ bản và quyền lợi nhận diện thương hiệu truyền thông.',
+  },
+  {
+    slug: 'bac',
+    cardClass: 'bg-[#eef7e8] border-2 border-bloom-green-deep shadow-[4px_4px_0px_var(--bloom-green-deep)] hover:shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px]',
+    badge: null,
+    btnVariant: 'outline' as const,
+    description: 'Dành cho các doanh nghiệp muốn tiếp cận tệp Gen Z qua social media truyền thông và proposal chính thức.',
+  },
+  {
+    slug: 'vang',
+    cardClass: 'bg-[#fdf3c7] border-2 border-bloom-green-deep shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:shadow-[8px_8px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px] scale-[1.02] z-10',
+    badge: '👑 Phổ biến',
+    btnVariant: 'primary' as const,
+    description: 'Mức đồng hành lý tưởng để thương hiệu tích hợp sâu sắc vào game ảo và quảng bá mạnh mẽ.',
+  },
+  {
+    slug: 'kim-cuong',
+    cardClass: 'bg-[#fde0e8] border-2 border-bloom-green-deep shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:shadow-[8px_8px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px] scale-[1.02] z-10',
+    badge: '💎 Đặc quyền',
+    btnVariant: 'petal' as const,
+    description: 'Đối tác chiến lược cao cấp nhất, dẫn đầu chiến dịch gieo mầm xanh và xuất hiện ấn tượng nhất.',
+  },
+] as const
 
 export function SponsorshipSection() {
   const { tiers, fundUsage, sponsorshipCategories } = CHAM_BLOOM_CONTENT
@@ -38,86 +55,89 @@ export function SponsorshipSection() {
               accent="đồng hành"
               align="center"
             />
-            <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600 font-sans font-light">
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-bloom-green-deep/75 font-semibold leading-relaxed">
               Lựa chọn vị trí đồng hành phù hợp để cùng chúng tôi ươm mầm xanh thực đầu tiên.
             </p>
           </MotionWrapper>
         </div>
 
         {/* 4 Pricing Cards ngang */}
-        <div className="mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
+        <div className="mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch pt-4">
           {tiers.map((tier, i) => {
-            const styles = tierStyles(tier.highlight)
+            const config = TIER_CARDS[i] || TIER_CARDS[0]
             return (
               <MotionWrapper
                 key={tier.slug}
                 delay={0.08 * i}
                 className="flex"
               >
-                <GlassCard
-                  className={`relative flex w-full flex-col p-8 ${styles.card}`}
-                >
-                  {styles.badge ? (
-                    <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full border border-bloom-gold/45 bg-bloom-gold px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-bloom-green-deep shadow-sm">
-                      ✦ Nổi bật
+                <div className={cn(
+                  'relative flex w-full flex-col p-8 rounded-[2rem] transition-all duration-300',
+                  config.cardClass
+                )}>
+                  {config.badge ? (
+                    <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full border-2 border-bloom-green-deep bg-white px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-bloom-green-deep shadow-[2px_2px_0px_var(--bloom-green-deep)]">
+                      {config.badge}
                     </span>
                   ) : null}
 
                   <div className="flex-1">
-                    <span className="font-sans text-[10px] font-semibold uppercase tracking-wider text-bloom-green-mid">
+                    <span className="font-display text-[9px] font-black uppercase tracking-widest text-bloom-green-deep/60">
                       Gói tài trợ
                     </span>
-                    <h3 className="mt-2 font-display text-xl font-semibold text-bloom-green-deep">
+                    <h3 className="mt-1 font-display text-xl font-black text-bloom-green-deep">
                       {tier.name}
                     </h3>
 
                     <div className="mt-3 flex items-baseline text-bloom-green-deep">
-                      <span className="text-lg font-semibold tracking-tight font-display">
+                      <span className="text-lg font-black tracking-tight font-display bg-white/70 border border-bloom-green-deep/15 px-3 py-1 rounded-lg">
                         {tier.teaser}
                       </span>
                     </div>
 
-                    <p className="mt-4 text-xs leading-relaxed text-gray-500 font-sans font-light">
-                      {i === 0 && 'Hỗ trợ các hoạt động cộng đồng xanh cơ bản và quyền lợi nhận diện thương hiệu truyền thông.'}
-                      {i === 1 && 'Dành cho các doanh nghiệp muốn tiếp cận tệp Gen Z qua social media truyền thông và proposal chính thức.'}
-                      {i === 2 && 'Mức đồng hành lý tưởng để thương hiệu tích hợp sâu sắc vào game ảo và quảng bá mạnh mẽ.'}
-                      {i === 3 && 'Đối tác chiến lược cao cấp nhất, dẫn đầu chiến dịch gieo mầm xanh và xuất hiện ấn tượng nhất.'}
+                    <p className="mt-5 text-[11.5px] leading-relaxed text-bloom-green-deep/70 font-semibold">
+                      {config.description}
                     </p>
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-bloom-green-mid/10">
+                  <div className="mt-8 pt-5 border-t-2 border-bloom-green-deep/10">
                     <BloomButton
                       href="#contact"
-                      variant={tier.highlight === 'gold' ? 'primary' : 'outline'}
-                      className="w-full text-center py-2 text-xs font-semibold font-display"
+                      variant={config.btnVariant}
+                      className="w-full text-center py-2 text-xs font-black font-display cursor-pointer"
                     >
-                      {'Đăng ký đồng hành'}
+                      Đăng ký đồng hành
                     </BloomButton>
                   </div>
-                </GlassCard>
+                </div>
               </MotionWrapper>
             )
           })}
         </div>
 
         {/* Bảng hạng mục tài trợ */}
-        <div className="mt-10">
+        <div className="mt-12">
           <MotionWrapper>
-            <GlassCard interactive={false} className="overflow-hidden rounded-3xl border border-bloom-green-mid/20 bg-white/60 p-6 shadow-sm">
+            <div className="overflow-hidden rounded-[2rem] border-2 border-bloom-green-deep bg-white p-6 shadow-[4px_4px_0px_var(--bloom-green-deep)]">
               <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <span className="bloom-tag-chip mb-3 font-display">Bảng hạng mục</span>
-                  <h3 className="font-display text-xl font-semibold text-bloom-green-deep">
+                  <span className="inline-flex rounded-full border-2 border-bloom-green-deep bg-bloom-green-light px-3.5 py-1 text-[9px] font-black uppercase tracking-widest text-bloom-green-deep shadow-[2px_2px_0px_var(--bloom-green-deep)] mb-3">
+                    📊 Bảng hạng mục
+                  </span>
+                  <h3 className="font-display text-lg font-black text-bloom-green-deep">
                     Các hạng mục đồng hành và mức đề xuất
                   </h3>
-                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+                  <p className="mt-2 max-w-3xl text-xs leading-relaxed text-bloom-green-deep/70 font-medium">
                     Từ hợp tác chuyên môn đến gói tài trợ Kim Cương, biểu đồ hạng mục này thể hiện rõ mức đề xuất và bản chất quyền lợi đồng hành.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setIsCategoryTableOpen((open) => !open)}
-                  className={isCategoryTableOpen ? 'self-start whitespace-nowrap rounded-full border border-white/50 bg-white/40 px-5 py-2 text-xs font-semibold text-bloom-green-deep backdrop-blur-md transition duration-300 hover:bg-white/60 active:scale-[0.98]' : 'self-start whitespace-nowrap rounded-full bg-bloom-green-deep px-5 py-2 text-xs font-semibold text-white shadow-md shadow-bloom-green-deep/20 transition duration-300 hover:bg-bloom-green-deep/90 active:scale-[0.98]'}
+                  className={cn(
+                    'self-start whitespace-nowrap bloom-btn-3d text-xs px-5 py-2 border-2 border-bloom-green-deep cursor-pointer select-none',
+                    isCategoryTableOpen ? 'bloom-btn-3d-outline' : 'bloom-btn-3d-primary'
+                  )}
                 >
                   {isCategoryTableOpen ? 'Thu gọn chi tiết' : 'Xem chi tiết'}
                 </button>
@@ -133,65 +153,72 @@ export function SponsorshipSection() {
                 transition={{ duration: 0.32, ease: 'easeOut' }}
                 className="overflow-hidden"
               >
-                <div className="overflow-x-auto">
-                  <table className="min-w-180 w-full text-sm">
-                    <thead className="border-b border-bloom-green-mid/20 bg-bloom-green-mist/90 text-left">
+                <div className="overflow-x-auto rounded-2xl border-2 border-bloom-green-deep mt-4">
+                  <table className="min-w-180 w-full text-xs">
+                    <thead className="border-b-2 border-bloom-green-deep bg-bloom-green-mist text-left">
                       <tr>
-                        <th className="px-4 py-3 font-semibold text-bloom-green-deep">Hạng mục</th>
-                        <th className="px-4 py-3 font-semibold text-bloom-green-deep">Mức đóng góp đề xuất</th>
-                        <th className="px-4 py-3 font-semibold text-bloom-green-deep">Thông tin</th>
+                        <th className="px-4 py-3.5 font-black text-bloom-green-deep w-[25%]">Hạng mục</th>
+                        <th className="px-4 py-3.5 font-black text-bloom-green-deep w-[25%]">Mức đóng góp đề xuất</th>
+                        <th className="px-4 py-3.5 font-black text-bloom-green-deep w-[50%]">Thông tin</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-bloom-green-mid/10">
+                    <tbody className="divide-y border-t border-bloom-green-deep/15 divide-bloom-green-deep/15">
                       {sponsorshipCategories.map((item, index) => (
-                        <tr key={item.title} className={index % 2 === 0 ? 'bg-white' : 'bg-bloom-green-mist/20'}>
-                          <td className="px-4 py-4 font-medium text-gray-800">{item.title}</td>
-                          <td className="px-4 py-4 text-gray-600">{item.contribution}</td>
-                          <td className="px-4 py-4 text-gray-600">{item.description}</td>
+                        <tr key={item.title} className={cn(
+                          'transition-colors hover:bg-bloom-green-light/40 font-medium text-bloom-green-deep/85',
+                          index % 2 === 0 ? 'bg-white' : 'bg-bloom-green-light/20'
+                        )}>
+                          <td className="px-4 py-4 font-black">{item.title}</td>
+                          <td className="px-4 py-4 font-bold text-bloom-green-deep">{item.contribution}</td>
+                          <td className="px-4 py-4 leading-relaxed font-sans">{item.description}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
               </m.div>
-            </GlassCard>
+            </div>
           </MotionWrapper>
         </div>
 
         {/* Phân bổ ngân sách */}
-        <div className="mt-10 grid gap-8 lg:grid-cols-12 items-center">
+        <div className="mt-12 grid gap-8 lg:grid-cols-12 items-center">
           <MotionWrapper className="lg:col-span-5">
             <div className="mb-4">
-              <span className="bloom-tag-chip mb-3 font-display">Phân bổ ngân sách</span>
-              <h3 className="font-display text-xl font-semibold text-bloom-green-deep">
+              <span className="inline-flex rounded-full border-2 border-bloom-green-deep bg-bloom-petal-soft px-3 py-1 text-[9px] font-black uppercase tracking-widest text-bloom-green-deep shadow-[2px_2px_0px_var(--bloom-green-deep)] mb-3">
+                💰 Phân bổ ngân sách
+              </span>
+              <h3 className="font-display text-xl font-black text-bloom-green-deep bloom-text-shadow">
                 Quỹ tài trợ đi đâu?
               </h3>
             </div>
-            <p className="text-gray-600 leading-relaxed font-sans text-sm font-light">
+            <p className="text-bloom-green-deep/75 leading-relaxed font-sans text-xs font-semibold">
               Mọi sự đồng hành tài chính từ các đơn vị đều được phân bổ có định hướng và minh bạch, tối đa hóa giá trị công nghệ của game ảo và tối ưu hóa chi phí hiện thực hóa khu vườn sinh thái ngoài đời thật.
             </p>
           </MotionWrapper>
 
           <MotionWrapper className="lg:col-span-7">
-            <GlassCard
-              interactive={false}
-              className="border-dashed border-bloom-green-mid/20 bg-white/40 p-8"
-            >
-              <h4 className="font-display text-base font-semibold text-bloom-green-deep mb-3">
+            <div className="rounded-[2rem] border-2 border-bloom-green-deep bg-white p-6 sm:p-8 shadow-[4px_4px_0px_var(--bloom-green-deep)] relative overflow-hidden">
+              {/* Floral element decoration */}
+              <span className="absolute right-4 top-4 text-3xl opacity-15 pointer-events-none select-none">🌱</span>
+              
+              <h4 className="font-display text-sm font-black text-bloom-green-deep mb-4 border-b-2 border-bloom-green-deep/10 pb-2">
                 {fundUsage.title}
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-3.5">
                 {fundUsage.bullets.map((b) => (
-                  <li key={b} className="flex items-start gap-3 text-sm leading-relaxed text-gray-700 font-sans font-light">
+                  <li key={b} className="flex items-start gap-3 text-xs leading-relaxed text-bloom-green-deep/80 font-sans font-semibold">
                     <span
-                      className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bloom-green-mid"
+                      className="mt-1 text-xs shrink-0 select-none"
                       aria-hidden
-                    />
+                    >
+                      🌱
+                    </span>
                     {b}
                   </li>
                 ))}
               </ul>
-            </GlassCard>
+            </div>
           </MotionWrapper>
         </div>
       </div>

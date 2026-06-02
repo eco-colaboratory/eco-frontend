@@ -1,18 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import { getCookie } from 'cookies-next';
 import { useAppSelector } from '@/lib/redux/hooks';
 import { selectAuth } from '@/lib/redux/slices/authSlice';
 
+const emptySubscribe = () => () => {};
+
 /** True when Redux auth matches cookie or both are absent (safe to run protected queries / redirects). */
 export function useAuthReady() {
   const { isAuthenticated, token } = useAppSelector(selectAuth);
-  const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    setChecked(true);
-  }, []);
+  const checked = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
   const cookieToken =
     checked && typeof window !== 'undefined' ? getCookie('authToken') : undefined;

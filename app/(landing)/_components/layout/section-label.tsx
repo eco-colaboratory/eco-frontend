@@ -18,7 +18,7 @@ export function SectionLabel({
     return (
       <p
         className={cn(
-          'inline-flex rounded-full border border-white/20 bg-white/15 px-4 py-2 text-xs font-medium uppercase tracking-widest backdrop-blur-md',
+          'inline-flex rounded-md border border-white/25 bg-white/20 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-widest backdrop-blur-md',
           tone === 'dark' ? 'text-white' : 'text-bloom-green-deep',
           className,
         )}
@@ -31,7 +31,7 @@ export function SectionLabel({
   return (
     <p
       className={cn(
-        'font-sans text-xs font-medium uppercase tracking-widest text-bloom-green-mid',
+        'font-sans text-[11px] font-semibold uppercase tracking-widest text-bloom-green-mid',
         className,
       )}
     >

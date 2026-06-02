@@ -29,7 +29,7 @@ export default function HomePage() {
         <Navbar />
         <HeroSection />
         <AboutSection />
-        {/* <CoreIdeaSection /> */}
+        <CoreIdeaSection />
         <AchievementsSection />
         <RoadmapSection />
         <SponsorshipSection />

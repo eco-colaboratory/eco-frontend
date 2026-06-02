@@ -20,20 +20,19 @@ const Dialog = ({
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) => {
-  const [open, setOpen] = React.useState(openProp ?? defaultOpen ?? false);
+  const [openState, setOpenState] = React.useState(defaultOpen ?? false);
 
-  React.useEffect(() => {
-    if (openProp !== undefined) {
-      setOpen(openProp);
-    }
-  }, [openProp]);
+  const isControlled = openProp !== undefined;
+  const open = isControlled ? openProp : openState;
 
   const handleOpenChange = React.useCallback(
     (val: boolean) => {
-      setOpen(val);
+      if (!isControlled) {
+        setOpenState(val);
+      }
       onOpenChange?.(val);
     },
-    [onOpenChange]
+    [isControlled, onOpenChange]
   );
 
   return (
