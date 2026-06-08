@@ -34,12 +34,12 @@ export const flowerTemplatesPageConfig = {
   hooks: flowerTemplatesCatalog,
   mapToCreate: (v: FlowerTemplatesFormValues) => ({
     name: v.name,
-    price: v.price,
+    basePrice: v.price,
     imageUrl: v.imageUrl || undefined,
   }),
   mapToUpdate: (v: FlowerTemplatesFormValues) => ({
     name: v.name,
-    price: v.price,
+    basePrice: v.price,
     imageUrl: v.imageUrl || undefined,
   }),
 };

@@ -28,7 +28,7 @@ export function FlowerTemplatesDialogs() {
   const handleCreate = async (values: FlowerTemplateFormValues) => {
     await createMutation.mutateAsync({
       name: values.name,
-      price: values.price,
+      basePrice: values.price,
       imageUrl: values.imageUrl || undefined,
     });
     toast.success('Đã tạo mẫu hoa mới');
@@ -40,7 +40,7 @@ export function FlowerTemplatesDialogs() {
       id: selectedTemplate.id,
       payload: {
         name: values.name,
-        price: values.price,
+        basePrice: values.price,
         imageUrl: values.imageUrl || undefined,
       },
     });

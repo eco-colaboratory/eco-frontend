@@ -9,7 +9,7 @@ export interface FlowerTemplate {
 
 export interface CreateFlowerTemplateRequest {
   name: string;
-  price: number;
+  basePrice: number;
   imageUrl?: string;
 }
 
