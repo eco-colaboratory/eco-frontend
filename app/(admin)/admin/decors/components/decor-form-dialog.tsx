@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useForm, type Resolver } from 'react-hook-form';
+import { useForm, useWatch, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { Palette, Pencil } from 'lucide-react';
@@ -10,7 +10,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -18,15 +17,21 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import type { Decor } from '@/lib/types/catalog/decor';
-import { decorSchema, type DecorFormValues } from './decor-schema';
+import { DECOR_IMAGE_OPTIONS, decorSchema, type DecorFormValues } from './decor-schema';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 type DecorFormDialogProps = {
@@ -57,6 +62,7 @@ export function DecorFormDialog({
       imageUrl: '',
     },
   });
+  const selectedImageUrl = useWatch({ control: form.control, name: 'imageUrl' });
 
   useEffect(() => {
     if (!open) return;
@@ -103,8 +109,22 @@ export function DecorFormDialog({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="imageUrl">Ảnh URL</Label>
-        <Input id="imageUrl" placeholder="Nhập đường dẫn ảnh..." {...form.register('imageUrl')} />
+        <Label>Slug ảnh Godot</Label>
+        <Select
+          value={selectedImageUrl || undefined}
+          onValueChange={(value) => form.setValue('imageUrl', value, { shouldDirty: true, shouldValidate: true })}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Chọn slug trang trí" />
+          </SelectTrigger>
+          <SelectContent>
+            {DECOR_IMAGE_OPTIONS.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label} ({option.value})
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         {form.formState.errors.imageUrl ? (
           <p className="text-xs text-red-600">{form.formState.errors.imageUrl.message}</p>
         ) : null}
