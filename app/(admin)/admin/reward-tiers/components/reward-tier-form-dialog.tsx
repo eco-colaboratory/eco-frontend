@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useForm, useWatch, type Resolver } from 'react-hook-form';
+import { useForm, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { Flower, Pencil } from 'lucide-react';
+import { Trophy, Pencil } from 'lucide-react';
 
 import {
   Dialog,
@@ -23,117 +23,120 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import type { FlowerTemplate } from '@/lib/types/catalog/flower-template';
-import {
-  FLOWER_TEMPLATE_OPTIONS,
-  flowerTemplateSchema,
-  type FlowerTemplateFormValues,
-} from './flower-template-schema';
+import type { RewardTier } from '@/lib/types/catalog/reward-tier';
+import { rewardTierSchema, type RewardTierFormValues } from './reward-tier-schema';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-type FlowerTemplateFormDialogProps = {
+type RewardTierFormDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   mode: 'create' | 'edit';
-  template?: FlowerTemplate | null;
-  onSubmit: (values: FlowerTemplateFormValues) => Promise<void>;
+  rewardTier?: RewardTier | null;
+  existingTiers?: RewardTier[];
+  onSubmit: (values: RewardTierFormValues) => Promise<void>;
   isPending?: boolean;
 };
 
-export function FlowerTemplateFormDialog({
+export function RewardTierFormDialog({
   open,
   onOpenChange,
   mode,
-  template,
+  rewardTier,
+  existingTiers = [],
   onSubmit,
   isPending,
-}: FlowerTemplateFormDialogProps) {
+}: RewardTierFormDialogProps) {
   const isCreate = mode === 'create';
   const isMobile = useIsMobile();
 
-  const form = useForm<FlowerTemplateFormValues>({
-    resolver: zodResolver(flowerTemplateSchema) as Resolver<FlowerTemplateFormValues>,
+  const form = useForm<RewardTierFormValues>({
+    resolver: zodResolver(rewardTierSchema) as Resolver<RewardTierFormValues>,
     defaultValues: {
-      name: '',
-      price: 0,
-      imageUrl: '',
+      minMinutes: 0,
+      wateringCanQty: 0,
+      fertilizerQty: 0,
     },
   });
-  const selectedName = useWatch({ control: form.control, name: 'name' });
 
   useEffect(() => {
     if (!open) return;
     if (isCreate) {
       form.reset({
-        name: '',
-        price: 0,
-        imageUrl: '',
+        minMinutes: 0,
+        wateringCanQty: 0,
+        fertilizerQty: 0,
       });
-    } else if (template) {
+    } else if (rewardTier) {
       form.reset({
-        name: template.name ?? '',
-        price: template.basePrice ?? 0,
-        imageUrl: template.imageUrl ?? '',
+        minMinutes: rewardTier.minMinutes ?? 0,
+        wateringCanQty: rewardTier.wateringCanQty ?? 0,
+        fertilizerQty: rewardTier.fertilizerQty ?? 0,
       });
     }
-  }, [open, isCreate, template, form]);
+  }, [open, isCreate, rewardTier, form]);
 
   const handleSubmit = form.handleSubmit(async (values) => {
+    // FE validation: Kiểm tra trùng minMinutes
+    const isDuplicate = existingTiers.some(
+      (tier) =>
+        Number(tier.minMinutes) === Number(values.minMinutes) &&
+        tier.id !== rewardTier?.id
+    );
+
+    if (isDuplicate) {
+      form.setError('minMinutes', {
+        type: 'manual',
+        message: 'Mốc thời gian (phút) này đã tồn tại trong danh sách',
+      });
+      return;
+    }
+
     try {
-      await onSubmit({ ...values, imageUrl: values.name });
+      await onSubmit(values);
       onOpenChange(false);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Lỗi lưu mẫu hoa');
+      toast.error(err instanceof Error ? err.message : 'Lỗi lưu mốc thưởng');
     }
   });
 
   const formContent = (
     <form onSubmit={handleSubmit} className="space-y-4 px-6 py-5">
       <div className="space-y-2">
-        <Label>Slug mẫu hoa</Label>
-        <Select
-          value={selectedName}
-          onValueChange={(value) => {
-            form.setValue('name', value, { shouldDirty: true, shouldValidate: true });
-            form.setValue('imageUrl', value, { shouldDirty: true, shouldValidate: true });
-          }}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Chọn slug mẫu hoa" />
-          </SelectTrigger>
-          <SelectContent>
-            {FLOWER_TEMPLATE_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label} ({option.value})
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {form.formState.errors.name ? (
-          <p className="text-xs text-red-600">{form.formState.errors.name.message}</p>
+        <Label htmlFor="minMinutes">Số phút tối thiểu</Label>
+        <Input
+          id="minMinutes"
+          type="number"
+          placeholder="Ví dụ: 25, 50, 75..."
+          {...form.register('minMinutes', { valueAsNumber: true })}
+        />
+        {form.formState.errors.minMinutes ? (
+          <p className="text-xs text-red-600">{form.formState.errors.minMinutes.message}</p>
         ) : null}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="price">Giá xu cơ bản</Label>
-        <Input id="price" type="number" placeholder="Số xu..." {...form.register('price')} />
-        {form.formState.errors.price ? (
-          <p className="text-xs text-red-600">{form.formState.errors.price.message}</p>
+        <Label htmlFor="wateringCanQty">Số lượng Bình tưới nhận được</Label>
+        <Input
+          id="wateringCanQty"
+          type="number"
+          placeholder="Số lượng bình tưới..."
+          {...form.register('wateringCanQty', { valueAsNumber: true })}
+        />
+        {form.formState.errors.wateringCanQty ? (
+          <p className="text-xs text-red-600">{form.formState.errors.wateringCanQty.message}</p>
         ) : null}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="imageUrl">Slug ảnh Godot</Label>
-        <Input id="imageUrl" readOnly {...form.register('imageUrl')} />
-        {form.formState.errors.imageUrl ? (
-          <p className="text-xs text-red-600">{form.formState.errors.imageUrl.message}</p>
+        <Label htmlFor="fertilizerQty">Số lượng Phân bón nhận được</Label>
+        <Input
+          id="fertilizerQty"
+          type="number"
+          placeholder="Số lượng phân bón..."
+          {...form.register('fertilizerQty', { valueAsNumber: true })}
+        />
+        {form.formState.errors.fertilizerQty ? (
+          <p className="text-xs text-red-600">{form.formState.errors.fertilizerQty.message}</p>
         ) : null}
       </div>
 
@@ -156,14 +159,14 @@ export function FlowerTemplateFormDialog({
           <SheetHeader className="px-6 border-b border-border/60 pb-3 bg-muted/10">
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-bloom-green-mid/10 text-bloom-green-mid">
-                {isCreate ? <Flower className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
+                {isCreate ? <Trophy className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
               </div>
               <div className="text-left space-y-0.5">
                 <SheetTitle className="text-base font-bold">
-                  {isCreate ? 'Thêm mẫu hoa' : 'Sửa mẫu hoa'}
+                  {isCreate ? 'Thêm mốc thưởng' : 'Sửa mốc thưởng'}
                 </SheetTitle>
                 <SheetDescription className="text-xs">
-                  {isCreate ? 'Tạo mẫu hoa mới.' : 'Cập nhật thông tin mẫu hoa.'}
+                  {isCreate ? 'Tạo cấu hình mốc thưởng tập trung mới.' : 'Cập nhật thông tin mốc thưởng.'}
                 </SheetDescription>
               </div>
             </div>
@@ -181,19 +184,19 @@ export function FlowerTemplateFormDialog({
           <div className="flex items-start gap-3 pr-8">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-bloom-green-mid/10 text-bloom-green-mid">
               {isCreate ? (
-                <Flower className="h-5 w-5" aria-hidden />
+                <Trophy className="h-5 w-5" aria-hidden />
               ) : (
                 <Pencil className="h-5 w-5" aria-hidden />
               )}
             </div>
             <div className="space-y-1">
               <DialogTitle className="text-base">
-                {isCreate ? 'Thêm mẫu hoa' : 'Sửa mẫu hoa'}
+                {isCreate ? 'Thêm mốc thưởng' : 'Sửa mốc thưởng'}
               </DialogTitle>
               <DialogDescription>
                 {isCreate
-                  ? 'Tạo một mẫu hoa mới trong hệ thống trò chơi.'
-                  : 'Cập nhật các thông tin của mẫu hoa.'}
+                  ? 'Tạo cấu hình mốc thưởng mới dựa trên số phút tập trung.'
+                  : 'Cập nhật lại phần thưởng của mốc này.'}
               </DialogDescription>
             </div>
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { useForm, type Resolver } from 'react-hook-form';
+import { useForm, useWatch, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { Layers, Pencil } from 'lucide-react';
@@ -58,6 +58,10 @@ export function SynergyFormDialog({
       flowerTemplateIds: [],
     },
   });
+  const selectedFlowerTemplateIds = useWatch({
+    control: form.control,
+    name: 'flowerTemplateIds',
+  }) ?? [];
 
   const flowerParams = useMemo(() => ({
     page: 1,
@@ -86,8 +90,6 @@ export function SynergyFormDialog({
       });
     }
   }, [open, isCreate, synergy, form]);
-
-  const selectedFlowerTemplateIds = form.watch('flowerTemplateIds') ?? [];
 
   const handleToggleFlower = (id: string) => {
     if (selectedFlowerTemplateIds.includes(id)) {

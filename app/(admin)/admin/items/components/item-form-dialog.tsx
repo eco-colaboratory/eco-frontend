@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useForm, type Resolver } from 'react-hook-form';
+import { useForm, useWatch, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { PackagePlus, Pencil } from 'lucide-react';
@@ -34,6 +34,7 @@ import type { Item } from '@/lib/types/catalog/item';
 import {
   itemSchema,
   ITEM_TYPES,
+  ITEM_IMAGE_SLUGS,
   ITEM_TYPE_LABELS,
   ITEM_TYPE_REVERSE_MAPPING,
   type ItemFormValues,
@@ -73,6 +74,8 @@ export function ItemFormDialog({
       receivedExp: 0,
     },
   });
+  const selectedType = useWatch({ control: form.control, name: 'type' }) ?? 'WATER';
+  const selectedImageUrl = useWatch({ control: form.control, name: 'imageUrl' });
 
   useEffect(() => {
     if (!open) return;
@@ -150,8 +153,15 @@ export function ItemFormDialog({
         <div className="space-y-2">
           <Label>Loại vật phẩm</Label>
           <Select
-            value={form.watch('type') ?? 'WATER'}
-            onValueChange={(v) => form.setValue('type', v as ItemTypeString)}
+            value={selectedType}
+            onValueChange={(v) => {
+              const type = v as ItemTypeString;
+              form.setValue('type', type, { shouldDirty: true, shouldValidate: true });
+              form.setValue('imageUrl', ITEM_IMAGE_SLUGS[type][0], {
+                shouldDirty: true,
+                shouldValidate: true,
+              });
+            }}
           >
             <SelectTrigger>
               <SelectValue placeholder="Chọn loại vật phẩm" />
@@ -175,8 +185,22 @@ export function ItemFormDialog({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="imageUrl">Ảnh URL</Label>
-        <Input id="imageUrl" placeholder="Nhập đường dẫn ảnh..." {...form.register('imageUrl')} />
+        <Label>Slug ảnh Godot</Label>
+        <Select
+          value={selectedImageUrl || undefined}
+          onValueChange={(value) => form.setValue('imageUrl', value, { shouldDirty: true, shouldValidate: true })}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Chọn slug ảnh" />
+          </SelectTrigger>
+          <SelectContent>
+            {ITEM_IMAGE_SLUGS[selectedType].map((slug) => (
+              <SelectItem key={slug} value={slug}>
+                {slug}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         {form.formState.errors.imageUrl ? (
           <p className="text-xs text-red-600">{form.formState.errors.imageUrl.message}</p>
         ) : null}
