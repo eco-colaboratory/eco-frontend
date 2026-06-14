@@ -5,6 +5,7 @@
  */
 import axios from "axios";
 import type { AuthTokenData } from "@/lib/api/services/fetchAuth";
+import { getApiUrl } from "@/lib/api/core";
 
 let refreshInFlight: Promise<AuthTokenData> | null = null;
 
@@ -12,7 +13,7 @@ export async function refreshAccessToken(refreshToken: string): Promise<AuthToke
   if (!refreshInFlight) {
     refreshInFlight = axios
       .post(
-        `${process.env.NEXT_PUBLIC_API_URL}api/auth/refresh-token`,
+        getApiUrl("api/auth/refresh-token"),
         { refreshToken },
         { headers: { "Content-Type": "application/json" } }
       )
