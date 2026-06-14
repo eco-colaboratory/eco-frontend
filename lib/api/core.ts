@@ -58,12 +58,13 @@ class ApiService {
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
+        const urlStr = originalRequest.url || "";
+        const shouldSkipRefresh =
+          urlStr.includes("refresh-token") ||
+          urlStr.includes("api/auth/login") ||
+          urlStr.includes("api/auth/register");
 
-        const isRefreshEndpoint =
-          typeof originalRequest.url === "string" &&
-          originalRequest.url.includes("refresh-token");
-
-        if (error.response?.status === 401 && !originalRequest._retry && !isRefreshEndpoint) {
+        if (error.response?.status === 401 && !originalRequest._retry && !shouldSkipRefresh) {
           if (this.isRefreshing) {
             return new Promise((resolve, reject) => {
               this.failedQueue.push({ resolve, reject });
@@ -169,6 +170,17 @@ class ApiService {
   }
 }
 
-const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/");
+export function getApiUrl(path = ""): string {
+  if (typeof window === "undefined") {
+    // Chạy ở phía server: sử dụng URL thật để gọi trực tiếp (Server-to-Server)
+    const serverUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/";
+    const base = serverUrl.endsWith("/") ? serverUrl : `${serverUrl}/`;
+    return `${base}${path}`;
+  }
+  // Chạy ở phía client (trình duyệt): sử dụng proxy tương đối để ẩn URL thật
+  return `/backend-api/${path}`;
+}
+
+const apiService = new ApiService(getApiUrl());
 
 export default apiService;

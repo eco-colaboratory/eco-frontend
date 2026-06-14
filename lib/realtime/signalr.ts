@@ -5,6 +5,7 @@ import {
   LogLevel,
 } from "@microsoft/signalr";
 import { store } from "@/lib/redux/store";
+import { getApiUrl } from "@/lib/api/core";
 
 export type SignalRStatus = HubConnectionState;
 
@@ -12,11 +13,13 @@ let connection: HubConnection | null = null;
 let startPromise: Promise<void> | null = null;
 
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/";
+  return getApiUrl();
 }
 
 export function getHubUrl(): string {
-  return new URL("/hubs/app", getBaseUrl()).toString();
+  const base = getBaseUrl();
+  const baseClean = base.endsWith("/") ? base.slice(0, -1) : base;
+  return `${baseClean}/hubs/app`;
 }
 
 function getAccessToken(): string | null {
