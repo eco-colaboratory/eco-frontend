@@ -85,7 +85,7 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
   hero: {
     videoUrl: HERO_VIDEO_URL,
     posterSrc: unsplash('photo-1490750967868-88aa4486c946', 1920),
-    badge: 'CHẠM Flora · Modern Eco Startup',
+    badge: 'CHẠM Flora · Trải nghiệm sống xanh của thế hệ mới',
     headline: ['Gieo nên một khu vườn thật', 'từ những hành động xanh của Gen Z'],
     tagline: 'Nền tảng game hóa giúp học sinh, sinh viên chăm sóc vườn hoa ảo, xây dựng thói quen tích cực và cùng cộng đồng tạo nên những mầm xanh ngoài đời thật.',
     primaryCta: 'Trở thành nhà tài trợ',
@@ -97,7 +97,7 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
     label: 'Về dự án',
     title: 'CHẠM Flora là gì?',
     intro:
-      'CHẠM Flora là phiên bản phát triển mới từ tinh thần CHẠM, được xây dựng theo hướng một game chăm sóc vườn hoa ảo dành cho học sinh – sinh viên.',
+      'Tiếp nối tinh thần CHẠM, CHẠM Flora là trò chơi chăm sóc vườn hoa ảo đồng hành cùng học sinh, sinh viên trên hành trình rèn luyện lối sống bền vững.',
     cards: [
       {
         icon: 'gamepad',
@@ -133,7 +133,7 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
   },
   mission: {
     title: 'Sứ mệnh',
-    body: 'giúp Gen Z xây dựng lối sống xanh và thói quen tích cực một cách nhẹ nhàng, gần gũi thông qua trải nghiệm game hóa, nơi mỗi hành động nhỏ đều góp phần tạo nên giá trị thật cho cộng đồng và tương lai.',
+    body: 'Giúp Gen Z xây dựng lối sống bền vững và thói quen tích cực một cách nhẹ nhàng, gần gũi thông qua trải nghiệm game hóa, nơi mỗi hành động nhỏ đều góp phần kiến tạo giá trị thật cho cộng đồng.',
     imageSrc: '/assets/landing/mission.jpg',
     imageAlt: 'Mầm cây nhỏ lớn dần dưới nắng — sứ mệnh CHẠM Flora',
   },
@@ -248,25 +248,25 @@ export const CHAM_BLOOM_CONTENT: ChamBloomContent = {
     label: 'Giá trị đồng hành',
     title: 'Vì sao nhà tài trợ nên quan tâm?',
     intro:
-      'Sponsor không chỉ là một logo hiển thị đơn điệu. Đồng hành cùng CHẠM Flora là giải pháp tối ưu giúp doanh nghiệp của bạn đạt được mục tiêu thương hiệu và cộng đồng.',
+      'Đồng hành cùng CHẠM Flora không chỉ là câu chuyện hiển thị logo đơn điệu. Đây là giải pháp tối ưu giúp thương hiệu kết nối sâu sắc với thế hệ trẻ và kiến tạo các giá trị cộng đồng thực chất.',
     cards: [
       {
-        title: 'Tiếp cận tập trung Gen Z',
+        title: 'Tiếp cận trực tiếp thế hệ trẻ (Gen Z)',
         description: 'Mở rộng mức độ nhận diện thương hiệu đối với tệp khán giả trẻ từ 16 - 24 tuổi.',
         bullets: ['Học sinh - sinh viên năng động', 'Tập trung cao tại khu vực TP.HCM', 'Thích công nghệ và xu hướng mới'],
       },
       {
-        title: 'Gắn thương hiệu với giá trị tích cực',
+        title: 'Nâng tầm thương hiệu xanh',
         description: 'Xây dựng hình ảnh thương hiệu tiên phong, thân thiện và trách nhiệm.',
         bullets: ['Bảo vệ môi trường thực tế', 'Nâng cao sức khỏe tinh thần', 'Ứng dụng công nghệ giáo dục sáng tạo'],
       },
       {
-        title: 'Đồng hành cùng chiến dịch lớn',
+        title: 'Độ phủ truyền thông đa kênh',
         description: 'Xuất hiện xuyên suốt các kênh thông tin lớn trong chiến dịch ra mắt sản phẩm.',
         bullets: ['Landing page dự án', 'Mạng xã hội & nội dung Viral', 'TVC quảng bá & Proposal đối ngoại'],
       },
       {
-        title: 'Tạo dấu ấn CSR thật',
+        title: 'Dấu ấn CSR xanh thực tế',
         description: 'Tạo dựng giá trị đóng góp thực tế cho xã hội có thể đo lường và tham quan.',
         bullets: ['Trực tiếp gieo trồng vườn hoa thật ngoài đời', 'Tạo tài nguyên sinh thái xanh cho thành phố', 'Có tư liệu truyền thông chân thực'],
       },

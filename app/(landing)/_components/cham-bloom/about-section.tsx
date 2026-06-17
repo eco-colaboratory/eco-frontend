@@ -20,24 +20,24 @@ const ICONS = {
 
 const CARD_COLOR_SCHEMES = [
   {
-    bg: 'bg-[#fde0e8]/80 hover:bg-[#fde0e8] border-[#f58fb1]',
-    iconBg: 'bg-[#f58fb1]/20 text-[#f58fb1]',
-    badgeBg: 'bg-[#f58fb1]/10 text-[#f58fb1]',
+    bg: 'bg-bloom-petal-soft/80 hover:bg-bloom-petal-soft border-bloom-petal',
+    iconBg: 'bg-bloom-petal/20 text-bloom-green-deep',
+    badgeBg: 'bg-bloom-petal/15 text-bloom-green-deep',
   },
   {
-    bg: 'bg-[#fdf3c7]/80 hover:bg-[#fdf3c7] border-[#ffcb45]',
-    iconBg: 'bg-[#ffcb45]/20 text-[#d9980d]',
-    badgeBg: 'bg-[#ffcb45]/10 text-[#d9980d]',
+    bg: 'bg-bloom-green-mist/80 hover:bg-bloom-green-mist border-bloom-gold',
+    iconBg: 'bg-bloom-gold/20 text-bloom-green-deep',
+    badgeBg: 'bg-bloom-gold/15 text-bloom-green-deep',
   },
   {
-    bg: 'bg-[#eef7e8]/80 hover:bg-[#eef7e8] border-[#82bf47]',
-    iconBg: 'bg-[#82bf47]/20 text-[#548722]',
-    badgeBg: 'bg-[#82bf47]/10 text-[#548722]',
+    bg: 'bg-bloom-green-light/80 hover:bg-bloom-green-light border-bloom-accent-mint',
+    iconBg: 'bg-bloom-accent-mint/20 text-bloom-green-deep',
+    badgeBg: 'bg-bloom-accent-mint/15 text-bloom-green-deep',
   },
   {
-    bg: 'bg-[#e0e4fc]/80 hover:bg-[#e0e4fc] border-[#92a1fa]',
-    iconBg: 'bg-[#92a1fa]/20 text-[#4c5de6]',
-    badgeBg: 'bg-[#92a1fa]/10 text-[#4c5de6]',
+    bg: 'bg-bloom-cream/80 hover:bg-bloom-cream border-bloom-green-deep',
+    iconBg: 'bg-bloom-green-deep/10 text-bloom-green-deep',
+    badgeBg: 'bg-bloom-green-deep/5 text-bloom-green-deep',
   },
 ] as const
 
@@ -120,7 +120,7 @@ export function AboutSection() {
             return (
               <MotionWrapper key={card.title} delay={0.08 * index}>
                 <article className={cn(
-                  'relative flex flex-col p-6 h-full rounded-[2rem] border-2 border-bloom-green-deep shadow-[4px_4px_0px_var(--bloom-green-deep)] transition-all duration-300 cursor-default group',
+                  'relative flex flex-col p-6 h-full rounded-[2rem] border-2 border-bloom-green-deep shadow-[4px_4px_0px_var(--bloom-green-deep)] bloom-card-hover-transition cursor-default group',
                   'hover:translate-y-[-6px] hover:rotate-[1deg] hover:shadow-[6px_6px_0px_var(--bloom-green-deep)]',
                   scheme.bg
                 )}>

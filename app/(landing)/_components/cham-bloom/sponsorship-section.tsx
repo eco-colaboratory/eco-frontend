@@ -16,27 +16,50 @@ const TIER_CARDS = [
     badge: null,
     btnVariant: 'outline' as const,
     description: 'Hỗ trợ các hoạt động cộng đồng xanh cơ bản và quyền lợi nhận diện thương hiệu truyền thông.',
+    features: [
+      'Logo 1/2 trên Landing Page',
+      'Bài đăng cảm ơn chung',
+      'Tặng quà tặng tại Workshop'
+    ],
   },
   {
     slug: 'bac',
-    cardClass: 'bg-[#eef7e8] border-2 border-bloom-green-deep shadow-[4px_4px_0px_var(--bloom-green-deep)] hover:shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px]',
+    cardClass: 'bg-bloom-accent-mint/10 border-2 border-bloom-green-deep shadow-[4px_4px_0px_var(--bloom-green-deep)] hover:shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px]',
     badge: null,
     btnVariant: 'outline' as const,
     description: 'Dành cho các doanh nghiệp muốn tiếp cận tệp Gen Z qua social media truyền thông và proposal chính thức.',
+    features: [
+      'Logo 1/2 trên Proposal',
+      'Bài viết cảm ơn riêng',
+      'Xuất hiện trong TVC Launch'
+    ],
   },
   {
     slug: 'vang',
-    cardClass: 'bg-[#fdf3c7] border-2 border-bloom-green-deep shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:shadow-[8px_8px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px] scale-[1.02] z-10',
+    cardClass: 'bg-bloom-green-mist border-2 border-bloom-green-deep shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:shadow-[8px_8px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px] scale-[1.02] z-10',
     badge: '👑 Phổ biến',
     btnVariant: 'primary' as const,
     description: 'Mức đồng hành lý tưởng để thương hiệu tích hợp sâu sắc vào game ảo và quảng bá mạnh mẽ.',
+    features: [
+      'Logo chuẩn trên Landing Page',
+      'Tên xuất hiện trong game',
+      'Đặt 1 standee tại Workshop',
+      'Thiết kế hoa/decor thương hiệu'
+    ],
   },
   {
     slug: 'kim-cuong',
-    cardClass: 'bg-[#fde0e8] border-2 border-bloom-green-deep shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:shadow-[8px_8px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px] scale-[1.02] z-10',
+    cardClass: 'bg-bloom-petal-soft border-2 border-bloom-green-deep shadow-[6px_6px_0px_var(--bloom-green-deep)] hover:shadow-[8px_8px_0px_var(--bloom-green-deep)] hover:translate-y-[-4px] scale-[1.02] z-10',
     badge: '💎 Đặc quyền',
     btnVariant: 'petal' as const,
     description: 'Đối tác chiến lược cao cấp nhất, dẫn đầu chiến dịch gieo mầm xanh và xuất hiện ấn tượng nhất.',
+    features: [
+      'Đặc quyền NTT Kim Cương',
+      'Nhiệm vụ riêng trong game',
+      'Đặt gian hàng trải nghiệm',
+      'Đại diện phát biểu Workshop',
+      'Logo nổi bật nhất dự án'
+    ],
   },
 ] as const
 
@@ -98,6 +121,16 @@ export function SponsorshipSection() {
                     <p className="mt-5 text-[11.5px] leading-relaxed text-bloom-green-deep/70 font-semibold">
                       {config.description}
                     </p>
+
+                    {/* Features list to enhance visual rhythm & hierarchy */}
+                    <ul className="mt-6 space-y-2.5 border-t border-bloom-green-deep/10 pt-5" aria-label={`Quyền lợi nổi bật của gói ${tier.name}`}>
+                      {config.features.map((feat) => (
+                        <li key={feat} className="flex items-start gap-2 text-[10.5px] text-bloom-green-deep/85 font-semibold">
+                          <span className="text-bloom-green-mid shrink-0 font-sans text-xs select-none" aria-hidden>✓</span>
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
                   <div className="mt-8 pt-5 border-t-2 border-bloom-green-deep/10">
@@ -134,6 +167,8 @@ export function SponsorshipSection() {
                 <button
                   type="button"
                   onClick={() => setIsCategoryTableOpen((open) => !open)}
+                  aria-expanded={isCategoryTableOpen}
+                  aria-controls="sponsorship-detail-table"
                   className={cn(
                     'self-start whitespace-nowrap bloom-btn-3d text-xs px-5 py-2 border-2 border-bloom-green-deep cursor-pointer select-none',
                     isCategoryTableOpen ? 'bloom-btn-3d-outline' : 'bloom-btn-3d-primary'
@@ -144,13 +179,28 @@ export function SponsorshipSection() {
               </div>
 
               <m.div
+                id="sponsorship-detail-table"
+                aria-hidden={!isCategoryTableOpen}
                 initial={false}
                 animate={isCategoryTableOpen ? 'open' : 'closed'}
                 variants={{
-                  open: { height: 'auto', opacity: 1 },
-                  closed: { height: 0, opacity: 0 },
+                  open: { 
+                    height: 'auto', 
+                    opacity: 1,
+                    transition: {
+                      height: { duration: 0.38, ease: [0.22, 1, 0.36, 1] }, // ease-out-quint
+                      opacity: { duration: 0.25, ease: 'linear' }
+                    }
+                  },
+                  closed: { 
+                    height: 0, 
+                    opacity: 0,
+                    transition: {
+                      height: { duration: 0.28, ease: [0.25, 1, 0.5, 1] }, // ease-out-quad-like
+                      opacity: { duration: 0.18, ease: 'linear' }
+                    }
+                  },
                 }}
-                transition={{ duration: 0.32, ease: 'easeOut' }}
                 className="overflow-hidden"
               >
                 <div className="overflow-x-auto rounded-2xl border-2 border-bloom-green-deep mt-4">

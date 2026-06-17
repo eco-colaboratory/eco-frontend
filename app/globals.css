@@ -568,6 +568,10 @@
   cursor: pointer;
   user-select: none;
 }
+.bloom-btn-3d:focus-visible {
+  outline: 3px dashed var(--bloom-green-deep);
+  outline-offset: 4px;
+}
 
 .bloom-btn-3d-primary {
   background: linear-gradient(135deg, var(--bloom-gold) 0%, #f5b52f 100%);
@@ -602,7 +606,7 @@
 
 .bloom-btn-3d-petal {
   background: linear-gradient(135deg, var(--bloom-petal) 0%, var(--brand-magenta) 100%);
-  color: white;
+  color: var(--bloom-green-deep);
   border: 2.5px solid var(--bloom-green-deep);
   box-shadow: 0 5px 0 var(--bloom-green-deep), 0 10px 20px rgba(245, 143, 177, 0.25);
 }
@@ -617,7 +621,7 @@
 
 .bloom-btn-3d-mint {
   background: linear-gradient(135deg, var(--bloom-accent-mint) 0%, #6eab34 100%);
-  color: white;
+  color: var(--bloom-green-deep);
   border: 2.5px solid var(--bloom-green-deep);
   box-shadow: 0 5px 0 var(--bloom-green-deep), 0 10px 20px rgba(130, 191, 71, 0.25);
 }
@@ -636,6 +640,10 @@
   background-color: #fffdf8;
   box-shadow: 0 6px 0 var(--bloom-green-deep), 0 12px 28px rgba(79, 53, 22, 0.06);
   transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+.bloom-card-hover-transition {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
 }
 
 .bloom-card-3d-interactive:hover {
@@ -684,5 +692,58 @@
 }
 .animate-bloom-bounce-glow {
   animation: bloomBounceGlow 3s ease-in-out infinite;
+}
+
+/* ==========================================
+   SCROLL-DRIVEN PARALLAX ANIMATIONS (OVERDRIVE)
+   ========================================== */
+@supports (animation-timeline: scroll()) {
+  @keyframes scrollRotateCW {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes scrollRotateCCW {
+    to { transform: rotate(-360deg); }
+  }
+  @keyframes scrollParallaxMascot {
+    to { transform: translateY(-48px) scale(0.96); }
+  }
+  @keyframes scrollParallaxGlow {
+    to { transform: translateY(80px); }
+  }
+
+  .scroll-rotate-cw {
+    animation: scrollRotateCW linear both;
+    animation-timeline: scroll(root);
+    animation-range: entry 0% exit 100%;
+  }
+  .scroll-rotate-ccw {
+    animation: scrollRotateCCW linear both;
+    animation-timeline: scroll(root);
+    animation-range: entry 0% exit 100%;
+  }
+  .scroll-parallax-mascot {
+    animation: scrollParallaxMascot linear both;
+    animation-timeline: scroll(root);
+    animation-range: entry 0% exit 100%;
+  }
+  .scroll-parallax-glow {
+    animation: scrollParallaxGlow linear both;
+    animation-timeline: scroll(root);
+    animation-range: entry 0% exit 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bloom-spin-slow,
+  .animate-bloom-float,
+  .animate-bloom-sway,
+  .animate-bloom-bounce-glow,
+  .scroll-rotate-cw,
+  .scroll-rotate-ccw,
+  .scroll-parallax-mascot,
+  .scroll-parallax-glow {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 

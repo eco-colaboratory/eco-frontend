@@ -91,7 +91,7 @@ export function ValuePropSection() {
                   <span className="bloom-headline-accent font-semibold">đồng hành cùng dự án?</span>
                 </h2>
                 
-                <p className="mt-5 text-pretty text-[14px] font-light leading-relaxed text-gray-600 border-l-2 border-bloom-green-mid/30 pl-5">
+                <p className="mt-5 text-pretty text-[14px] font-light leading-relaxed text-bloom-green-deep/75 border-l-2 border-bloom-green-mid/30 pl-5">
                   {valueProp.intro}
                 </p>
 
@@ -108,7 +108,7 @@ export function ValuePropSection() {
                           {card.title}
                         </h3>
                       </div>
-                      <p className="mt-2 text-pretty text-sm font-light leading-relaxed text-gray-500">
+                      <p className="mt-2 text-pretty text-sm font-light leading-relaxed text-bloom-green-deep/65">
                         {card.description}
                       </p>
                     </div>
@@ -118,7 +118,7 @@ export function ValuePropSection() {
                 {/* CTA lớn màu xanh rêu đậm sang trọng */}
                 <button
                   onClick={handleScrollToContact}
-                  className="mt-8 inline-flex items-center justify-center gap-2.5 rounded-full bg-bloom-green-deep px-7 py-3.5 font-display text-[13px] font-semibold text-white shadow-md shadow-bloom-green-deep/15 transition-all duration-300 hover:bg-bloom-green-mid hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bloom-green-deep"
+                  className="mt-8 inline-flex items-center justify-center gap-2.5 rounded-full bg-bloom-green-deep px-7 py-3.5 font-display text-[13px] font-semibold text-white shadow-md shadow-bloom-green-deep/15 transition-all duration-300 hover:bg-bloom-green-mid hover:text-bloom-green-deep hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bloom-green-deep"
                 >
                   Liên hệ tài trợ ngay
                   <ArrowRight className="h-4 w-4" />

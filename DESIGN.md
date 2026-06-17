@@ -1,122 +1,141 @@
-Create a full-viewport hero section for a SaaS landing page called "Stellar.ai" using React, TypeScript, Tailwind CSS, and Lucide React icons. The design uses the Inter font (weights 400, 500, 600, 700) imported from Google Fonts. No other dependencies beyond lucide-react, react, and react-dom.
+---
+name: "CHẠM Flora"
+description: "Landing page game hóa hành động xanh cho Gen Z và kết nối nhà tài trợ"
+colors:
+  primary: "#e3a11d"
+  primary-deep: "#4f3516"
+  accent-petal: "#f58fb1"
+  accent-mint: "#82bf47"
+  neutral-bg: "#fffaf2"
+  neutral-fg: "#2f2416"
+  neutral-card: "#fffdf8"
+  bloom-gold: "#ffcb45"
+typography:
+  display:
+    fontFamily: "var(--font-be-vietnam-pro), var(--font-inter), sans-serif"
+    fontSize: "clamp(2rem, 5vw, 4rem)"
+    fontWeight: 800
+    lineHeight: 1.2
+    letterSpacing: "-0.02em"
+  body:
+    fontFamily: "var(--font-be-vietnam-pro), var(--font-inter), sans-serif"
+    fontSize: "1rem"
+    fontWeight: 400
+    lineHeight: 1.6
+rounded:
+  sm: "0.5rem"
+  md: "1rem"
+  lg: "2rem"
+spacing:
+  sm: "1rem"
+  md: "2rem"
+  lg: "4rem"
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.primary-deep}"
+    rounded: "9999px"
+    padding: "12px 24px"
+  button-primary-hover:
+    backgroundColor: "{colors.primary}"
+---
 
-OVERALL STRUCTURE
+# Design System: CHẠM Flora
 
-The page is a full-screen (h-screen) white background container with overflow-hidden. Everything is contained in a single viewport. There is no scrolling. The layout stacks vertically: navbar at top, hero content in upper-center, and a partner logo bar pinned to the bottom.
+## 1. Overview
 
-BACKGROUND VIDEO
+**Creative North Star: "The Gamified Green Oasis" (Ốc đảo xanh game hóa)**
 
-A looping, muted, autoplaying, inline video fills the entire viewport as an absolute-positioned background
-Video URL: https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260330_153826_e9005cf7-a1c7-4c7d-886f-fea22d644a9c.mp4
-CSS: absolute inset-0 w-full h-full object-cover
-The video has top padding to push it down below the hero text: pt-[120px] on mobile, md:pt-[200px] on desktop
-This creates the effect where the video content appears below the text area
+Hệ thống thiết kế CHẠM Flora được xây dựng để mang đến một không gian tràn ngập năng lượng sinh động, gần gũi với thiên nhiên nhưng đầy tính tương tác thế hệ mới. Hệ thống là sự giao thoa độc đáo giữa phong cách game hóa (Gamified) trẻ trung, các yếu tố đồ họa 3D nổi bật (Neo-brutalism nhẹ nhàng) và bảng màu hữu cơ (Organic) ấm áp. Thiết kế hướng tới việc thuyết phục doanh nghiệp tài trợ bằng sự chuyên nghiệp của cấu trúc thông tin, đồng thời tạo sức hút hành động xanh cho thế hệ Gen Z bằng các hiệu ứng đung đưa, chuyển động nổi.
 
-VIDEO FADE-OUT OVERLAYS (White gradient masks)
+Hệ thống thiết kế này loại bỏ hoàn toàn các phong cách xám xịt, tối giản lạnh lùng của SaaS truyền thống và thay thế bằng các góc bo tròn lớn, viền dày thân thiện và các nút bấm có chiều sâu xúc giác.
 
-Three absolute-positioned gradient overlays sit on top of the video (z-10) to fade the video into the white background at the top:
+**Key Characteristics:**
+- **Organic & Tactile**: Sử dụng các đường viền dày (2.5px), các nút bấm dạng khối 3D tạo cảm giác vật lý sống động.
+- **Friendly Geometry**: Các container dạng thẻ (cards) được bo tròn lớn (32px / 2rem) để giảm bớt sự cứng nhắc.
+- **Playful Animation**: Các hiệu ứng đung đưa (sway) và nổi bồng bềnh (float) nhẹ nhàng mô phỏng sự phát triển của cỏ cây hoa lá.
 
-General overlay: top: 120px, height: 200px, gradient from white to transparent
-Desktop-only overlay (hidden on mobile, hidden md:block): top: 200px, height: 300px, gradient from white to transparent
-Mobile-only overlay (md:hidden): top: 120px, height: 200px, gradient from white to transparent
-All overlays use pointer-events-none so they don't block interaction.
+## 2. Colors
 
-NAVBAR (z-20, relative)
+Bảng màu của CHẠM Flora lấy cảm hứng từ thiên nhiên nhiệt đới ấm áp với các tông màu mật ong, hồng cánh hoa và xanh bạc hà tươi mát.
 
-Max width max-w-7xl, centered, horizontal padding px-4 sm:px-6, vertical padding py-4
-Flex row, items-center justify-between
-Animated with animate-fade-in-up at animationDelay: 0.1s, initial opacity: 0
+### Primary
+- **Honey Mid** (#e3a11d): Màu vàng mật ong ấm áp, sử dụng làm màu chủ đạo cho các CTA chính, các điểm nhấn quan trọng và trạng thái active.
+- **Forest Deep** (#4f3516): Màu nâu đất đậm, đóng vai trò làm đường viền (border), màu chữ chính và các chi tiết định hình hình khối 3D.
 
-Left side (logo):
-Lucide Star icon, w-5 h-5 fill-black
-Text "Stellar.ai", text-lg font-semibold
+### Secondary
+- **Petal Pink** (#f58fb1): Màu hồng cánh hoa tươi tắn đại diện cho sự tươi trẻ, game hóa và những đóa hoa nở rộ.
+- **Mint Green** (#82bf47): Màu xanh bạc hà tươi mát đại diện cho hành động xanh, môi trường và sự phát triển bền vững.
 
-Center nav (hidden on mobile, hidden md:flex, gap-8):
-"Solutions" button with ChevronDown icon (w-4 h-4), text-sm text-gray-700 hover:text-black
-"For Teams" button with ChevronDown icon, same styling
-"About Us" button, text-sm text-gray-700 hover:text-black
-"Learn Hub" button, same styling
+### Neutral
+- **Bloom Cream** (#fffaf2): Màu nền chủ đạo, mang lại cảm giác ấm áp, dễ chịu và thân thiện hơn so với màu trắng tinh khiết hay xám lạnh.
+- **Ink Dark** (#2f2416): Màu chữ chính, đảm bảo độ tương phản cao chống mỏi mắt và kết nối tốt với Forest Deep.
+- **Card White** (#fffdf8): Màu nền cho các thẻ thông tin, sáng hơn màu nền chung một chút để tạo chiều sâu lớp lang.
 
-Right side (hidden on mobile hidden sm:flex, gap-4):
-"Login" text button, text-sm text-gray-700 hover:text-black
-"Get started free" button: bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors
+### Named Rules
+**The Forest Border Rule.** Tất cả các thành phần tương tác quan trọng (thẻ card, nút bấm, input) đều phải có đường viền Forest Deep (#4f3516) dày 2.5px để duy trì tính nhất quán của phong cách game 3D.
 
-Mobile hamburger (sm:hidden):
-Toggles between Menu and X icons from Lucide (w-6 h-6)
+## 3. Typography
 
-MOBILE MENU (conditionally rendered when open)
+**Display Font:** Be Vietnam Pro (hoặc Inter làm fallback)
+**Body Font:** Be Vietnam Pro (hoặc Inter làm fallback)
 
-Positioned absolute top-[60px] left-0 right-0 z-30
-Background: bg-white/95 backdrop-blur-md border-b border-gray-200
-Animated with animate-fade-in-overlay
-Contains same nav items as desktop, stacked vertically with px-6 py-4 gap-4
-Login and "Get started free" buttons separated by a border-t border-gray-200 pt-4
-The CTA button is full width in mobile menu
+Hệ thống sử dụng font chữ sans-serif hiện đại của Việt Nam với các nét chữ bo tròn thân thiện, rõ nét, dễ đọc trên mọi thiết bị.
 
-HERO CONTENT (z-20, relative)
+### Hierarchy
+- **Display** (Bold 800, clamp(2rem, 5vw, 4rem), 1.2): Dùng cho các tiêu đề chính của Hero section và các số liệu thống kê nổi bật.
+- **Headline** (Bold 700, 1.875rem, 1.3): Tiêu đề các mục lớn trên trang.
+- **Title** (SemiBold 600, 1.25rem, 1.4): Tiêu đề của thẻ card hoặc các phân mục nhỏ.
+- **Body** (Regular 400, 1rem, 1.6): Dùng cho văn bản thông thường, giới hạn dòng tối đa 65-75ch để dễ đọc.
+- **Label** (Medium 500, 0.875rem, 1.4): Dùng cho thẻ tag, nút bấm, chú thích nhỏ.
 
-Container: px-4 sm:px-6 pt-6 sm:pt-12 pb-16 sm:pb-32 max-w-7xl mx-auto text-center
+### Named Rules
+**The Balanced Headline Rule.** Tất cả các tiêu đề h1 đến h3 phải sử dụng thuộc tính `text-wrap: balance` để đảm bảo độ dài các dòng cân đối trên mọi thiết bị, không để mồ côi chữ.
 
-Rating badge (animationDelay: 0.2s):
-inline-flex items-center gap-2 mb-5 sm:mb-8
-Small box: w-6 h-6 border border-gray-300 rounded flex items-center justify-center containing a filled Star icon (w-4 h-4 fill-black)
-Text: "4.9 rating from 18.3K+ users", text-xs sm:text-sm font-medium text-black
+## 4. Elevation
 
-Heading (animationDelay: 0.3s):
-Font sizes: text-[38px] sm:text-6xl md:text-7xl lg:text-[80px]
-font-normal leading-[1.1] tracking-tight mb-4 sm:mb-5
-Mobile layout (sm:hidden): Three lines -- "Work Smarter." / "Move Faster." / "AI Powers You Up."
-Desktop layout (hidden sm:inline): Two lines -- "Work Smarter. Move Faster." / "AI Powers You Up."
-"AI Powers You Up." uses a gradient text effect: bg-gradient-to-r from-black via-gray-500 to-gray-400 bg-clip-text text-transparent
+CHẠM Flora không sử dụng bóng đổ mờ (soft shadows) làm mặc định để trang trí. Thay vào đó, chiều sâu của giao diện được kiến tạo thông qua sự kết hợp giữa đường viền dày và bóng đổ cứng 3D (hard shadow) có màu sắc rõ ràng (Forest Deep) dịch chuyển theo tương tác của người dùng.
 
-Subheading (animationDelay: 0.4s):
-text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-2
-Text: "Intelligent automation syncs with the tools you love to streamline tasks, boost output, and save time."
+### Shadow Vocabulary
+- **3D Button Shadow** (`box-shadow: 0 5px 0 #4f3516`): Sử dụng cho các nút bấm ở trạng thái bình thường. Dịch chuyển xuống `0 3px 0` khi hover và `0 0 0` khi active.
+- **3D Card Shadow** (`box-shadow: 0 6px 0 #4f3516`): Sử dụng cho các thẻ thông tin (cards). Tăng lên `0 10px 0` khi hover ở trạng thái tương tác.
 
-CTA button (animationDelay: 0.5s):
-bg-black text-white px-6 sm:px-8 py-3 rounded-full text-sm sm:text-base font-medium hover:bg-gray-800 transition-colors
-Text: "Begin Free Trial"
+### Named Rules
+**The Hard-Shadow Rule.** Cấm tuyệt đối việc sử dụng bóng đổ mịn màu xám mờ nhạt kết hợp với viền mỏng trên cùng một phần tử (ghost card pattern). Mọi chiều sâu phải được thể hiện bằng bóng đổ cứng màu Forest Deep (#4f3516).
 
-BOTTOM PARTNER BAR (z-20, absolute bottom-0)
+## 5. Components
 
-Container: absolute bottom-0 left-0 right-0 z-20 flex flex-col items-center gap-3 sm:gap-4 pb-4 sm:pb-8 px-4
-Animated: animate-fade-in-up at animationDelay: 0.6s, initial opacity: 0
+### Buttons
+- **Shape:** Bo tròn hoàn toàn (full-pill, `border-radius: 9999px`), tạo cảm giác mềm mại thân thiện.
+- **Primary (Honey 3D):** Nền Honey Mid (#e3a11d), chữ Forest Deep (#4f3516), viền Forest Deep dày 2.5px. Box shadow 3D dày 5px màu Forest Deep.
+- **Outline (Cream 3D):** Nền Bloom Cream (#fffaf2), chữ Forest Deep, viền Forest Deep dày 2.5px. Box shadow 3D dày 5px.
+- **Petal (Pink 3D):** Nền Petal Pink (#f58fb1), chữ trắng, viền Forest Deep dày 2.5px. Box shadow 3D dày 5px.
+- **Mint (Green 3D):** Nền Mint Green (#82bf47), chữ trắng, viền Forest Deep dày 2.5px. Box shadow 3D dày 5px.
+- **Interactive Treatment:** Khi hover, nút dịch chuyển xuống `translateY(2px)` và shadow giảm còn 3px. Khi click (active), nút dịch chuyển xuống `translateY(5px)` và shadow biến mất hoàn toàn.
 
-Glass pill badge:
-rounded-full px-3 sm:px-3.5 py-1
-text-[10px] sm:text-xs font-medium text-white
-Frosted glass effect: backdrop-blur-md bg-white/15 border border-white/20
-Text: "Collaborating with top aerospace pioneers globally"
+### Cards / Containers
+- **Corner Style:** Bo tròn lớn (32px / 2rem) mang phong cách organic.
+- **Background:** Nền Card White (#fffdf8).
+- **Border:** Viền Forest Deep dày 2.5px.
+- **Shadow:** Sử dụng 3D Card Shadow (`0 6px 0 #4f3516`).
+- **Hover Treatment (Interactive Card):** Dịch chuyển lên `translateY(-4px)` và shadow tăng lên `0 10px 0 #4f3516`.
 
-Partner logos (text-based, no images):
-Flex row: gap-5 sm:gap-12 md:gap-16 flex-wrap justify-center
-Five names: "Aeon", "Vela", "Apex", "Orbit", "Zeno"
-Each: text-lg sm:text-2xl md:text-3xl italic text-white tracking-tight with inline style fontFamily: 'Georgia, serif'
+### Chips / Tags
+- **Style:** Nền trắng mờ (opacity 70%), viền Honey Mid nhạt dày 1px, chữ Forest Deep. Bo tròn hoàn toàn.
 
-ANIMATIONS (defined in index.css)
+### Navigation
+- **Style:** Nền Bloom Cream hoặc trắng mờ tích hợp backdrop-blur, viền Forest Deep dày 2.5px ở phía dưới. Các link điều hướng sử dụng font Be Vietnam Pro, màu Ink Dark, hover đổi màu sang Honey Mid.
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+## 6. Do's and Don'ts
 
-@keyframes fadeInOverlay {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.animate-fade-in-overlay { animation: fadeInOverlay 0.4s ease-out forwards; }
+### Do:
+- **Do** sử dụng viền Forest Deep (#4f3516) dày 2.5px cho các phần tử tương tác chính.
+- **Do** sử dụng hiệu ứng chuyển dịch translateY kết hợp với thay đổi shadow để thể hiện tương tác của nút bấm và thẻ card.
+- **Do** tôn trọng bảng màu tự nhiên ấm áp (Bloom Cream, Honey Mid, Petal Pink, Mint Green).
+- **Do** sử dụng `text-wrap: balance` cho tiêu đề và `text-wrap: pretty` cho các đoạn văn dài để tối ưu hiển thị tiếng Việt.
 
-Each element uses staggered delays (0.1s through 0.6s) applied via inline style={{ animationDelay: 'X.Xs', opacity: 0 }}.
-
-FONT
-Google Fonts import: @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-Applied globally: body { font-family: 'Inter', sans-serif; }
-
-KEY DESIGN NOTES
-The "liquid glass" effect comes from the frosted-glass partner badge using backdrop-blur-md bg-white/15 border border-white/20
-The mobile menu also uses glass: bg-white/95 backdrop-blur-md
-No purple/indigo colors -- entire palette is black, white, and grays
-The heading gradient goes from pure black through gray-500 to gray-400
-The video is visible primarily in the lower half, with white gradients dissolving it into the clean white upper section
-Color palette: strictly monochrome
+### Don't:
+- **Don't** sử dụng bóng đổ mờ nhạt (soft drop shadows) màu xám chung với đường viền mỏng 1px (ghost-card).
+- **Don't** sử dụng viền bo góc quá vuông vức (nhỏ hơn 8px) hoặc quá nhọn, làm giảm đi tính chất Organic của dự án.
+- **Don't** thiết kế các thẻ card có kích thước giống hệt nhau lặp đi lặp lại một cách nhàm chán (cliché card grids). Hãy sử dụng Bento Grid hoặc bố cục bất đối xứng để tạo nhịp điệu sinh động.
+- **Don't** sử dụng text gradient màu xám đen kiểu SaaS template truyền thống. Hãy dùng màu Forest Deep nguyên bản hoặc gradient tự nhiên rực rỡ như `bloom-headline-accent` (vàng -> hồng -> xanh mint).
