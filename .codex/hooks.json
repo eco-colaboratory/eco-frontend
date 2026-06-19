@@ -12,6 +12,155 @@
             "statusMessage": "Checking UI changes"
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/build_check.py\"",
+            "timeout": 30,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/build_check.py\")'"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/artifact_fold.py\"",
+            "timeout": 5,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/artifact_fold.py\")'"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/session_init.py\"",
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/session_init.py\")'"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/subagent_init.py\"",
+            "timeout": 5,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/subagent_init.py\")'"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/dev_rules_reminder.py\"",
+            "timeout": 5,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/dev_rules_reminder.py\")'"
+          },
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/simplify_gate.py\"",
+            "timeout": 15,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/simplify_gate.py\")'"
+          },
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/caveman_watch.py\"",
+            "timeout": 5,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/caveman_watch.py\")'"
+          },
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/suggest_compact.py\"",
+            "timeout": 5,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/suggest_compact.py\")'"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/session_state.py\" user-prompt",
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/session_state.py\") user-prompt'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/privacy_block.py\"",
+            "timeout": 5,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/privacy_block.py\")'"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/tool_counter.py\"",
+            "timeout": 3,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/tool_counter.py\")'"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/pre_compact.py\"",
+            "timeout": 5,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/pre_compact.py\")'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/session_end.py\"",
+            "timeout": 10,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/session_end.py\")'"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/session_end.py\"",
+            "timeout": 10,
+            "commandWindows": "powershell -NoProfile -Command '$root = git rev-parse --show-toplevel; python (Join-Path $root \".codex/hooks/session_end.py\")'"
+          }
+        ]
       }
     ]
   }
