@@ -18,15 +18,15 @@ const STEP_DETAILS = [
     icon: Share2,
     badge: 'Tương tác & kết nối',
     description: 'Kết nối nỗ lực cùng cộng đồng và đồng hành cùng các thương hiệu xanh uy tín.',
-    circleClass: 'bg-[#fdf3c7] text-bloom-green-deep',
-    badgeClass: 'text-[#bd850b] bg-[#fdf3c7]/60 border-bloom-green-deep/15',
+    circleClass: 'bg-bloom-green-mist text-bloom-green-deep',
+    badgeClass: 'text-bloom-green-deep bg-bloom-green-mist/50 border-bloom-green-deep/15',
   },
   {
     icon: Sprout,
     badge: 'Mầm xanh thực tế',
     description: 'Hiện thực hóa vườn hoa thật ngoài đời từ kết quả chăm sóc và tài trợ hữu hình.',
-    circleClass: 'bg-[#eef7e8] text-bloom-green-deep',
-    badgeClass: 'text-[#4c781e] bg-[#eef7e8]/60 border-bloom-green-deep/15',
+    circleClass: 'bg-bloom-accent-mint/20 text-bloom-green-deep',
+    badgeClass: 'text-bloom-green-deep bg-bloom-accent-mint/15 border-bloom-green-deep/15',
   },
 ] as const
 
@@ -68,10 +68,10 @@ export function CoreIdeaSection() {
 
                 return (
                   <li key={step} className="relative flex flex-col items-center">
-                    <MotionWrapper delay={0.12 * (i + 1)} className="w-full flex flex-col items-center">
+                    <MotionWrapper delay={0.12 * (i + 1)} className="w-full flex flex-col items-center group/step">
                       {/* Vòng tròn số bước với hiệu ứng hover mượt mà */}
                       <div className={cn(
-                        'relative flex h-16 w-16 items-center justify-center rounded-full border-2 border-bloom-green-deep transition-all duration-300 z-20 hover:scale-110 group font-display font-black text-2xl shadow-[4px_4px_0px_var(--bloom-green-deep)]',
+                        'relative flex h-16 w-16 items-center justify-center rounded-full border-2 border-bloom-green-deep transition-all duration-300 z-20 group-hover/step:scale-110 group-hover/step:rotate-[4deg] group-hover/step:-translate-y-1 font-display font-black text-2xl shadow-[4px_4px_0px_var(--bloom-green-deep)]',
                         details.circleClass
                       )}>
                         <span>

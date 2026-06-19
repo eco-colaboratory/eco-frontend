@@ -122,7 +122,7 @@ export function AchievementsSection() {
               </p>
 
               <div key={activeIndex} className="animate-fade-in-up flex flex-col items-start">
-                <span className="inline-flex items-center rounded-full border border-bloom-accent-mint/25 bg-bloom-accent-mint/15 px-4.5 py-1.5 text-xs font-bold uppercase tracking-wider text-bloom-accent-mint shadow-sm backdrop-blur-sm">
+                <span className="inline-flex items-center rounded-full border border-bloom-accent-mint/25 bg-bloom-accent-mint/15 px-4.5 py-1.5 text-xs font-bold uppercase tracking-wider text-bloom-green-deep shadow-sm backdrop-blur-sm">
                   {activeSlide.value}
                 </span>
 
@@ -138,7 +138,7 @@ export function AchievementsSection() {
               <div className="mt-8">
                 <a
                   href="#contact"
-                  className="inline-flex items-center justify-center rounded-full bg-bloom-dark px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-md shadow-bloom-green-deep/15 transition-all duration-300 hover:bg-bloom-green-mid motion-reduce:transition-none"
+                  className="inline-flex items-center justify-center rounded-full bg-bloom-dark px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-md shadow-bloom-green-deep/15 transition-all duration-300 hover:bg-bloom-green-mid hover:text-bloom-green-deep focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-bloom-green-deep focus-visible:outline-offset-2 motion-reduce:transition-none"
                 >
                   Đồng hành ngay
                 </a>
@@ -201,7 +201,7 @@ export function AchievementsSection() {
                       aria-label={`Chuyển tới slide ${index + 1}: ${slide.label}`}
                       aria-current={index === activeIndex ? 'true' : undefined}
                       className={cn(
-                        'h-2 rounded-full transition-all duration-300 motion-reduce:transition-none',
+                        'relative h-2 rounded-full transition-all duration-300 focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-bloom-green-deep focus-visible:outline-offset-2 motion-reduce:transition-none after:absolute after:inset-[-8px] after:content-[""]',
                         index === activeIndex
                           ? 'w-8 bg-bloom-green-deep'
                           : 'w-2 bg-bloom-green-deep/25 hover:bg-bloom-green-deep/50',

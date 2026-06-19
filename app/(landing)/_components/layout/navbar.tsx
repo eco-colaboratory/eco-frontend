@@ -214,7 +214,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setAuthOpen(true)}
-              className="hidden bloom-btn-3d bloom-btn-3d-petal px-4.5 py-1.5 text-[11px] text-white sm:inline-flex cursor-pointer"
+              className="hidden bloom-btn-3d bloom-btn-3d-petal px-4.5 py-1.5 text-[11px] text-white md:inline-flex cursor-pointer"
             >
               Đăng nhập
             </button>
@@ -222,7 +222,7 @@ export function Navbar() {
 
           <button
             type="button"
-            className="sm:hidden flex items-center justify-center p-1.5 rounded-full border border-bloom-green-deep/15 bg-white/50 text-bloom-green-deep hover:bg-white transition-colors"
+            className="md:hidden flex items-center justify-center p-1.5 rounded-full border border-bloom-green-deep/15 bg-white/50 text-bloom-green-deep hover:bg-white transition-colors"
             aria-label={open ? 'Đóng menu' : 'Mở menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -236,8 +236,11 @@ export function Navbar() {
         {open ? (
           <m.div
             key="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu điều hướng"
             className={cn(
-              'pointer-events-auto overflow-hidden sm:hidden mt-6',
+              'pointer-events-auto overflow-hidden md:hidden mt-6',
               'border-b border-bloom-green-mid/15 bg-bloom-cream/95 backdrop-blur-md',
               isScrolled ? cn(pillWidth, 'rounded-2xl border-x border-b') : 'w-full',
             )}
@@ -259,7 +262,7 @@ export function Navbar() {
                       'rounded-lg py-2 px-3 text-[13px] font-medium transition-colors font-display',
                       isActive
                         ? 'bg-bloom-green-mid/10 text-bloom-green-deep'
-                        : 'text-gray-600 hover:bg-bloom-green-light/50 hover:text-bloom-green-deep',
+                        : 'text-bloom-green-deep/75 hover:bg-bloom-green-light/50 hover:text-bloom-green-deep',
                     )}
                   >
                     {l.label}
@@ -276,7 +279,7 @@ export function Navbar() {
                 ) : (
                   <button
                     type="button"
-                    className="block w-full rounded-full bg-bloom-green-mid py-2 text-center text-xs font-medium text-white transition-colors hover:bg-bloom-green-deep font-display"
+                    className="block w-full rounded-full bg-bloom-green-mid py-2 text-center text-xs font-black text-bloom-green-deep transition-colors hover:bg-bloom-green-deep hover:text-white font-display"
                     onClick={() => {
                       setOpen(false)
                       setAuthOpen(true)

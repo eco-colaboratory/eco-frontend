@@ -79,8 +79,11 @@ export function BenefitsSection() {
         {/* Nút bấm Đóng/Mở bảng chi tiết */}
         <div className="flex justify-center mb-10">
           <button
+            id="benefits-expand-btn"
             type="button"
             onClick={() => setIsTableExpanded(!isTableExpanded)}
+            aria-expanded={isTableExpanded}
+            aria-controls="benefits-detail-table"
             className="bloom-btn-3d bloom-btn-3d-primary px-6 py-2.5 text-xs text-bloom-green-deep border-2 border-bloom-green-deep cursor-pointer select-none"
           >
             {isTableExpanded ? (
@@ -97,7 +100,7 @@ export function BenefitsSection() {
 
         {/* BƯỚC 2 — Bảng Quyền lợi chi tiết (Expandable Table) */}
         {isTableExpanded && (
-          <div className="animate-fade-in-up duration-500">
+          <div id="benefits-detail-table" role="region" aria-labelledby="benefits-expand-btn" className="animate-fade-in-up duration-500">
             {/* Desktop Version */}
             <div className="hidden md:block rounded-[2rem] border-2 border-bloom-green-deep bg-white/95 shadow-[6px_6px_0px_var(--bloom-green-deep)] relative overflow-hidden">
               <div className="overflow-auto max-h-[65vh]">
@@ -141,7 +144,7 @@ export function BenefitsSection() {
                             rowIndex % 2 === 1 && 'bg-bloom-green-light/10'
                           )}
                         >
-                          <td className="px-6 py-3.5 font-bold text-bloom-green-deep/85 leading-snug font-sans">{row.label}</td>
+                          <td className="px-6 py-3.5 font-bold text-bloom-green-deep leading-snug font-sans">{row.label}</td>
                           {row.cells.map((cell, i) => {
                             const isCheck = cell === '✓'
                             return (
@@ -152,7 +155,7 @@ export function BenefitsSection() {
                                 {isCheck ? (
                                   <span className="text-sm select-none" title="Có">🌸</span>
                                 ) : cell === '-' ? (
-                                  <span className="text-gray-300 select-none">—</span>
+                                  <span className="text-bloom-green-deep/30 select-none">—</span>
                                 ) : (
                                   <span className="inline-flex rounded-full border border-bloom-green-deep/30 bg-bloom-green-light px-2.5 py-0.5 text-[10px] font-black text-bloom-green-deep shadow-[1px_1px_0px_var(--bloom-green-deep)]">
                                     {cell}
@@ -221,7 +224,7 @@ export function BenefitsSection() {
                     return (
                       <li key={row.label} className="flex items-start gap-2.5">
                         <span className="text-[10px] select-none mt-0.5">🌸</span>
-                        <div className="text-xs font-semibold text-bloom-green-deep/80 leading-snug">
+                        <div className="text-xs font-semibold text-bloom-green-deep leading-snug">
                           <span>{row.label}</span>
                           {cellValue !== '✓' && (
                             <span className="inline-flex mt-1 rounded-full border border-bloom-green-deep/30 bg-bloom-green-light px-2 py-0.5 text-[9px] font-black text-bloom-green-deep ml-1">

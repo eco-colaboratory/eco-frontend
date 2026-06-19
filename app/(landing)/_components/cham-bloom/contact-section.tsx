@@ -128,7 +128,7 @@ export function ContactSection() {
               {/* Primary Button with Eco Green Gradient */}
               <BloomButton
                 href={`mailto:${contact.email}`}
-                className="bg-gradient-to-r from-bloom-green-mid to-bloom-accent-mint text-white hover:opacity-95 hover:shadow-[0_0_25px_rgba(16,185,129,0.3)] text-sm font-semibold shadow-lg transition-all duration-300 transform active:scale-95 border-0"
+                className="bg-gradient-to-r from-bloom-green-mid to-bloom-accent-mint text-bloom-green-deep hover:opacity-95 hover:shadow-[0_0_25px_rgba(16,185,129,0.3)] text-sm font-black shadow-lg transition-all duration-300 transform active:scale-95 border-0"
               >
                 <span className="flex items-center gap-2">
                   {contact.cta}
@@ -167,12 +167,14 @@ export function ContactSection() {
 
                   <div className="space-y-2 pt-1">
                     <button
+                      type="button"
                       onClick={() => {
                         navigator.clipboard.writeText(contact.email)
                         toast.success('Đã sao chép email', {
                           description: contact.email,
                         })
                       }}
+                      aria-label={`Sao chép địa chỉ email đại diện: ${contact.email}`}
                       className="flex w-full items-center gap-2.5 py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 hover:text-white transition-all group/link border border-white/5 text-[11px]"
                     >
                       <MailIcon className="h-3.5 w-3.5 text-bloom-accent-mint group-hover/link:scale-110 transition-transform" />

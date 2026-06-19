@@ -1,6 +1,7 @@
 import {
   Flower2,
   LayoutDashboard,
+  ListTodo,
   Package,
   Palette,
   Sparkles,
@@ -23,6 +24,7 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
   { label: 'Hệ sinh thái', href: '/admin/synergies', icon: Sparkles },
   { label: 'Mẫu hoa', href: '/admin/flower-templates', icon: Flower2 },
   { label: 'Mốc thưởng', href: '/admin/reward-tiers', icon: Trophy },
+  { label: 'Nhiệm vụ', href: '/admin/daily-tasks', icon: ListTodo },
 ];
 
 export const ADMIN_QUICK_LINKS = ADMIN_NAV_ITEMS.filter((item) => item.href !== '/admin/dashboard');

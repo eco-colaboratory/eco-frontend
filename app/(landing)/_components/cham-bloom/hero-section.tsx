@@ -29,12 +29,12 @@ function BackgroundFlowers() {
   return (
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
       {/* Sun/Glow Orbs */}
-      <div className="absolute -top-40 right-[-10%] h-[600px] w-[600px] rounded-full bg-bloom-gold/20 blur-[130px] mix-blend-screen" />
-      <div className="absolute top-[20%] left-[-20%] h-[550px] w-[550px] rounded-full bg-bloom-petal-soft/40 blur-[110px] mix-blend-screen" />
+      <div className="absolute -top-40 right-[-10%] h-[600px] w-[600px] rounded-full bg-bloom-gold/20 blur-[130px] mix-blend-screen scroll-parallax-glow" />
+      <div className="absolute top-[20%] left-[-20%] h-[550px] w-[550px] rounded-full bg-bloom-petal-soft/40 blur-[110px] mix-blend-screen scroll-parallax-glow" />
       <div className="absolute bottom-[-10%] right-[10%] h-[600px] w-[600px] rounded-full bg-bloom-accent-mint/15 blur-[140px] mix-blend-screen" />
 
       {/* Rotating large flower 1 */}
-      <div className="absolute -right-24 top-[15%] h-[320px] w-[320px] opacity-[0.08] lg:opacity-[0.14] animate-bloom-spin-slow text-bloom-petal">
+      <div className="absolute -right-24 top-[15%] h-[320px] w-[320px] opacity-[0.08] lg:opacity-[0.14] animate-bloom-spin-slow scroll-rotate-cw text-bloom-petal">
         <svg viewBox="0 0 100 100" fill="currentColor" className="h-full w-full">
           <path d="M50 35c-4-10-20-10-20 0 0 10 16 15 20 25 4-10 20-15 20-25 0-10-16-10-20 0z" />
           <path d="M50 65c-4 10-20 10-20 0 0-10 16-15 20-25 4 10 20 15 20 25 0 10-16 10-20 0z" />
@@ -45,7 +45,7 @@ function BackgroundFlowers() {
       </div>
 
       {/* Rotating flower 2 */}
-      <div className="absolute -left-20 bottom-[10%] h-[240px] w-[240px] opacity-[0.08] lg:opacity-[0.12] animate-bloom-spin-slow text-bloom-gold" style={{ animationDirection: 'reverse' }}>
+      <div className="absolute -left-20 bottom-[10%] h-[240px] w-[240px] opacity-[0.08] lg:opacity-[0.12] animate-bloom-spin-slow scroll-rotate-ccw text-bloom-gold" style={{ animationDirection: 'reverse' }}>
         <svg viewBox="0 0 100 100" fill="currentColor" className="h-full w-full">
           <path d="M50 35c-4-10-20-10-20 0 0 10 16 15 20 25 4-10 20-15 20-25 0-10-16-10-20 0z" />
           <path d="M50 65c-4 10-20 10-20 0 0-10 16-15 20-25 4 10 20 15 20 25 0 10-16 10-20 0z" />
@@ -148,7 +148,7 @@ export function HeroSection() {
               </div>
 
               {/* Chibi Mascot Image */}
-              <div className="relative z-10 w-[78%] sm:w-[82%] aspect-square select-none animate-bloom-float">
+              <div className="relative z-10 w-[78%] sm:w-[82%] aspect-square select-none animate-bloom-float scroll-parallax-mascot">
                 <Image
                   src="/assets/landing/hero.png"
                   alt="Mascot CHẠM Flora"
