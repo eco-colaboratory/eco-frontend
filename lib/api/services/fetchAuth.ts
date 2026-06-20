@@ -43,4 +43,29 @@ export const fetchAuth = {
     });
     return response.data;
   },
+
+  getProfile: async (): Promise<AuthProfileResponse> => {
+    const response = await apiService.get<AuthProfileResponse>("api/auth/profile");
+    return response.data;
+  },
 };
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  currency: number;
+  level: number;
+}
+
+export interface AuthProfileResponse {
+  isSuccess: boolean;
+  message: string;
+  data: UserProfile;
+  metaData?: string;
+  metadata?: unknown;
+}
+
