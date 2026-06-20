@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { deleteCookie } from "cookies-next";
-import { store } from "@/lib/redux/store";
+
 import { getStoredAccessToken, getStoredRefreshToken } from "@/lib/auth/token-storage";
 import { applyRefreshedSession } from "@/lib/auth/persist-session";
 import { refreshAccessToken } from "@/lib/auth/refresh-session";
@@ -98,6 +98,7 @@ class ApiService {
             deleteCookie("authToken", { path: "/" });
             deleteCookie("refreshToken", { path: "/" });
             const { logout } = await import("@/lib/redux/slices/authSlice");
+            const { store } = await import("@/lib/redux/store");
             store.dispatch(logout());
 
             if (typeof window !== "undefined") {

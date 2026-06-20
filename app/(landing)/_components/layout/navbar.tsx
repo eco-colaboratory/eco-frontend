@@ -10,6 +10,8 @@ import {
   useScroll,
 } from 'framer-motion'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { AuthModal, UserMenuDropdown } from '@/components/widget/auth'
 import { useAppSelector } from '@/lib/redux/hooks'
@@ -65,12 +67,14 @@ function CloseIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export function Navbar() {
+  const router = useRouter()
   const [isScrolled, setIsScrolled] = useState(
     () => typeof window !== 'undefined' && window.scrollY > SCROLL_THRESHOLD,
   )
   const [open, setOpen] = useState(false)
   const [authOpen, setAuthOpen] = useState(false)
   const [activeSection, setActiveSection] = useState<string>('hero')
+  const [shouldNavigateToTopup, setShouldNavigateToTopup] = useState(false)
   const reduced = useReducedMotion()
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const user = useAppSelector(selectUser)
@@ -81,6 +85,24 @@ export function Navbar() {
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setIsScrolled(latest > SCROLL_THRESHOLD)
   })
+
+  useEffect(() => {
+    if (isAuthenticated && shouldNavigateToTopup) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShouldNavigateToTopup(false)
+      router.push('/topup')
+      toast.success('Đăng nhập thành công! Đang chuyển hướng tới trang nạp coin...')
+    }
+  }, [isAuthenticated, shouldNavigateToTopup, router])
+
+  const handleTopupClick = () => {
+    if (isAuthenticated) {
+      router.push('/topup')
+    } else {
+      setShouldNavigateToTopup(true)
+      setAuthOpen(true)
+    }
+  }
 
   useEffect(() => {
     const sections = ['hero', 'about', 'vision', 'sponsorship', 'contact']
@@ -180,13 +202,14 @@ export function Navbar() {
 
         <div className="hidden items-center justify-center gap-6 md:flex lg:gap-8">
           {NAV_LINKS.map((l) => {
-            const sectionId = l.href.replace('#', '')
+            const isHash = l.href.startsWith('#')
+            const sectionId = isHash ? l.href.replace('#', '') : ''
             const isActive = activeSection === sectionId
             return (
               <Link
                 key={l.href}
                 href={l.href}
-                onClick={(e) => scrollToSection(e, sectionId)}
+                onClick={isHash ? (e) => scrollToSection(e, sectionId) : undefined}
                 className={cn(
                   'relative py-1.5 text-[13.5px] font-bold transition-colors font-display tracking-wide',
                   isActive
@@ -207,7 +230,15 @@ export function Navbar() {
           })}
         </div>
 
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center justify-end gap-3">
+          <button
+            type="button"
+            onClick={handleTopupClick}
+            className="hidden bloom-btn-3d bloom-btn-3d-primary px-4.5 py-1.5 text-[11px] text-bloom-green-deep md:inline-flex cursor-pointer shadow-[0_3px_0_#4f3516] hover:translate-y-[1px] hover:shadow-[0_2px_0_#4f3516] active:translate-y-[3px] active:shadow-[0_0px_0_#4f3516]"
+          >
+            Nạp Coin
+          </button>
+
           {isAuthenticated ? (
             <UserMenuDropdown displayName={displayName} />
           ) : (
@@ -251,13 +282,14 @@ export function Navbar() {
           >
             <div className="flex flex-col gap-2.5 px-6 py-4">
               {NAV_LINKS.map((l) => {
-                const sectionId = l.href.replace('#', '')
+                const isHash = l.href.startsWith('#')
+                const sectionId = isHash ? l.href.replace('#', '') : ''
                 const isActive = activeSection === sectionId
                 return (
                   <Link
                     key={l.href}
                     href={l.href}
-                    onClick={(e) => scrollToSection(e, sectionId)}
+                    onClick={isHash ? (e) => scrollToSection(e, sectionId) : undefined}
                     className={cn(
                       'rounded-lg py-2 px-3 text-[13px] font-medium transition-colors font-display',
                       isActive
@@ -269,7 +301,22 @@ export function Navbar() {
                   </Link>
                 )
               })}
-              <div className="border-t border-bloom-green-mid/10 pt-3">
+              <div className="border-t border-bloom-green-mid/10 pt-3 flex flex-col gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(false)
+                    if (isAuthenticated) {
+                      router.push('/topup')
+                    } else {
+                      setShouldNavigateToTopup(true)
+                      setAuthOpen(true)
+                    }
+                  }}
+                  className="block w-full rounded-full bg-bloom-gold border-2 border-bloom-green-deep py-2 text-center text-xs font-black text-bloom-green-deep transition-colors hover:bg-bloom-green-deep hover:text-white font-display shadow-[2px_2px_0px_#4f3516] cursor-pointer"
+                >
+                  Nạp Coin
+                </button>
                 {isAuthenticated ? (
                   <UserMenuDropdown
                     displayName={displayName}

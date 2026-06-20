@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
-import { ChevronDown, LogOut, LayoutDashboard } from 'lucide-react'
+import { ChevronDown, LogOut, LayoutDashboard, Coins } from 'lucide-react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { useLandingAuth } from '@/hooks/useLandingAuth'
@@ -99,6 +99,16 @@ export function UserMenuDropdown({
                 : { duration: 0.18, ease: [0.22, 1, 0.36, 1] }
             }
           >
+            <Link
+              href="/topup"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-xs font-medium text-bloom-green-deep transition-colors hover:bg-bloom-green-mid/10 font-display border-b border-bloom-green-mid/10"
+            >
+              <Coins className="h-3.5 w-3.5 text-bloom-gold" aria-hidden />
+              Nạp Coin
+            </Link>
+
             {isAdmin && (
               <Link
                 href="/admin/dashboard"

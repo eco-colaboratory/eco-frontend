@@ -9,6 +9,16 @@ import { SignalRProvider } from './signalRProvider'
 import { useAuthSyncAcrossTabs } from '@/hooks/useAuthSyncAcrossTabs'
 import { useAuthHydration } from '@/hooks/useAuthHydration'
 
+if (process.env.NODE_ENV === 'development') {
+  const orig = console.error;
+  console.error = (...args: unknown[]) => {
+    if (typeof args[0] === 'string' && args[0].includes('Encountered a script tag')) {
+      return;
+    }
+    orig.apply(console, args);
+  };
+}
+
 // Sync logout giữa các tabs + restore session from cookies
 function AuthSyncProvider({ children }: { children: ReactNode }) {
   useAuthSyncAcrossTabs()
