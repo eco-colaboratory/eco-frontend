@@ -51,3 +51,6 @@ agents.md
 .ck.json
 .my-skills.lock.json
 session-data/
+
+.vercel
+.env*
