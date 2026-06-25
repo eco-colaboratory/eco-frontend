@@ -70,7 +70,8 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
       if (pathname === "/" || pathname === "/landing") return NextResponse.next();
     }
-    if (!isPublicRoute) return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+    if (isPublicRoute) return NextResponse.next();
+    return NextResponse.redirect(new URL("/admin/dashboard", request.url));
   }
 
   // INSTRUCTOR
