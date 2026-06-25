@@ -36,6 +36,7 @@ export function middleware(request: NextRequest) {
 
   const publicRoutes = [
     "/",
+    "/term",
   ];
 
   const isPublicRoute = publicRoutes.some((r) => pathname === r || pathname.startsWith(`${r}/`));

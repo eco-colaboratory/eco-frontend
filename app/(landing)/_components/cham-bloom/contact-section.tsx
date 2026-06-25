@@ -265,8 +265,8 @@ export function ContactSection() {
           <div className="border-t border-white/5 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30">
             <p>{contact.copyright}</p>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Chính sách bảo mật</a>
-              <a href="#" className="hover:text-white transition-colors">Điều khoản sử dụng</a>
+              <Link href="/term?tab=privacy" className="hover:text-white transition-colors">Chính sách bảo mật</Link>
+              <Link href="/term?tab=terms" className="hover:text-white transition-colors">Điều khoản sử dụng</Link>
             </div>
           </div>
         </footer>
