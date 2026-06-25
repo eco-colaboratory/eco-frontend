@@ -5,6 +5,7 @@ import { Providers } from '@/lib/providers'
 import { NavigationProgress } from '@/components/navigation-progress'
 import { Toaster } from '@/components/ui/sonner'
 import { getSiteUrl, SITE } from '@/lib/seo/site'
+import { ScrollToTop } from '@/components/widget/scroll-to-top'
 
 const beVietnamPro = Be_Vietnam_Pro({
   subsets: ['latin', 'vietnamese'],
@@ -53,6 +54,7 @@ export default function RootLayout({
         <Providers>
           <NavigationProgress />
           {children}
+          <ScrollToTop />
           <Toaster theme="light" position="bottom-center" richColors closeButton />
         </Providers>
       </body>

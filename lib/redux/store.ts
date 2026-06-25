@@ -1,4 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { registerStore } from "@/lib/auth/token-storage";
 import {
   persistStore,
   persistReducer,
@@ -35,6 +36,9 @@ export const store = configureStore({
     }),
   devTools: process.env.NODE_ENV !== "production",
 });
+
+// Đăng ký store để bẻ gãy dependency circular cycle với token-storage
+registerStore(store);
 
 export const persistor = persistStore(store);
 

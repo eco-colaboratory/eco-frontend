@@ -23,7 +23,7 @@ const NAV_LINKS = [
   { href: '#about', label: 'Về chúng tôi' },
   { href: '#roadmap', label: 'Lộ trình' },
   { href: '#sponsorship', label: 'Gói tài trợ' },
-  { href: '#contact', label: 'Liên hệ' },
+  { href: '/term?tab=terms', label: 'Điều khoản' },
 ] as const
 
 const springTransition = { type: 'spring' as const, stiffness: 200, damping: 50 }
