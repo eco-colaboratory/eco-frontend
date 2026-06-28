@@ -172,14 +172,10 @@ class ApiService {
 }
 
 export function getApiUrl(path = ""): string {
-  if (typeof window === "undefined") {
-    // Chạy ở phía server: sử dụng URL thật để gọi trực tiếp (Server-to-Server)
-    const serverUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/";
-    const base = serverUrl.endsWith("/") ? serverUrl : `${serverUrl}/`;
-    return `${base}${path}`;
-  }
-  // Chạy ở phía client (trình duyệt): sử dụng proxy tương đối để ẩn URL thật
-  return `/backend-api/${path}`;
+  // Tạm thời bỏ ẩn url backend đi, sử dụng trực tiếp URL thật
+  const serverUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/";
+  const base = serverUrl.endsWith("/") ? serverUrl : `${serverUrl}/`;
+  return `${base}${path}`;
 }
 
 const apiService = new ApiService(getApiUrl());

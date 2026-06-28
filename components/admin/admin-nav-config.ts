@@ -8,6 +8,8 @@ import {
   Trophy,
   Users,
   Ticket,
+  Coins,
+  Store,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -27,6 +29,8 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
   { label: 'Mốc thưởng', href: '/admin/reward-tiers', icon: Trophy },
   { label: 'Nhiệm vụ', href: '/admin/daily-tasks', icon: ListTodo },
   { label: 'Gift Code', href: '/admin/gift-codes', icon: Ticket },
+  { label: 'Gói nạp', href: '/admin/coin-packages', icon: Coins },
+  { label: 'Cửa hàng', href: '/admin/shop-prices', icon: Store },
 ];
 
 export const ADMIN_QUICK_LINKS = ADMIN_NAV_ITEMS.filter((item) => item.href !== '/admin/dashboard');
