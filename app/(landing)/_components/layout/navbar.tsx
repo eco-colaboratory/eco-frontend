@@ -10,7 +10,7 @@ import {
   useScroll,
 } from 'framer-motion'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { AuthModal, UserMenuDropdown } from '@/components/widget/auth'
@@ -24,6 +24,7 @@ const NAV_LINKS = [
   { href: '#roadmap', label: 'Lộ trình' },
   { href: '#sponsorship', label: 'Gói tài trợ' },
   { href: '/term?tab=terms', label: 'Điều khoản' },
+  { href: '/download', label: 'Tải Game' },
 ] as const
 
 const springTransition = { type: 'spring' as const, stiffness: 200, damping: 50 }
@@ -68,6 +69,7 @@ function CloseIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export function Navbar() {
   const router = useRouter()
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(
     () => typeof window !== 'undefined' && window.scrollY > SCROLL_THRESHOLD,
   )
@@ -79,6 +81,7 @@ export function Navbar() {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const user = useAppSelector(selectUser)
   const displayName = user?.username || user?.name || 'bạn'
+  const isDarkHeader = pathname === '/download' && !isScrolled
 
   const { scrollY } = useScroll()
 
@@ -136,6 +139,9 @@ export function Navbar() {
   }, [])
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (pathname !== '/') {
+      return
+    }
     e.preventDefault()
     const element = document.getElementById(id)
     if (element) {
@@ -158,7 +164,7 @@ export function Navbar() {
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex flex-col items-center">
       <m.nav
         className={cn(
-          'pointer-events-auto grid grid-cols-2 sm:grid-cols-3 items-center px-6 py-2 sm:px-6 sm:py-2.5 transition-all duration-300',
+          'pointer-events-auto flex items-center justify-between px-6 py-2 sm:px-6 sm:py-2.5 transition-all duration-300',
           isScrolled
             ? cn(
               pillWidth,
@@ -184,7 +190,7 @@ export function Navbar() {
           y: reduced ? { duration: 0 } : springTransition,
         }}
       >
-        <div className="flex justify-start">
+        <div className="flex-1 flex justify-start">
           <Link
             href="#hero"
             onClick={(e) => scrollToSection(e, 'hero')}
@@ -200,21 +206,27 @@ export function Navbar() {
           </Link>
         </div>
 
-        <div className="hidden items-center justify-center gap-6 md:flex lg:gap-8">
+        <div className="hidden items-center justify-center gap-5 md:flex lg:gap-8 shrink-0 flex-initial">
           {NAV_LINKS.map((l) => {
             const isHash = l.href.startsWith('#')
             const sectionId = isHash ? l.href.replace('#', '') : ''
-            const isActive = activeSection === sectionId
+            const isActive = isHash
+              ? activeSection === sectionId
+              : pathname === l.href.split('?')[0]
             return (
               <Link
                 key={l.href}
-                href={l.href}
+                href={isHash && pathname !== '/' ? `/${l.href}` : l.href}
                 onClick={isHash ? (e) => scrollToSection(e, sectionId) : undefined}
                 className={cn(
-                  'relative py-1.5 text-[13.5px] font-bold transition-colors font-display tracking-wide',
-                  isActive
-                    ? 'text-bloom-green-deep'
-                    : 'text-bloom-green-deep/60 hover:text-bloom-green-deep',
+                  'relative py-1.5 text-[13.5px] font-bold transition-colors font-display tracking-wide whitespace-nowrap',
+                  isDarkHeader
+                    ? isActive
+                      ? 'text-white'
+                      : 'text-white/70 hover:text-white'
+                    : isActive
+                      ? 'text-bloom-green-deep'
+                      : 'text-bloom-green-deep/60 hover:text-bloom-green-deep',
                 )}
               >
                 {l.label}
@@ -230,7 +242,7 @@ export function Navbar() {
           })}
         </div>
 
-        <div className="flex items-center justify-end gap-3">
+        <div className="flex-1 flex items-center justify-end gap-3">
           <button
             type="button"
             onClick={handleTopupClick}
@@ -253,7 +265,12 @@ export function Navbar() {
 
           <button
             type="button"
-            className="md:hidden flex items-center justify-center p-1.5 rounded-full border border-bloom-green-deep/15 bg-white/50 text-bloom-green-deep hover:bg-white transition-colors"
+            className={cn(
+              "md:hidden flex items-center justify-center p-1.5 rounded-full border transition-colors",
+              isDarkHeader
+                ? "border-white/15 bg-white/5 text-white hover:bg-white/10"
+                : "border-bloom-green-deep/15 bg-white/50 text-bloom-green-deep hover:bg-white"
+            )}
             aria-label={open ? 'Đóng menu' : 'Mở menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -284,11 +301,13 @@ export function Navbar() {
               {NAV_LINKS.map((l) => {
                 const isHash = l.href.startsWith('#')
                 const sectionId = isHash ? l.href.replace('#', '') : ''
-                const isActive = activeSection === sectionId
+                const isActive = isHash
+                  ? activeSection === sectionId
+                  : pathname === l.href.split('?')[0]
                 return (
                   <Link
                     key={l.href}
-                    href={l.href}
+                    href={isHash && pathname !== '/' ? `/${l.href}` : l.href}
                     onClick={isHash ? (e) => scrollToSection(e, sectionId) : undefined}
                     className={cn(
                       'rounded-lg py-2 px-3 text-[13px] font-medium transition-colors font-display',
