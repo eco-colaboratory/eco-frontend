@@ -193,7 +193,7 @@ export default function DownloadPageClient() {
                   {/* App Icon */}
                   <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-[2px] border-bloom-green-deep shadow-[2px_2px_0px_#4f3516] bg-white shrink-0">
                     <Image
-                      src="/assets/logo/logo_flower.png"
+                      src="/assets/logo/icon.png"
                       alt="CHẠM Flora Icon"
                       fill
                       className="object-cover p-1.5"
