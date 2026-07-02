@@ -4,6 +4,12 @@ export const SITE = {
   defaultDescription:
     'CHẠM Flora là nền tảng game hóa hành động xanh cho Gen Z, kêu gọi tài trợ và hợp tác CSR để chuyển đổi vườn hoa ảo thành vườn hoa thật.',
   locale: 'vi_VN',
+  gameThumbnail: {
+    url: '/assets/game/thumnail.png',
+    width: 1024,
+    height: 500,
+    alt: 'Thumbnail game CHẠM Flora',
+  },
 } as const
 
 export function getSiteUrl(): string {

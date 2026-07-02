@@ -24,7 +24,7 @@ import {
 } from '@/app/(landing)/_components/layout'
 
 const GALLERY_ITEMS = [
-  { src: '/assets/game/thumnail.png', alt: 'CHẠM Flora - Trồng Hoa Của Bạn, Xanh Hóa Trái Đất', isPortrait: false },
+  { src: '/assets/game/thumnail.png', alt: 'CHẠM Flora - Trồng Vườn Ảo, Kiến Tạo Vườn Thật', isPortrait: false },
   { src: '/assets/game/ingame/1.png', alt: 'Khu Vườn Sinh Thái CHẠM Flora', isPortrait: true },
   { src: '/assets/game/ingame/2.png', alt: 'Hệ thống hoa và cây trồng thực tế', isPortrait: true },
   { src: '/assets/game/ingame/3.png', alt: 'Hành động xanh đổi phần quà thực tế ngoài đời thực', isPortrait: true },
@@ -178,8 +178,8 @@ export default function DownloadPageClient() {
                 
                 {/* Title and brand */}
                 <div className="space-y-1.5">
-                  <h1 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl leading-[1.15] tracking-tight text-white bloom-text-shadow-heavy animate-fade-in">
-                    Trồng Hoa Của Bạn, Xanh Hóa Trái Đất
+                  <h1 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl leading-[1.15] tracking-tight text-white text-balance bloom-text-shadow-heavy animate-fade-in">
+                    Trồng Vườn Ảo, Kiến Tạo Vườn Thật
                   </h1>
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold">
                     <span className="text-bloom-accent-mint font-bold">CHẠM Flora Team</span>
