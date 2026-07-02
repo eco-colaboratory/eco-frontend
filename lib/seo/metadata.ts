@@ -18,7 +18,7 @@ export function buildPageMetadata({
   description = SITE.defaultDescription,
   path = '/',
   noindex = false,
-  ogImage = 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&h=630&q=80',
+  ogImage = SITE.gameThumbnail.url,
 }: BuildPageMetadataInput): Metadata {
   const siteUrl = getSiteUrl()
   const pathname = normalizePath(path)
@@ -37,7 +37,14 @@ export function buildPageMetadata({
       title: ogTitle,
       description,
       siteName: SITE.name,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: SITE.name }],
+      images: [
+        {
+          url: ogImage,
+          width: SITE.gameThumbnail.width,
+          height: SITE.gameThumbnail.height,
+          alt: SITE.gameThumbnail.alt,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',

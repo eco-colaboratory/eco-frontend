@@ -16,6 +16,8 @@ import { cn } from '@/lib/utils'
 import { AuthModal, UserMenuDropdown } from '@/components/widget/auth'
 import { useAppSelector } from '@/lib/redux/hooks'
 import { selectIsAuthenticated, selectUser } from '@/lib/redux/slices/authSlice'
+import { useLandingAuth } from '@/hooks/useLandingAuth'
+import { hasAdminRole } from '@/lib/types/roles'
 
 const SCROLL_THRESHOLD = 100
 
@@ -30,7 +32,7 @@ const NAV_LINKS = [
 const springTransition = { type: 'spring' as const, stiffness: 200, damping: 50 }
 
 const pillWidth =
-  'w-[92%] max-w-7xl sm:w-[85%] md:w-3/4'
+  'w-[95%] max-w-7xl sm:w-[90%] md:w-[88%] lg:w-[82%] xl:w-3/4'
 
 function MenuIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -82,6 +84,14 @@ export function Navbar() {
   const user = useAppSelector(selectUser)
   const displayName = user?.username || user?.name || 'bạn'
   const isDarkHeader = pathname === '/download' && !isScrolled
+  const isAdmin = user && user.role ? hasAdminRole(user.role) : false
+
+  const { logout } = useLandingAuth()
+
+  const handleLogout = async () => {
+    setOpen(false)
+    await logout()
+  }
 
   const { scrollY } = useScroll()
 
@@ -206,7 +216,7 @@ export function Navbar() {
           </Link>
         </div>
 
-        <div className="hidden items-center justify-center gap-5 md:flex lg:gap-8 shrink-0 flex-initial">
+        <div className="hidden items-center justify-center gap-3.5 md:flex lg:gap-6 xl:gap-8 shrink-0 flex-initial">
           {NAV_LINKS.map((l) => {
             const isHash = l.href.startsWith('#')
             const sectionId = isHash ? l.href.replace('#', '') : ''
@@ -219,7 +229,7 @@ export function Navbar() {
                 href={isHash && pathname !== '/' ? `/${l.href}` : l.href}
                 onClick={isHash ? (e) => scrollToSection(e, sectionId) : undefined}
                 className={cn(
-                  'relative py-1.5 text-[13.5px] font-bold transition-colors font-display tracking-wide whitespace-nowrap',
+                  'relative py-1.5 text-[13px] xl:text-[13.5px] font-bold transition-colors font-display tracking-wide whitespace-nowrap',
                   isDarkHeader
                     ? isActive
                       ? 'text-white'
@@ -242,25 +252,29 @@ export function Navbar() {
           })}
         </div>
 
-        <div className="flex-1 flex items-center justify-end gap-3">
-          <button
-            type="button"
-            onClick={handleTopupClick}
-            className="hidden bloom-btn-3d bloom-btn-3d-primary px-4.5 py-1.5 text-[11px] text-bloom-green-deep md:inline-flex cursor-pointer shadow-[0_3px_0_#4f3516] hover:translate-y-[1px] hover:shadow-[0_2px_0_#4f3516] active:translate-y-[3px] active:shadow-[0_0px_0_#4f3516]"
-          >
-            Nạp Coin
-          </button>
+        <div className="flex-1 flex items-center justify-end gap-2 sm:gap-3">
+          <span className="hidden md:inline-flex">
+            <button
+              type="button"
+              onClick={handleTopupClick}
+              className="bloom-btn-3d bloom-btn-3d-primary px-4.5 py-1.5 text-[11px] text-bloom-green-deep cursor-pointer shadow-[0_3px_0_#4f3516] hover:translate-y-[1px] hover:shadow-[0_2px_0_#4f3516] active:translate-y-[3px] active:shadow-[0_0px_0_#4f3516]"
+            >
+              Nạp Coin
+            </button>
+          </span>
 
           {isAuthenticated ? (
             <UserMenuDropdown displayName={displayName} />
           ) : (
-            <button
-              type="button"
-              onClick={() => setAuthOpen(true)}
-              className="hidden bloom-btn-3d bloom-btn-3d-petal px-4.5 py-1.5 text-[11px] text-white md:inline-flex cursor-pointer"
-            >
-              Đăng nhập
-            </button>
+            <span className="hidden md:inline-flex">
+              <button
+                type="button"
+                onClick={() => setAuthOpen(true)}
+                className="bloom-btn-3d bloom-btn-3d-petal px-4.5 py-1.5 text-[11px] text-white cursor-pointer"
+              >
+                Đăng nhập
+              </button>
+            </span>
           )}
 
           <button
@@ -320,32 +334,58 @@ export function Navbar() {
                   </Link>
                 )
               })}
-              <div className="border-t border-bloom-green-mid/10 pt-3 flex flex-col gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpen(false)
-                    if (isAuthenticated) {
-                      router.push('/topup')
-                    } else {
-                      setShouldNavigateToTopup(true)
-                      setAuthOpen(true)
-                    }
-                  }}
-                  className="block w-full rounded-full bg-bloom-gold border-2 border-bloom-green-deep py-2 text-center text-xs font-black text-bloom-green-deep transition-colors hover:bg-bloom-green-deep hover:text-white font-display shadow-[2px_2px_0px_#4f3516] cursor-pointer"
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false)
+                  if (isAuthenticated) {
+                    router.push('/topup')
+                  } else {
+                    setShouldNavigateToTopup(true)
+                    setAuthOpen(true)
+                  }
+                }}
+                className={cn(
+                  'w-full text-left rounded-lg py-2 px-3 text-[13px] font-medium transition-colors font-display cursor-pointer',
+                  pathname === '/topup'
+                    ? 'bg-bloom-green-mid/10 text-bloom-green-deep'
+                    : 'text-bloom-green-deep/75 hover:bg-bloom-green-light/50 hover:text-bloom-green-deep',
+                )}
+              >
+                Nạp Coin
+              </button>
+              {isAdmin && (
+                <Link
+                  href="/admin/dashboard"
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    'block w-full text-left rounded-lg py-2 px-3 text-[13px] font-medium transition-colors font-display cursor-pointer',
+                    pathname.startsWith('/admin')
+                      ? 'bg-bloom-green-mid/10 text-bloom-green-deep'
+                      : 'text-bloom-green-deep/75 hover:bg-bloom-green-light/50 hover:text-bloom-green-deep',
+                  )}
                 >
-                  Nạp Coin
-                </button>
+                  Dashboard
+                </Link>
+              )}
+              <div className="border-t border-bloom-green-mid/10 pt-3 flex flex-col gap-2">
                 {isAuthenticated ? (
-                  <UserMenuDropdown
-                    displayName={displayName}
-                    variant="block"
-                    onLogout={() => setOpen(false)}
-                  />
+                  <div className="flex flex-col gap-2">
+                    <div className="text-center text-[12px] text-bloom-green-deep/70 font-semibold font-display">
+                      Xin chào, <span className="text-bloom-green-deep font-bold">{displayName}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="block w-full rounded-full bg-bloom-green-mid/10 border border-bloom-green-mid/25 py-2 text-center text-xs font-black text-bloom-green-deep transition-colors hover:bg-bloom-green-deep hover:text-white font-display cursor-pointer"
+                    >
+                      Đăng xuất
+                    </button>
+                  </div>
                 ) : (
                   <button
                     type="button"
-                    className="block w-full rounded-full bg-bloom-green-mid py-2 text-center text-xs font-black text-bloom-green-deep transition-colors hover:bg-bloom-green-deep hover:text-white font-display"
+                    className="block w-full rounded-full bg-bloom-green-mid py-2 text-center text-xs font-black text-bloom-green-deep transition-colors hover:bg-bloom-green-deep hover:text-white font-display cursor-pointer"
                     onClick={() => {
                       setOpen(false)
                       setAuthOpen(true)

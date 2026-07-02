@@ -35,6 +35,20 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: SITE.name,
     description: SITE.defaultDescription,
+    images: [
+      {
+        url: SITE.gameThumbnail.url,
+        width: SITE.gameThumbnail.width,
+        height: SITE.gameThumbnail.height,
+        alt: SITE.gameThumbnail.alt,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE.name,
+    description: SITE.defaultDescription,
+    images: [SITE.gameThumbnail.url],
   },
   robots: { index: true, follow: true },
 }
