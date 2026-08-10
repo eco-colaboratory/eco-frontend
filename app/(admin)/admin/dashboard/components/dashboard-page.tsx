@@ -87,7 +87,7 @@ export function DashboardPage() {
             <AnalyticsChart data={filteredMetrics} />
           </TabsContent>
           <TabsContent value="daily-data" className="min-h-0 flex-1 overflow-auto">
-            <DailyMetricsTable data={filteredMetrics} dateLabel={rangeLabel} />
+            <DailyMetricsTable key={rangeLabel} data={filteredMetrics} dateLabel={rangeLabel} />
           </TabsContent>
         </Tabs>
       </div>
